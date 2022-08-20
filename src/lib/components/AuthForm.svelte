@@ -20,24 +20,42 @@
     };
 </script>
 
-<form on:submit|preventDefault={submit} class="space-y-5 {$$props.class}">
-    <div class="grid gap-10 grid-flow-row pr-[25%] my-10">
-        <div class="text-xl text-right">
+<form on:submit|preventDefault={submit}>
+    <div class="inputs">
+        <div class="input">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" class="text-light-text h-8 w-1/2" bind:value={email} />
+            <input type="email" name="email" id="email" bind:value={email} />
         </div>
 
-        <div class="text-xl text-right">
+        <div class="input">
             <label for="password">Password</label>
-            <input
-                type="password"
-                name="password"
-                id="password"
-                class="text-light-text h-8 w-1/2"
-                bind:value={password}
-            />
+            <input type="password" name="password" id="password" bind:value={password} />
         </div>
     </div>
 
     <WButton type="submit">Login</WButton>
 </form>
+
+<style lang="scss">
+    .inputs {
+        display: grid;
+        gap: 40px;
+        grid-auto-flow: row;
+        padding-right: 25%;
+        margin: 40px 0;
+    }
+
+    .input {
+        text-align: right;
+        font-size: 20px;
+        line-height: 28px;
+
+        input {
+            width: 50%;
+            height: 32px;
+            color: #3c3737;
+            padding: 0 12px;
+            border-radius: 6px;
+        }
+    }
+</style>
