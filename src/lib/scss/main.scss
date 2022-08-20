@@ -1,2 +1,10 @@
 @import 'reset.scss';
+@import 'vars.scss';
 @import 'theme.scss';
+
+body {
+    overflow-x: hidden;
+    user-select: none;
+    width: 100%;
+    min-height: 100vh;
+}

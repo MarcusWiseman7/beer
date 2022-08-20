@@ -64,40 +64,39 @@
     {/if}
 </svelte:head>
 
-<div class="layout w-full pt-12 lg:pt-0">
-    <header class="fixed left-0 top-0 right-0 lg:relative h-12 lg:h-auto flex items-center lg:pt-16 lg:pb-5 lg:pl-14">
-        <div
-            on:click={logoClick}
-            class="relative flex h-12 w-12 lg:h-16 lg:w-16 lg:bg-main-color rounded-xl justify-center items-center cursor-pointer"
-        >
-            <InlineSVG class="hidden lg:block absolute -bottom-2 right-0" src={logo_beer_src} />
-            <img class="block lg:hidden" src={menu_src} alt="menu" height="24" width="24" />
+<div class="layout">
+    <header class="header">
+        <div on:click={logoClick} class="header__logo">
+            <div class="header__logo--desktop">
+                <InlineSVG src={logo_beer_src} />
+            </div>
+            <img class="header__logo--mobile" src={menu_src} alt="menu" height="24" width="24" />
         </div>
-        <h1 class="lg:text-2xl lg:ml-5">Wounded Soldier</h1>
+        <h1>Wounded Soldier</h1>
     </header>
 
-    <div class="flex relative mt-24 lg:mt-8 2xl:mt-24">
+    <main>
         <!-- DESKTOP MENU -->
-        <div class="hidden lg:block lg:w-1/4 relative lg:pl-9">
+        <div class="menu--desktop">
             <MainNavDesktop />
         </div>
 
         <!-- MAIN CONTENT -->
-        <div class="w-full px-3.5 lg:w-3/5 2xl:w-1/2 lg:px-0 relative">
+        <div class="content-wrapper">
             <!-- FOAM -->
-            <div class="absolute right-5 -top-16 lg:right-7 lg:-top-28 2xl:-top-40 w-1/2">
-                <InlineSVG class="fill-light-hover dark:fill-dark-hover" src={foam_src} />
+            <div class="foam">
+                <InlineSVG style="fill:inherit;" src={foam_src} />
             </div>
 
             <!-- PAGE SLOT -->
-            <div class="relative bg-light-page dark:bg-dark-page rounded-t lg:rounded-t-3xl p-2 lg:p-7 base">
+            <div class="page">
                 <slot />
             </div>
         </div>
-    </div>
-</div>
+    </main>
 
-<WFooter />
+    <WFooter />
+</div>
 
 <!-- MOBILE MENU -->
 {#if openMenu}
@@ -121,11 +120,139 @@
 {/if}
 
 <style lang="scss">
+    @import '../lib/scss/vars.scss';
     .layout {
         width: 100%;
+        padding-top: 48px;
+
+        @media (min-width: $tablet) {
+            padding-top: 0;
+        }
     }
 
-    .base {
+    .header {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 48px;
+        display: flex;
+        align-items: center;
+
+        @media (min-width: $tablet) {
+            position: relative;
+            height: auto;
+            padding: 64px 0 20px 56px;
+        }
+
+        h1 {
+            font-size: 24px;
+            line-height: 32px;
+            margin-left: 20px;
+        }
+
+        &__logo {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+            width: 48px;
+            border-radius: 12px;
+            cursor: pointer;
+
+            @media (min-width: $tablet) {
+                height: 64px;
+                width: 64px;
+                background-color: var(--main-color);
+            }
+
+            &--desktop {
+                display: none;
+                position: absolute;
+                right: 0;
+                bottom: -8px;
+
+                @media (min-width: $tablet) {
+                    display: block;
+                }
+            }
+
+            &--mobile {
+                @media (min-width: $tablet) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    main {
+        display: flex;
+        position: relative;
+        margin-top: 96px;
+
+        @media (min-width: $tablet) {
+            margin-top: 32px;
+        }
+
+        @media (min-width: $desktop) {
+            margin-top: 96px;
+        }
+    }
+
+    .menu--desktop {
+        display: none;
+        position: relative;
+
+        @media (min-width: $tablet) {
+            display: block;
+            width: 25%;
+            padding-left: 36px;
+        }
+    }
+
+    .content-wrapper {
+        position: relative;
+        width: 100%;
+        padding: 0 14px;
+
+        @media (min-width: $tablet) {
+            width: 60%;
+            padding: 0;
+        }
+        @media (min-width: $desktop) {
+            width: 50%;
+        }
+    }
+
+    .foam {
+        position: absolute;
+        right: 20px;
+        top: -64px;
+        width: 50%;
+        fill: var(--hover);
+
+        @media (min-width: $tablet) {
+            right: 28px;
+            top: -112px;
+        }
+        @media (min-width: $desktop) {
+            top: -160px;
+        }
+    }
+
+    .page {
+        position: relative;
         min-height: calc(100vh - 19rem);
+        background-color: var(--page);
+        padding: 8px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+
+        @media (min-width: $tablet) {
+            padding: 28px;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+        }
     }
 </style>
