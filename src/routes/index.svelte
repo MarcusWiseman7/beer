@@ -12,8 +12,24 @@
     });
 </script>
 
-<h1 class="mb-5 text-2xl font-semibold">New and popular</h1>
+<h1 class="popular">New and popular</h1>
 <WWrapper items={[{}, {}, {}, {}]} size="big" />
 
-<h1 class="my-5 text-2xl font-semibold">Top rated beer</h1>
+<h1 class="top">Top rated beer</h1>
 <WHorizontalScroller items={topBeers} />
+
+<style lang="scss">
+    h1 {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .popular {
+        margin-bottom: 20px;
+    }
+
+    .top {
+        margin: 20px 0;
+    }
+</style>

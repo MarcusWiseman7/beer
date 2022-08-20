@@ -1,6 +1,5 @@
 // THEME - LIGHT
 @mixin lightTheme {
-    --main-color: #fb6d3a;
     --body: #e5e5e5;
     --page: #ffffff;
     --hover: #f2f4f8;
@@ -11,7 +10,6 @@
 
 // THEME - DARK
 @mixin darkTheme() {
-    --main-color: #fb6d3a;
     --body: #3c3737;
     --page: #332d2d;
     --hover: #514c4c;
@@ -21,6 +19,9 @@
 }
 
 :root {
+    --main-color: #fb6d3a;
+    --error-color: rgb(220 38 38);
+
     @media (prefers-color-scheme: light) {
         @include lightTheme;
     }

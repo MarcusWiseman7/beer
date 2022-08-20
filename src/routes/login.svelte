@@ -56,10 +56,27 @@
     });
 </script>
 
-<h1 class="text-3xl font-semibold mb-10">Login</h1>
+<h1>Login</h1>
 
 {#if errorMessage}
-    <div class="text-red-600 text-lg font-semibold my-6">{errorMessage}</div>
+    <div class="error">{errorMessage}</div>
 {/if}
 
 <AuthForm on:submit={tryLogin} on:error={handleErrorEvent} />
+
+<style lang="scss">
+    h1 {
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 40px;
+    }
+
+    .error {
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 28px;
+        color: var(--error-color);
+        margin: 24px 0;
+    }
+</style>
