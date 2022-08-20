@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="75" width="70" viewBox="0 0 70 75" fill="none">
+        <rect
+            x="10"
+            y="10"
+            rx="4"
+            ry="4"
+            stroke="rgba(0, 0, 0, 0.5)"
+            stroke-width="4"
+            height="55"
+            width="40"
+            fill="#fff"
+        />
+        <line
+            x1="23"
+            x2="23"
+            y1="20"
+            y2="55"
+            stroke="rgba(0, 0, 0, 0.5)"
+            stroke-width="6"
+        />
+        <line
+            x1="37"
+            x2="37"
+            y1="20"
+            y2="55"
+            stroke="rgba(0, 0, 0, 0.5)"
+            stroke-width="6"
+        />
+        <path
+            d="M 51.75 20 l 12 1 v 30 l -12 1"
+            stroke="rgba(0, 0, 0, 0.5)"
+            stroke-width="5"
+            stroke-linejoin="round"
+            fill="#fff"
+        />
+    </svg>

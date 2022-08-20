@@ -1,0 +1,37 @@
+$main-color: #fb6d3a;
+
+// THEME - LIGHT
+@mixin lightTheme {
+    --body: #e5e5e5;
+    --page: #ffffff;
+    --hover: #f2f4f8;
+    --border: #dddddd;
+    --text: #3c3737;
+    --text-2: #999faa;
+}
+
+// THEME - DARK
+@mixin darkTheme() {
+    --body: #3c3737;
+    --page: #332d2d;
+    --hover: #514c4c;
+    --border: #484c51;
+    --text: #ffffff;
+    --text-2: #999faa;
+}
+
+:root {
+    @media (prefers-color-scheme: light) {
+        @include lightTheme;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        @include darkTheme;
+    }
+}
+
+html,
+body {
+    background-color: var(--body);
+    color: var(--text);
+}
