@@ -2,7 +2,7 @@
     <div class="spinner" />
 </div>
 
-<style>
+<style lang="scss">
     .spinner-wrap {
         position: fixed;
         top: 0;

@@ -1,22 +1,42 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    export let wClass: string = '';
     export let type: string = 'main';
 
     const dispatch = createEventDispatcher();
-
-    $: finalClass =
-        'flex items-center justify-center w-full border-light-border dark:border-dark-border ' +
-        (type == 'main' ? 'px-12 py-4 border-4 rounded-xl ' : 'px-6 py-1 border-2 w-max text-xs rounded-md') +
-        wClass;
 </script>
 
 <button
-    class={finalClass}
+    class={'button--' + type}
     on:click={() => {
         dispatch('click');
     }}
 >
     <slot />
 </button>
+
+<style lang="scss">
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: max-content;
+        border: 2px solid var(--border);
+        border-radius: 6px;
+        padding: 4px 24px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .button {
+        &--main {
+            border: 4px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 48px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 28px;
+        }
+    }
+</style>

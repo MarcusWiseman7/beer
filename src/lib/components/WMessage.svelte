@@ -5,26 +5,41 @@
     import { fly } from 'svelte/transition';
     import type { IMessage } from '../ts-interfaces';
 
-    const baseClass: string = `
-        absolute bottom-10 left-10 z-50 
-        px-8 py-2 
-        font-semibold text-white text-lg max-w-xs text-justify 
-        rounded-md shadow-lg 
-    `;
-    const color: string =
-        messageObj.type === 'success'
-            ? ` bg-green-600`
-            : messageObj.type === 'error'
-            ? ` bg-red-600`
-            : messageObj.type === 'warning'
-            ? ` bg-yellow-600`
-            : ` bg-stone-400`;
-
     setTimeout(() => {
         appMessages.update((a) => a.filter((m: IMessage) => m.id !== messageObj.id));
     }, messageObj.timeout);
 </script>
 
-<div transition:fly={{ x: -100 }} class={baseClass + color}>
+<div transition:fly={{ x: -100 }} class={'message ' + `message--${messageObj.type}`}>
     {messageObj.message}
 </div>
+
+<style lang="scss">
+    .message {
+        position: absolute;
+        bottom: 40px;
+        left: 40px;
+        z-index: 50;
+        padding: 8px 32px;
+        font-weight: 600;
+        color: #fff;
+        font-size: 18px;
+        line-height: 28px;
+        text-align: justify;
+        border-radius: 6px;
+        max-width: 320px;
+        background-color: rgb(168 162 158);
+
+        &--success {
+            background-color: rgb(22 163 74);
+        }
+
+        &--error {
+            background-color: rgb(220 38 38);
+        }
+
+        &--warning {
+            background-color: rgb(202 138 4);
+        }
+    }
+</style>
