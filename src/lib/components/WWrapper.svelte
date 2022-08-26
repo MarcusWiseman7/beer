@@ -20,22 +20,66 @@
 </script>
 
 {#if items.length}
-    <div class="grid gap-2 lg:gap-4 grid-cols-2 2xl:grid-cols-3">
+    <div class="wrapper">
         {#each items.slice(0, maxResults) as item}
             <WCard {item} {size} />
         {/each}
     </div>
 {:else if which == 'searchResults'}
-    <div class="flex flex-col items-center my-14 overflow-hidden break-words">
-        <h3 class="mb-2">Sorry, no results for "blah"...</h3>
-        <div class="w-3/4 lg:w-1/2">
+    <div class="results">
+        <h3>Sorry, no results for "blah"...</h3>
+        <div class="button-container">
             <WButton on:click={checkIfLoggedIn}>Add new beer</WButton>
         </div>
     </div>
 {/if}
 
 {#if which != 'topBeers' && items.length > maxResults}
-    <div class="my-5 flex justify-center">
+    <div class="more">
         <WButton type="quick" on:click={increaseMax}>Show more</WButton>
     </div>
 {/if}
+
+<style lang="scss">
+    @import '../scss/vars.scss';
+    .wrapper {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        @media (min-width: $tablet) {
+            gap: 16px;
+        }
+
+        @media (min-width: $desktop) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    .results {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        margin: 56px 0;
+        overflow-wrap: break-word;
+
+        h3 {
+            margin-bottom: 8px;
+        }
+
+        .button-container {
+            width: 75%;
+
+            @media (min-width: $tablet) {
+                width: 50%;
+            }
+        }
+    }
+
+    .more {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+</style>
