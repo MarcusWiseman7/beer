@@ -21,40 +21,114 @@
 
 <div
     transition:fly={{ x: -100, opacity: 1, easing: linear, duration: 400, delay: 50 }}
-    class="z-30 fixed top-0 bottom-0 left-0 right-0"
+    class="nav-container"
     on:click={close}
 >
-    <div class="w-11/12 bg-light-page dark:bg-dark-page h-full relative">
+    <nav>
         <!-- closer -->
-        <div class="absolute top-2 right-3 flex justify-center items-center h-10 w-10 bg-main-color rounded-full">
+        <div class="closer">
             <InlineSVG src={close_src} />
         </div>
 
         <!-- nav -->
-        <ul class="py-14 px-4">
+        <ul>
             {#each $mainNav as link}
                 <li
                     on:click={() => {
                         goto(link.href);
                     }}
-                    class={'flex items-center font-medium text-xl h-14 pl-7 border-b border-light-border dark:border-dark-border last:border-none' +
-                        (link.href == activeRoute
-                            ? ' fill-main-color text-main-color'
-                            : ' fill-dark-body dark:fill-light-body')}
+                    class={link.href == activeRoute ? 'list-item active' : 'list-item'}
                 >
                     <InlineSVG src={'src/lib/assets/icons/nav/' + link.name + '.svg'} />
-                    <span class="ml-5 capitalize">{link.name}</span>
+                    <span>{link.name}</span>
                 </li>
             {/each}
 
-            <li class="p-10">
-                <button
-                    class="flex items-center justify-center px-12 py-4 border-4 w-full border-light-border dark:border-dark-border rounded-xl"
-                >
+            <li class="list-item--button">
+                <button>
                     <InlineSVG src={add_beer_src} {...{ width: 20, height: 20 }} />
-                    <span class="ml-3">Add beer</span>
+                    <span>Add beer</span>
                 </button>
             </li>
         </ul>
-    </div>
+    </nav>
 </div>
+
+<style lang="scss">
+    .nav-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 30;
+    }
+
+    nav {
+        position: relative;
+        background-color: var(--page);
+        height: 100%;
+        width: 90%;
+    }
+
+    ul {
+        padding: 56px 16px;
+    }
+
+    .list-item {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 28px;
+        height: 56px;
+        border-bottom: 1px solid var(--border);
+        padding-left: 28px;
+        fill: var(--text);
+
+        &:last-child {
+            border-style: none;
+        }
+
+        &.active {
+            color: var(--main-color);
+            fill: var(--main-color);
+        }
+
+        span {
+            text-transform: capitalize;
+            margin-left: 20px;
+        }
+
+        &--button {
+            padding: 40px;
+
+            button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 4px solid var(--border);
+                border-radius: 12px;
+                width: 100%;
+                padding: 16px 48px;
+            }
+
+            span {
+                margin-left: 12px;
+            }
+        }
+    }
+
+    .closer {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--main-color);
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+    }
+</style>

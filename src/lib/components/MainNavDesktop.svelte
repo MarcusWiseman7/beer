@@ -10,41 +10,86 @@
     $: activeRoute = $page.url.pathname;
 </script>
 
-<div class="relative">
-    <ul class="absolute right-0 top-24 w-72">
+<nav>
+    <ul>
         {#each $mainNav as link}
             <li
                 on:click={() => {
                     goto(link.href);
                 }}
-                class={'flex items-center font-medium text-xl h-16 relative cursor-pointer' +
-                    (link.href == activeRoute
-                        ? ' fill-main-color text-main-color bg-light-page dark:bg-dark-page active before:shadow-light-page before:dark:shadow-dark-page'
-                        : ' fill-dark-body dark:fill-light-body')}
+                class={link.href == activeRoute ? 'list-item active' : 'list-item'}
             >
-                <InlineSVG
-                    class="mr-5 ml-8"
-                    src={'src/lib/assets/icons/nav/' + link.name + '.svg'}
-                    {...{ height: 22 }}
-                />
-                <span class="capitalize">{link.name}</span>
+                <div class="list-item__icon">
+                    <InlineSVG src={'src/lib/assets/icons/nav/' + link.name + '.svg'} {...{ height: 22 }} />
+                </div>
+                <span class="list-item__title">{link.name}</span>
             </li>
         {/each}
 
-        <li class="pt-10 pr-10">
-            <button
-                class="flex items-center justify-center px-12 py-4 border-4 w-full border-light-border dark:border-dark-border rounded-xl"
-            >
+        <li class="list-item--button">
+            <button>
                 <InlineSVG src={add_beer_src} {...{ width: 20, height: 20 }} />
-                <span class="ml-3">Add beer</span>
+                <span>Add beer</span>
             </button>
         </li>
     </ul>
-</div>
+</nav>
 
-<style>
+<style lang="scss">
+    nav {
+        position: relative;
+    }
+
+    ul {
+        position: absolute;
+        right: 0;
+        top: 96px;
+        width: 288px;
+    }
+
+    .list-item {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 28px;
+        height: 64px;
+        fill: var(--text);
+
+        &__icon {
+            margin: 0 20px 0 32px;
+        }
+
+        &__title {
+            text-transform: capitalize;
+        }
+
+        &--button {
+            padding: 40px 40px 0 0;
+
+            button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 16px 48px;
+                width: 100%;
+                border: 4px solid var(--border);
+                border-radius: 12px;
+            }
+
+            span {
+                margin-left: 12px;
+            }
+        }
+    }
+
     .active {
         border-radius: 30px 0px 0px 30px;
+        color: var(--main-color);
+        fill: var(--main-color);
+        background-color: var(--page);
     }
 
     .active::before {
@@ -55,7 +100,7 @@
         height: 60px;
         width: 30px;
         border-radius: 0 0 30px 0;
-        box-shadow: 0 30px 0 0 var(--light-page);
+        box-shadow: 0 30px 0 0 var(--page);
     }
 
     .active::after {
@@ -66,16 +111,6 @@
         height: 60px;
         width: 30px;
         border-radius: 0 30px 0 0;
-        box-shadow: 0 -30px 0 0 var(--light-page);
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .active::before {
-            box-shadow: 0 30px 0 0 var(--dark-page);
-        }
-
-        .active::after {
-            box-shadow: 0 -30px 0 0 var(--dark-page);
-        }
+        box-shadow: 0 -30px 0 0 var(--page);
     }
 </style>
