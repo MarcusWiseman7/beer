@@ -1,33 +1,84 @@
 <script lang="ts">
     export let type: string = 'normal';
-
-    const wClass =
-        'flex items-center border rounded-3xl w-full' +
-        (type === 'rating-fixed'
-            ? ' bg-white text-light-text border-light-border'
-            : ' border-light-border dark:border-dark-border h-8 py-0.5 pl-0.5 pr-2');
-
-    const titleClass =
-        'text-sm overflow-hidden text-ellipsis whitespace-nowrap' +
-        (type === 'rating'
-            ? ' max-w-[100px] mr-4 ml-0.5 font-semibold'
-            : type === 'rating-fixed'
-            ? ' mr-2 font-bold'
-            : type === 'location'
-            ? ' max-w-[200px] mx-2 font-semibold'
-            : ' max-w-[100px] mx-2 font-semibold');
 </script>
 
-<div class={wClass}>
-    <div class="rounded-full h-7 w-7 flex justify-center items-center">
+<div class={`pill pill--${type}`}>
+    <div class="pill__image">
         <slot name="image" />
     </div>
 
-    <div class={titleClass}>
+    <div class="pill__title">
         <slot name="title" />
     </div>
 
-    <div class="text-[10px] font-light text-light-text-2 dark:text-dark-text-2 whitespace-nowrap">
+    <div class="pill__info">
         <slot name="info" />
     </div>
 </div>
+
+<style lang="scss">
+    .pill {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        width: 100%;
+        height: 32px;
+        padding: 2px 8px 2px 2px;
+
+        &__image {
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 28px;
+            width: 28px;
+        }
+
+        &__title {
+            font-size: 14px;
+            line-height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100px;
+            font-weight: 600;
+            margin: 0 8px;
+        }
+
+        &__info {
+            font-size: 10px;
+            font-weight: 300;
+            color: var(--text-2);
+            white-space: nowrap;
+        }
+
+        &--rating {
+            .pill__title {
+                max-width: 100px;
+                margin: 0 16px 0 2px;
+                font-weight: 600;
+            }
+        }
+
+        &--rating-fixed {
+            background-color: #fff;
+            color: #3c3737;
+            border: 1px solid #dddddd;
+            height: auto;
+            padding: 0;
+
+            .pill__title {
+                font-weight: 700;
+                margin-right: 8px;
+            }
+        }
+
+        &--location {
+            .pill__title {
+                max-width: 200px;
+                font-weight: 600;
+                margin: 0 8px;
+            }
+        }
+    }
+</style>

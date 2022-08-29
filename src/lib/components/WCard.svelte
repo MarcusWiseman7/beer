@@ -12,16 +12,6 @@
     export let item: IBeer;
     export let size: string = 'normal';
 
-    const cardClass: string = `
-        flex flex-col items-center h-full 
-        bg-light-body dark:bg-dark-body 
-        overflow-hidden relative cursor-pointer 
-        border border-light-border dark:border-dark-border rounded-xl 
-        hover:after:bg-light-hover hover:after:absolute hover:after:top-0 hover:after:right-0 hover:after:bottom-0 hover:after:left-0 hover:after:bg-opacity-10
-    `;
-    const imageClass: string = size === 'big' ? 'w-full h-40 min-h-[10rem]' : 'w-full h-28 min-h-[7rem]';
-    const infoClass: string = size === 'big' ? 'mt-1 grid gap-2 grid-cols-2' : 'mt-1 grid gap-2 grid-cols-1';
-
     const stockPhotos = [
         '/stock/b6_k7y5gk',
         '/stock/b5_tpwqfg',
@@ -46,36 +36,32 @@
 </script>
 
 {#if item}
-    <div class={cardClass} on:click={cardClick}>
+    <div class={`card card--${size}`} on:click={cardClick}>
         <!-- image -->
-        <div class={imageClass}>
-            <img src={cloudinaryPicURL(stockPic())} alt="stock pic" class="w-full h-full object-cover" />
+        <div class="card__image">
+            <img src={cloudinaryPicURL(stockPic())} alt="stock pic" />
         </div>
 
         <!-- content -->
-        <div class="p-3 xl:p-4 flex flex-col gap-2 h-full w-full">
+        <div class="card__content">
             <!-- name/title -->
             {#if item.beerName}
-                <h3 class="font-medium text-base overflow-hidden text-ellipsis whitespace-nowrap">{item.beerName}</h3>
+                <h3 class="card__content__title">{item.beerName}</h3>
             {/if}
 
             <!-- style -->
             {#if item.style}
-                <h5
-                    class="text-sm font-medium text-light-text-2 dark:text-dark-text-2 overflow-hidden text-ellipsis whitespace-nowrap"
-                >
-                    {item.style}
-                </h5>
+                <h5 class="card__content__style">{item.style}</h5>
             {/if}
 
             <!-- info row -->
-            <div class={infoClass}>
+            <div class="card__content__info">
                 {#if item.brewery?._id}
                     <div on:click|stopPropagation={breweryClick}>
                         <WPill>
                             <svelte:fragment slot="image">
                                 <img
-                                    class="rounded-full h-7 w-7"
+                                    class="pill__image"
                                     src={cloudinaryPicURL(
                                         '/breweries/' + item.brewery.logo.slice(item.brewery.logo.lastIndexOf('/'))
                                     )}
@@ -109,7 +95,7 @@
         </div>
 
         {#if size !== 'big' && item.averageRating}
-            <div class="absolute top-2 left-2">
+            <div class="rating-pill">
                 <WPill type="rating-fixed">
                     <svelte:fragment slot="image">
                         <InlineSVG src={star_src} />
@@ -120,3 +106,91 @@
         {/if}
     </div>
 {/if}
+
+<style lang="scss">
+    @import '../scss/vars.scss';
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        background-color: var(--body);
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        &__image {
+            width: 100%;
+            height: 112px;
+            min-height: 112px;
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &__content {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+
+            @media (min-width: $desktop) {
+                padding: 16px;
+            }
+
+            &__title {
+                font-weight: 500;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            &__style {
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: 500;
+                color: var(--text-2);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            &__info {
+                margin-top: 4px;
+                display: grid;
+                gap: 8px;
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+
+        &--big {
+            .card__image {
+                height: 160px;
+                min-height: 160px;
+            }
+
+            .card__content__info {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+    }
+
+    .pill__image {
+        border-radius: 50%;
+        height: 28px;
+        width: 28px;
+    }
+
+    .rating-pill {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+    }
+</style>
