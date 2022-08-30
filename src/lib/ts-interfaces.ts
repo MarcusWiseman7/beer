@@ -29,13 +29,12 @@ export interface IMessage {
 };
 
 export interface ICard { };
-
 export interface IBeer {
     _id: Types.ObjectId;
     dateCreated: Date;
     beerName: string;
     altName?: string;
-    brewery?: Types.ObjectId;
+    brewery?: IBrewery;
     style?: string;
     degrees?: number;
     abv?: number;

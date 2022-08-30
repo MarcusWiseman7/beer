@@ -46,7 +46,7 @@
 
             <li class="list-item--button">
                 <button>
-                    <InlineSVG src={add_beer_src} {...{ width: 20, height: 20 }} />
+                    <InlineSVG src={add_beer_src} width="20" height="20" />
                     <span>Add beer</span>
                 </button>
             </li>

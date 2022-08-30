@@ -10,7 +10,7 @@
     }, messageObj.timeout);
 </script>
 
-<div transition:fly={{ x: -100 }} class={'message ' + `message--${messageObj.type}`}>
+<div transition:fly={{ x: -100 }} class={`message message--${messageObj.type}`}>
     {messageObj.message}
 </div>
 

@@ -20,7 +20,7 @@
                 class={link.href == activeRoute ? 'list-item active' : 'list-item'}
             >
                 <div class="list-item__icon">
-                    <InlineSVG src={'src/lib/assets/icons/nav/' + link.name + '.svg'} {...{ height: 22 }} />
+                    <InlineSVG src={'src/lib/assets/icons/nav/' + link.name + '.svg'} height="22" />
                 </div>
                 <span class="list-item__title">{link.name}</span>
             </li>
@@ -28,7 +28,7 @@
 
         <li class="list-item--button">
             <button>
-                <InlineSVG src={add_beer_src} {...{ width: 20, height: 20 }} />
+                <InlineSVG src={add_beer_src} width="20" height="20" />
                 <span>Add beer</span>
             </button>
         </li>

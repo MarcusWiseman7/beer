@@ -11,6 +11,7 @@
 
     export let item: IBeer;
     export let size: string = 'normal';
+    export let dragging: boolean = false;
 
     const stockPhotos = [
         '/stock/b6_k7y5gk',
@@ -25,12 +26,11 @@
     };
 
     const cardClick = (): void => {
-        if (item?._id) goto('/beer/' + item._id);
+        if (item?._id && !dragging) goto('/beer/' + item._id);
     };
 
     const breweryClick = (): void => {
         const id = item.brewery?._id;
-        console.log('id :>> ', id);
         if (id) goto('/brewery/' + id);
     };
 </script>
@@ -60,14 +60,17 @@
                     <div on:click|stopPropagation={breweryClick}>
                         <WPill>
                             <svelte:fragment slot="image">
-                                <img
-                                    class="pill__image"
-                                    src={cloudinaryPicURL(
-                                        '/breweries/' + item.brewery.logo.slice(item.brewery.logo.lastIndexOf('/'))
-                                    )}
-                                    alt="logo"
-                                />
+                                {#if item.brewery.logo}
+                                    <img
+                                        class="pill__image"
+                                        src={cloudinaryPicURL(
+                                            '/breweries/' + item.brewery.logo.slice(item.brewery.logo.lastIndexOf('/'))
+                                        )}
+                                        alt="logo"
+                                    />
+                                {/if}
                             </svelte:fragment>
+
                             <svelte:fragment slot="title">{item.brewery.name}</svelte:fragment>
                         </WPill>
                     </div>
@@ -86,7 +89,7 @@
                 {#if item?.brewery?.location}
                     <WPill type="location">
                         <svelte:fragment slot="image">
-                            <InlineSVG class="h-3" src={cz_src} />
+                            <InlineSVG src={cz_src} width="28" />
                         </svelte:fragment>
                         <svelte:fragment slot="title">{item.brewery.location}</svelte:fragment>
                     </WPill>

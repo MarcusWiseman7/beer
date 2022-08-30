@@ -34,17 +34,6 @@
     $: gapAdjustment = 12 * (numberOfVisibleItems - 1);
     $: itemWidth = (scroller?.clientWidth - gapAdjustment) / numberOfVisibleItems;
 
-    $: scrollerClass =
-        'flex gap-[12px] overflow-x-auto w-full no-scrollbar' + (wantDrag ? '' : ' snap-x snap-proximity');
-
-    $: leftArrowClass =
-        (showLeftArrow ? '' : 'hidden ') +
-        'z-10 absolute -translate-y-1/2 w-[54px] bg-transparent top-1/2 left-0 py-10 pr-[15px] overflow-hidden rounded-r-[3px]';
-
-    $: rightArrowClass =
-        (showRightArrow ? '' : 'hidden ') +
-        'z-10 absolute -translate-y-1/2 w-[54px] bg-transparent top-1/2 right-0 text-right py-10 pr-[10px] pl-[15px] overflow-hidden rounded-l-[3px]';
-
     const updateCanShowArrows = (bool: boolean): void => {
         canShowArrows = bool;
     };
@@ -118,14 +107,15 @@
 
 {#if items?.length && scrollerInitialized}
     <div
-        class="relative w-full touch-pan-y"
+        class="scroller__container"
         on:mouseenter={() => updateCanShowArrows(true)}
         on:mouseleave={() => updateCanShowArrows(false)}
     >
-        <div on:click={() => arrowClick(-1)} class={leftArrowClass}>
-            <div
-                class="cursor-pointer flex justify-center items-center bg-white border border-[#ddd] w-[39px] h-[42px] rounded-r-[3px]"
-            >
+        <div
+            on:click={() => arrowClick(-1)}
+            class={`arrow__wrapper arrow__wrapper--left ${showLeftArrow ? '' : 'hidden'}`}
+        >
+            <div class="arrow arrow--left">
                 <InlineSVG src={leftarrow_src} />
             </div>
         </div>
@@ -137,26 +127,98 @@
             on:pointerleave={dragend}
             on:pointerup={dragend}
             bind:this={scroller}
-            class={scrollerClass}
+            class={`scroller no-scrollbar ${wantDrag ? '' : 'scroller--snap'}`}
         >
             {#each items as item}
-                <div class="snap-start" style={`min-width: ${itemWidth}px`}>
-                    <WCard {item} />
+                <div class="scroller__item" style={`min-width: ${itemWidth}px`}>
+                    <WCard {item} dragging={drag} />
                 </div>
             {/each}
         </div>
 
-        <div on:click={() => arrowClick(1)} class={rightArrowClass}>
-            <div
-                class="cursor-pointer flex justify-center items-center bg-white border border-[#ddd] w-[39px] h-[42px] rounded-l-[3px]"
-            >
+        <div
+            on:click={() => arrowClick(1)}
+            class={`arrow__wrapper arrow__wrapper--right ${showRightArrow ? '' : 'hidden'}`}
+        >
+            <div class="arrow arrow--right">
                 <InlineSVG src={rightarrow_src} />
             </div>
         </div>
     </div>
 {/if}
 
-<style>
+<style lang="scss">
+    .scroller {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        width: 100%;
+
+        &--snap {
+            scroll-snap-type: x proximity;
+        }
+
+        &__container {
+            position: relative;
+            width: 100%;
+            touch-action: pan-y;
+        }
+
+        &__item {
+            scroll-snap-align: start;
+        }
+    }
+
+    .arrow {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        width: 39px;
+        height: 42px;
+
+        &--left {
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        &--right {
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        &__wrapper {
+            z-index: 10;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: transparent;
+            width: 54px;
+            overflow: hidden;
+
+            &.hidden {
+                display: none;
+            }
+
+            &--left {
+                left: 0;
+                padding: 40px 15px 40px 0;
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+
+            &--right {
+                right: 0;
+                text-align: right;
+                padding: 40px 10px 40px 15px;
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+            }
+        }
+    }
+
     .no-scrollbar {
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
