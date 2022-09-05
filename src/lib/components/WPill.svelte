@@ -20,18 +20,29 @@
     .pill {
         display: flex;
         align-items: center;
-        border: 1px solid var(--border);
-        width: 100%;
+        border-radius: 30px;
+        border: 1px solid var(--c-pill-border);
+        background-color: var(--c-pill-bg);
         height: 32px;
-        padding: 2px 8px 2px 2px;
+        padding: 2px 16px 2px 2px;
 
         &__image {
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
             height: 28px;
             width: 28px;
+
+            > svg {
+                height: 28px;
+                width: 28px;
+            }
+            > img {
+                border-radius: 50%;
+                overflow: hidden;
+            }
         }
 
         &__title {
@@ -42,7 +53,7 @@
             white-space: nowrap;
             max-width: 100px;
             font-weight: 600;
-            margin: 0 8px;
+            margin-left: 8px;
         }
 
         &__info {
@@ -61,21 +72,25 @@
         }
 
         &--rating-fixed {
-            background-color: #fff;
+            background: var(--main-light);
             color: #3c3737;
             border: 1px solid #dddddd;
-            height: auto;
-            padding: 0;
-
+            height: 26px;
+            padding: 0 8px;
             .pill__title {
                 font-weight: 700;
-                margin-right: 8px;
+                margin-left: 6px;
+            }
+            .pill__image {
+                width: auto;
             }
         }
 
         &--location {
+            max-width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
             .pill__title {
-                max-width: 200px;
                 font-weight: 600;
                 margin: 0 8px;
             }

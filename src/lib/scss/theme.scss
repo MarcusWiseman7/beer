@@ -6,6 +6,11 @@
     --border: #dddddd;
     --text: #3c3737;
     --text-2: #999faa;
+    // PILL
+    --c-pill-bg: #fff;
+    --c-pill-border: #F2F2F2;
+    // CARD
+    --c-card-bg: (var(--main-light)) --c-card-border: #EBEBF0;
 }
 
 // THEME - DARK
@@ -16,16 +21,22 @@
     --border: #484c51;
     --text: #ffffff;
     --text-2: #999faa;
+    // PILL
+    --c-pill-bg: #302C2C;
+    --c-pill-border: #484C51;
+    // CARD
+    --c-card-bg: #3C3737;
+    --c-card-border: #484C51;
 }
 
 :root {
     --main-color: #fb6d3a;
     --error-color: rgb(220 38 38);
-
+    --main-light: #fff;
+    --main-dark: #000000;
     @media (prefers-color-scheme: light) {
         @include lightTheme;
     }
-
     @media (prefers-color-scheme: dark) {
         @include darkTheme;
     }

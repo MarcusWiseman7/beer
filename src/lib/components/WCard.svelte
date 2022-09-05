@@ -62,7 +62,6 @@
                             <svelte:fragment slot="image">
                                 {#if item.brewery.logo}
                                     <img
-                                        class="pill__image"
                                         src={cloudinaryPicURL(
                                             '/breweries/' + item.brewery.logo.slice(item.brewery.logo.lastIndexOf('/'))
                                         )}
@@ -117,11 +116,11 @@
         flex-direction: column;
         align-items: center;
         height: 100%;
-        background-color: var(--body);
+        background-color: var(--c-card-bg);
         overflow: hidden;
         position: relative;
         cursor: pointer;
-        border: 1px solid var(--border);
+        border: 1px solid var(--c-card-border);
         border-radius: 12px;
 
         &__image {
@@ -139,10 +138,7 @@
         &__content {
             height: 100%;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 12px;
+            padding: 9px 12px;
 
             @media (min-width: $desktop) {
                 padding: 16px;
@@ -163,13 +159,14 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                margin-top: 3px;
             }
 
             &__info {
-                margin-top: 4px;
-                display: grid;
-                gap: 8px;
-                grid-template-columns: repeat(1, minmax(0, 1fr));
+                margin-top: 9px;
+                display: flex;
+                flex-flow: row wrap;
+                gap: 6px;
             }
         }
 
