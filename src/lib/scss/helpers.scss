@@ -1,0 +1,8 @@
+.is-wrapper {
+    box-shadow: var(--box-border-shadow);
+    padding: 16px;
+    border-radius: var(--main-border-radius);
+    background-color: var(--page);
+    position: relative;
+    overflow: hidden;
+}

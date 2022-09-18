@@ -18,6 +18,7 @@
     import menu_src from '$lib/assets/icons/nav/menu.svg';
     import foam_src from '$lib/assets/icons/layout/foam.svg';
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
+    import WInput from '$lib/components/WInput.svelte';
 
     $: pathname = $page.url.pathname;
     $: openMenu = false;
@@ -94,7 +95,11 @@
             </div>
         </div>
 
-        <div class="aside">aside</div>
+        <div class="aside">
+            <div class="wrapper">
+                <WInput />
+            </div>
+        </div>
     </main>
 
     <WFooter />
@@ -190,7 +195,9 @@
 
     main {
         display: flex;
+        flex-flow: row wrap;
         position: relative;
+        justify-content: center;
         margin-top: 96px;
 
         @media (min-width: $tablet) {
@@ -208,7 +215,7 @@
 
         @media (min-width: $tablet) {
             display: block;
-            width: 25%;
+            width: 20%;
             padding-left: 36px;
         }
     }
@@ -228,14 +235,20 @@
     }
 
     .aside {
-        padding-left: 30px;
+        padding: 0 30px 0 20px;
+        height: 100%;
+        width: 20%;
+        max-width: 260px;
+        .wrapper {
+            overflow: hidden;
+        }
     }
 
     .foam {
         position: absolute;
         right: 20px;
         top: -64px;
-        width: 50%;
+
         fill: var(--hover);
 
         @media (min-width: $tablet) {
@@ -254,7 +267,7 @@
         padding: 30px;
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--box-border-shadow);
 
         @media (min-width: $tablet) {
             padding: 28px;

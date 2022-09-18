@@ -28,8 +28,8 @@
 
         <li class="list-item--button">
             <button class="btn btn--primary">
-                <InlineSVG src={add_beer_src} width="20" height="20" />
-                <span>Add beer</span>
+                <InlineSVG src={add_beer_src} width="17" height="18" />
+                <span class="text">Add beer</span>
             </button>
         </li>
     </ul>
@@ -38,13 +38,16 @@
 <style lang="scss">
     nav {
         position: relative;
+        top: 100px;
+        right: 0px;
+        z-index: 5;
     }
 
     ul {
-        position: absolute;
-        right: 0;
-        top: 96px;
-        width: 288px;
+        // position: absolute;
+        // right: 0;
+        // top: 96px;
+        // width: 288px;
     }
 
     .list-item {

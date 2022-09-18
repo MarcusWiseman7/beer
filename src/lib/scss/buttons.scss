@@ -5,6 +5,11 @@
     min-height: 30px;
     padding: 0 42px;
     border-radius: var(--main-btn-border-radius);
+    >text {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
     // color variants
     &--primary {
         background-color: var(--main-color);
