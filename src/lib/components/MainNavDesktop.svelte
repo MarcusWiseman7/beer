@@ -27,7 +27,7 @@
         {/each}
 
         <li class="list-item--button">
-            <button>
+            <button class="btn btn--primary">
                 <InlineSVG src={add_beer_src} width="20" height="20" />
                 <span>Add beer</span>
             </button>
@@ -56,10 +56,11 @@
         font-size: 20px;
         line-height: 28px;
         height: 64px;
-        fill: var(--text);
+        color: var(--text-2);
+        fill: var(--text-2);
 
         &__icon {
-            margin: 0 20px 0 32px;
+            margin: 0 18px 0 24px;
         }
 
         &__title {
@@ -67,20 +68,18 @@
         }
 
         &--button {
-            padding: 40px 40px 0 0;
-
-            button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 16px 48px;
-                width: 100%;
-                border: 4px solid var(--border);
+            padding-right: 40px;
+            margin-top: 40px;
+            .btn {
+                height: 48px;
+                width: 90%;
+                margin: 0 auto;
                 border-radius: 12px;
+                font-weight: 600;
             }
 
             span {
-                margin-left: 12px;
+                margin-left: 18px;
             }
         }
     }
@@ -90,27 +89,26 @@
         color: var(--main-color);
         fill: var(--main-color);
         background-color: var(--page);
-    }
 
-    .active::before {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: -60px;
-        height: 60px;
-        width: 30px;
-        border-radius: 0 0 30px 0;
-        box-shadow: 0 30px 0 0 var(--page);
-    }
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            z-index: 5;
+            right: 0;
+            height: 60px;
+            width: 30px;
+        }
+        &:before {
+            top: -60px;
+            border-radius: 0 0 30px 0;
+            box-shadow: 0 30px 0 0 var(--page);
+        }
 
-    .active::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        bottom: -60px;
-        height: 60px;
-        width: 30px;
-        border-radius: 0 30px 0 0;
-        box-shadow: 0 -30px 0 0 var(--page);
+        &:after {
+            bottom: -60px;
+            border-radius: 0 30px 0 0;
+            box-shadow: 0 -30px 0 0 var(--page);
+        }
     }
 </style>

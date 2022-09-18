@@ -43,16 +43,12 @@
 <style lang="scss">
     @import '../scss/vars.scss';
     .wrapper {
-        display: grid;
-        gap: 8px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
+        flex-flow: row;
+        overflow-x: auto;
 
         @media (min-width: $tablet) {
-            gap: 16px;
-        }
-
-        @media (min-width: $desktop) {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
         }
     }
 

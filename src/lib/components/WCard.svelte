@@ -75,7 +75,8 @@
                     </div>
                 {/if}
 
-                {#if size === 'big' && item.averageRating}
+                <!-- TODO: maybe remove code and make it dry, so same position as on small wCard -->
+                <!-- {#if size === 'big' && item.averageRating}
                     <WPill type="rating">
                         <svelte:fragment slot="image">
                             <InlineSVG src={star_src} />
@@ -83,7 +84,7 @@
                         <svelte:fragment slot="title">{item.averageRating}</svelte:fragment>
                         <svelte:fragment slot="info">3 reviews</svelte:fragment>
                     </WPill>
-                {/if}
+                {/if} -->
 
                 {#if item?.brewery?.location}
                     <WPill type="location">
@@ -96,7 +97,7 @@
             </div>
         </div>
 
-        {#if size !== 'big' && item.averageRating}
+        {#if item.averageRating}
             <div class="rating-pill">
                 <WPill type="rating-fixed">
                     <svelte:fragment slot="image">
@@ -113,9 +114,8 @@
     @import '../scss/vars.scss';
     .card {
         display: flex;
+        flex-shrink: 0;
         flex-direction: column;
-        align-items: center;
-        height: 100%;
         background-color: var(--c-card-bg);
         overflow: hidden;
         position: relative;
@@ -124,9 +124,27 @@
         border-radius: 12px;
 
         &__image {
+            position: relative;
             width: 100%;
             height: 112px;
             min-height: 112px;
+
+            &:before {
+                content: '';
+                position: absolute;
+                background: linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0.7) 0%,
+                    rgba(0, 0, 0, 0.601562) 23.96%,
+                    rgba(0, 0, 0, 0.399668) 59.9%,
+                    rgba(0, 0, 0, 0) 100%
+                );
+                left: 0;
+                right: 0;
+                top: 0;
+                width: 100%;
+                height: 50%;
+            }
 
             img {
                 height: 100%;
@@ -171,13 +189,14 @@
         }
 
         &--big {
+            max-width: 250px;
             .card__image {
                 height: 160px;
                 min-height: 160px;
             }
 
             .card__content__info {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                // grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
     }

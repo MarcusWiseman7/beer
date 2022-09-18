@@ -93,6 +93,8 @@
                 <slot />
             </div>
         </div>
+
+        <div class="aside">aside</div>
     </main>
 
     <WFooter />
@@ -225,6 +227,10 @@
         }
     }
 
+    .aside {
+        padding-left: 30px;
+    }
+
     .foam {
         position: absolute;
         right: 20px;
@@ -245,9 +251,10 @@
         position: relative;
         min-height: calc(100vh - 19rem);
         background-color: var(--page);
-        padding: 8px;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
+        padding: 30px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
         @media (min-width: $tablet) {
             padding: 28px;

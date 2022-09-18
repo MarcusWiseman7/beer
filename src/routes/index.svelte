@@ -13,23 +13,26 @@
 </script>
 
 <h1 class="popular">New and popular</h1>
-<WWrapper items={[{}, {}, {}, {}]} size="big" />
+<WWrapper items={topBeers} size="big" />
 
-<h1 class="top">Top rated beer</h1>
+<div class="row">
+    <h1 class="top">Top rated beer</h1>
+    <a href="#" class="link">Show all ></a>
+</div>
 <WHorizontalScroller items={topBeers} />
 
 <style lang="scss">
-    h1 {
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 32px;
-    }
-
     .popular {
         margin-bottom: 20px;
     }
 
     .top {
         margin: 20px 0;
+    }
+    .row {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-items: center;
     }
 </style>

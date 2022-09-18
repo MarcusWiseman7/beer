@@ -1,0 +1,23 @@
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 0 42px;
+    border-radius: var(--main-btn-border-radius);
+    // color variants
+    &--primary {
+        background-color: var(--main-color);
+        color: var(--main-light);
+    }
+    // 
+}
+
+.link {
+    font-size: 14px;
+    color: var(--text);
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

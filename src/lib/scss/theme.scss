@@ -1,16 +1,17 @@
 // THEME - LIGHT
 @mixin lightTheme {
-    --body: #e5e5e5;
+    --body: #EDEDED;
     --page: #ffffff;
     --hover: #f2f4f8;
     --border: #dddddd;
-    --text: #3c3737;
-    --text-2: #999faa;
+    --text: #000;
+    --text-2: #3C3737;
     // PILL
     --c-pill-bg: #fff;
     --c-pill-border: #F2F2F2;
     // CARD
-    --c-card-bg: (var(--main-light)) --c-card-border: #EBEBF0;
+    --c-card-bg: var(--main-light);
+    --c-card-border: #EBEBF0;
 }
 
 // THEME - DARK
@@ -34,12 +35,13 @@
     --error-color: rgb(220 38 38);
     --main-light: #fff;
     --main-dark: #000000;
-    @media (prefers-color-scheme: light) {
-        @include lightTheme;
-    }
-    @media (prefers-color-scheme: dark) {
-        @include darkTheme;
-    }
+    --main-btn-border-radius: 8px;
+    @include lightTheme;
+    // @media (prefers-color-scheme: light) {
+    // }
+    // @media (prefers-color-scheme: dark) {
+    //     @include darkTheme;
+    // }
 }
 
 html,
