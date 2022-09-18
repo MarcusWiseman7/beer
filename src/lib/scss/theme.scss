@@ -35,13 +35,12 @@
     --error-color: rgb(220 38 38);
     --main-light: #fff;
     --main-dark: #000000;
-    --main-btn-border-radius: 8px;
-    @include lightTheme;
-    // @media (prefers-color-scheme: light) {
-    // }
-    // @media (prefers-color-scheme: dark) {
-    //     @include darkTheme;
-    // }
+    @media (prefers-color-scheme: light) {
+        @include lightTheme;
+    }
+    @media (prefers-color-scheme: dark) {
+        @include darkTheme;
+    }
 }
 
 html,

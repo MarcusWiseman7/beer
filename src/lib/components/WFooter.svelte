@@ -1,5 +1,5 @@
 <footer>
-    <span>Marcus Wiseman &copy; {new Date().getFullYear()}</span>
+    <span>Marcus Wiseman | Patrik Kopčo &copy; {new Date().getFullYear()}</span>
 </footer>
 
 <style lang="scss">
