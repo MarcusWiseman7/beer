@@ -60,7 +60,7 @@
         line-height: 28px;
         height: 64px;
         color: var(--text-2);
-        fill: var(--text-2);
+        stroke: var(--text-2);
 
         &__icon {
             margin: 0 18px 0 24px;
@@ -89,9 +89,9 @@
 
     .active {
         border-radius: 30px 0px 0px 30px;
-        color: var(--main-color);
-        fill: var(--main-color);
         background-color: var(--page);
+        color: var(--main-color);
+        stroke: var(--main-color);
 
         &:before,
         &:after {
