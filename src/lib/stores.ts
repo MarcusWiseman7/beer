@@ -3,6 +3,14 @@ import sanity from './sanity';
 import type { IUser, IBeer, IMessage, IPosts, ITranslations } from './ts-interfaces';
 
 /**
+ * ICONS
+ */
+import Home__SvelteComponent_ from './assets/icons/nav/home.svelte';
+import Discover__SvelteComponent_ from './assets/icons/nav/discover.svelte';
+import Profile__SvelteComponent_
+    from './assets/icons/nav/profile.svelte';
+
+/**
  * WRITABLE EXPORTS
  */
 export let appMessages = writable<IMessage[]>([]);
@@ -47,15 +55,17 @@ const getTranslations = async (): Promise<ITranslations> => {
  * READABLE EXPORTS
  */
 export const mainNav = readable([
-    { name: 'home', href: '/' },
-    { name: 'discover', href: '/discover' },
-    { name: 'profile', href: '/profile' },
+    { name: 'home', icon: Home__SvelteComponent_, href: '/' },
+    { name: 'discover', icon: Discover__SvelteComponent_, href: '/discover' },
+    { name: 'profile', icon: Profile__SvelteComponent_, href: '/profile' },
 ]);
 
-export const blogPosts = readable<IPosts[]|null>(null, set => {
+export const blogPosts = readable<IPosts[] | null>(null, set => {
+    return;
     getBlogPosts().then(set).catch(err => console.error(err));
 });
 
 export const i18n = readable<ITranslations>({}, set => {
+    return;
     getTranslations().then(set).catch(err => console.error(err));
 });

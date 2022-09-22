@@ -51,7 +51,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 100px;
+            // max-width: 100px;
             font-weight: 600;
             margin-left: 8px;
         }
@@ -65,7 +65,7 @@
 
         &--rating {
             .pill__title {
-                max-width: 100px;
+                // max-width: 100px;
                 margin: 0 16px 0 2px;
                 font-weight: 600;
             }
@@ -87,7 +87,7 @@
         }
 
         &--location {
-            max-width: 200px;
+            // max-width: 200px;
             overflow: hidden;
             white-space: nowrap;
             .pill__title {

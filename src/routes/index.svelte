@@ -5,10 +5,10 @@
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import WWrapper from '$lib/components/WWrapper.svelte';
     import { onMount } from 'svelte';
-    import { myProfile } from '$lib/stores';
+    // import { myProfile } from '$lib/stores';
 
     onMount(() => {
-        console.log('myProfile :>> ', $myProfile);
+        // console.log('myProfile :>> ', $myProfile);
     });
 </script>
 

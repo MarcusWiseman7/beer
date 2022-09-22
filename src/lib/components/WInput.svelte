@@ -1,5 +1,6 @@
 <script lang="ts">
     import InlineSVG from 'svelte-inline-svg';
+
     // icons
     import search from '$lib/assets/icons/components/search.svg';
 
@@ -14,7 +15,7 @@
         <InlineSVG src={search} />
         <span>Hunt for some good beer!</span>
     </div>
-    <input type="text" autofocus name="" id="" on:focus={onFocus} on:blur={onBlur} />
+    <input type="text" name="" id="" on:focus={onFocus} on:blur={onBlur} />
 </div>
 
 <style lang="scss">

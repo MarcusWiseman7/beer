@@ -20,7 +20,7 @@
                 class={link.href == activeRoute ? 'list-item active' : 'list-item'}
             >
                 <div class="list-item__icon">
-                    <InlineSVG src={'src/lib/assets/icons/nav/' + link.name + '.svg'} height="22" />
+                    <svelte:component this={link.icon} />
                 </div>
                 <span class="list-item__title">{link.name}</span>
             </li>

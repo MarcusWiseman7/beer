@@ -73,7 +73,7 @@
             </div>
             <img class="header__logo--mobile" src={menu_src} alt="menu" height="24" width="24" />
         </div>
-        <h1>Wounded Soldier</h1>
+        <h1>Beer</h1>
     </header>
 
     <main>
