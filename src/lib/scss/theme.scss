@@ -3,20 +3,17 @@
     --body: #EDEDED;
     --page: #ffffff;
     --hover: #f2f4f8;
-    --border: #dddddd;
+    --border: #DBDEE7;
     --text: #000;
     --text-2: #3C3737;
     --text-3: #999faa;
     --box-border-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
-
     // PILL
     --c-pill-bg: #fff;
     --c-pill-border: #F2F2F2;
-
     // CARD
     --c-card-bg: var(--main-light);
     --c-card-border: #EBEBF0;
-
     // WINPUT
     --c-text: #A0A0A0;
 }
@@ -31,15 +28,12 @@
     --text-2: #999faa;
     --text-3: #999faa;
     --box-border-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
-
     // PILL
     --c-pill-bg: #302C2C;
     --c-pill-border: #484C51;
-
     // CARD
     --c-card-bg: #3C3737;
     --c-card-border: #484C51;
-
     // WINPUT
     --c-text: #A0A0A0;
 }
@@ -50,7 +44,7 @@
     --main-light: #fff;
     --main-dark: #000000;
     --main-border-radius: 8px;
-    
+    --main-transition: .2s linear;
     @include lightTheme;
     // @media (prefers-color-scheme: light) {
     // }
