@@ -26,6 +26,22 @@
     // import instagram_src from '$lib/assets/icons/social/instagram.svg';
     import twitter_src from '$lib/assets/icons/social/twitter.svg';
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
+    import WTag from '$lib/components/WTag.svelte';
+
+    const staticTags = [
+        {
+            title: '🔥 Discover with us',
+        },
+        {
+            title: 'Blog',
+        },
+        {
+            title: '🍺 Pilsner Urquell',
+        },
+        {
+            title: '🇨🇿 Zichov, Czech Republic',
+        },
+    ];
 
     $: pathname = $page.url.pathname;
     $: openMenu = false;
@@ -129,6 +145,14 @@
         <div class="aside">
             <div class="wrapper">
                 <WInput />
+            </div>
+
+            <div class="tags">
+                {#each staticTags as item}
+                    <WTag>
+                        <svelte:fragment slot="title">{item.title}</svelte:fragment>
+                    </WTag>
+                {/each}
             </div>
 
             <div class="socials">
@@ -235,13 +259,25 @@
         position: relative;
         justify-content: center;
         margin-top: 96px;
+        max-width: 2048px;
+        margin: 0 auto;
 
-        @media (min-width: $tablet) {
-            margin-top: 32px;
+        // @media (min-width: $tablet) {
+        //     margin-top: 32px;
+        // }
+
+        // @media (min-width: $desktop) {
+        //     margin-top: 96px;
+        // }
+        @media (min-width: 960px) {
+            max-width: 992px;
         }
-
-        @media (min-width: $desktop) {
-            margin-top: 96px;
+        @media (min-width: 1200px) {
+            max-width: 100%;
+            // max-width: 1140px;
+        }
+        @media (min-width: 1600px) {
+            max-width: 1500px;
         }
     }
 
@@ -255,6 +291,9 @@
             justify-content: space-between;
             width: 20%;
             padding-left: 36px;
+            display: block;
+            min-width: 260px;
+            padding-left: 6px;
         }
     }
 
@@ -262,21 +301,22 @@
         position: relative;
         width: 100%;
         padding: 0 14px;
-
         @media (min-width: $tablet) {
-            width: 60%;
+            width: 55%;
             padding: 0;
-        }
-        @media (min-width: $desktop) {
-            width: 50%;
+            width: calc(100% - 240px - 320px);
         }
     }
 
     .aside {
         padding: 0 30px 0 20px;
         height: 100%;
-        width: 20%;
-        max-width: 260px;
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        flex-flow: column;
+        gap: 16px;
+
         .wrapper {
             overflow: hidden;
         }
@@ -286,7 +326,6 @@
             background: #ffffff;
             box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
-            margin: 16px 0;
 
             h2 {
                 font-weight: 700;
@@ -295,13 +334,17 @@
                 margin-bottom: 16px;
             }
         }
+        .tags {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 6px;
+        }
     }
 
     .foam {
         position: absolute;
         right: 20px;
         top: -64px;
-
         fill: var(--hover);
 
         @media (min-width: $tablet) {
@@ -309,7 +352,8 @@
             top: -112px;
         }
         @media (min-width: $desktop) {
-            top: -160px;
+            top: -150px;
+            z-index: 1;
         }
     }
 
