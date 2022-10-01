@@ -64,9 +64,9 @@
     };
 
     // SEO HEAD ITEMS
-    $: title =
-        $i18n && $i18n['title-' + pathname] ? `WoundedSoldier | ${$i18n['title-' + pathname]}` : 'WoundedSoldier';
+    $: title = $i18n && $i18n['title-' + pathname] ? `Beer | ${$i18n['title-' + pathname]}` : 'Beer';
     $: description = ($i18n && $i18n['description-' + pathname]) || 'Social beer and kombucha';
+    $: hashtags = 'beer,kombucha';
 
     onMount(initApp);
 </script>
@@ -75,9 +75,14 @@
     <title>{title}</title>
     <meta property="og:title" content={title} />
     <meta property="og:url" content={'https://wounded-soldier.com' + pathname} />
+
     {#if description}
         <meta name="description" content={description} />
         <meta property="og:description" content={description} />
+    {/if}
+    {#if hashtags}
+        <meta name="hashtags" content={hashtags} />
+        <meta property="og:hashtags" content={hashtags} />
     {/if}
 </svelte:head>
 
