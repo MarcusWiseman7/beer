@@ -1,6 +1,6 @@
 <script lang="ts">
     import networks from '../social-networks';
-    import { createEventDispatcher, onMount } from 'svelte';
+    import { createEventDispatcher } from 'svelte';
     import { page } from '$app/stores';
     import InlineSVG from 'svelte-inline-svg';
 
@@ -20,7 +20,6 @@
     let quote: string = '';
     let hashtags: string = '';
     let media: string = '';
-
     let encodedHashtags = '';
     let rawLink = '';
     let shareLink = '';
@@ -33,6 +32,11 @@
     let popupLeft = 0;
     let popupWindow: any = undefined;
     let popupInterval: any = null;
+
+    // watch url to get new sharelink on each route
+    $: if (url && typeof window !== 'undefined') {
+        build();
+    }
 
     // METHODS
     const getEncodedHashtags = (): string => {
@@ -150,12 +154,12 @@
         emit('open');
     };
 
+    // emit event so we can track if needed
     const emit = (name: string): void => {
         dispatch(name, { key, url });
-        // $root.$emit('share_network_' + name, key, url);
-        // $emit(name, key, url);
     };
 
+    // rebuild the share link
     const build = (): void => {
         // set share values
         title = document.querySelector('[property="og:title"]')?.content || '';
@@ -175,8 +179,6 @@
             shareLink = getShareLink();
         }, 10);
     };
-
-    onMount(build);
 </script>
 
 <svelte:element

@@ -5,7 +5,6 @@
 
     // components
     import InlineSVG from 'svelte-inline-svg';
-    import WSocials from './WSocials.svelte';
 
     // icons
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
@@ -34,10 +33,6 @@
                 <InlineSVG src={add_beer_src} width="17" height="18" />
                 <span class="text">Add beer</span>
             </button>
-        </li>
-
-        <li class="list-item--button">
-            <WSocials />
         </li>
     </ul>
 </nav>

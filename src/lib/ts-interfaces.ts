@@ -28,6 +28,11 @@ export interface IMessage {
     id: number;
 };
 
+export interface ISocialNetwork {
+    id: string;
+    icon: string;
+};
+
 export interface ICard { };
 export interface IBeer {
     _id: Types.ObjectId;

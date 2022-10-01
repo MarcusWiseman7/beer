@@ -13,15 +13,36 @@
     import WMessage from '$lib/components/WMessage.svelte';
     import InlineSVG from 'svelte-inline-svg';
     import WLoading from '$lib/components/WLoading.svelte';
+    import WSocials from '$lib/components/WSocials.svelte';
 
     // icons
     import menu_src from '$lib/assets/icons/nav/menu.svg';
     import foam_src from '$lib/assets/icons/layout/foam.svg';
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
     import WInput from '$lib/components/WInput.svelte';
+    // import facebook_src from '$lib/assets/icons/social/facebook-dark.svg';
+    // import instagram_src from '$lib/assets/icons/social/instagram-dark.svg';
+    import facebook_src from '$lib/assets/icons/social/facebook.svg';
+    // import instagram_src from '$lib/assets/icons/social/instagram.svg';
+    import twitter_src from '$lib/assets/icons/social/twitter.svg';
+    import telegram_src from '$lib/assets/icons/social/telegram.svg';
 
     $: pathname = $page.url.pathname;
     $: openMenu = false;
+
+    // const socialNetworks = [
+    //     { id: 'facebook', icon: facebook_src },
+    //     { id: 'instagram', icon: instagram_src },
+    //     // { id: 'twitter', icon: twitter_src },
+    //     // { id: 'telegram', icon: telegram_src },
+    // ];
+
+    const shareNetworks = [
+        { id: 'facebook', icon: facebook_src },
+        // { id: 'instagram', icon: instagram_src },
+        { id: 'twitter', icon: twitter_src },
+        { id: 'telegram', icon: telegram_src },
+    ];
 
     const initApp = (): void => {
         getLocale();
@@ -85,6 +106,11 @@
         <!-- DESKTOP MENU -->
         <div class="menu--desktop">
             <MainNavDesktop />
+
+            <!-- Add later, do we really want follow? Or share? -->
+            <!-- <div>
+                <WSocials {socialNetworks} />
+            </div> -->
         </div>
 
         <!-- MAIN CONTENT -->
@@ -103,6 +129,11 @@
         <div class="aside">
             <div class="wrapper">
                 <WInput />
+            </div>
+
+            <div class="socials">
+                <h2>Share on socials</h2>
+                <WSocials socialNetworks={shareNetworks} />
             </div>
         </div>
     </main>
@@ -219,7 +250,9 @@
         position: relative;
 
         @media (min-width: $tablet) {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             width: 20%;
             padding-left: 36px;
         }
@@ -246,6 +279,21 @@
         max-width: 260px;
         .wrapper {
             overflow: hidden;
+        }
+
+        .socials {
+            padding: 14px 12px;
+            background: #ffffff;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin: 16px 0;
+
+            h2 {
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 24px;
+                margin-bottom: 16px;
+            }
         }
     }
 
