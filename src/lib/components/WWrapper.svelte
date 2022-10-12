@@ -19,7 +19,7 @@
     };
 </script>
 
-{#if items.length}
+{#if items?.length}
     <div class="wrapper">
         {#each items.slice(0, maxResults) as item}
             <WCard {item} {size} />
@@ -34,7 +34,7 @@
     </div>
 {/if}
 
-{#if which != 'topBeers' && items.length > maxResults}
+{#if which != 'topBeers' && items?.length > maxResults}
     <div class="more">
         <WButton type="quick" on:click={increaseMax}>Show more</WButton>
     </div>

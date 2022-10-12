@@ -20,16 +20,3 @@ export const getPointFromEvent = ($event): { x: number, y: number } => {
     }
     return point;
 };
-
-// mongoose helpers
-export const userSelect = '_id email altEmails displayName name avatarPublicId reviews darkMode';
-export const reviewSelect = '-__v';
-export const beerSelect =
-    '_id beerName brewery style degrees abv bi logoPublicId description averageRating totalNumberOfRatings';
-export const tempBeerSelect = beerSelect + ' tempBeer tempBrewery';
-export const brewerySelect = '-__v -sumOfAllBeerRatings -dateCreated';
-
-export const averageRound = (a: number, b: number, c: number): number => {
-    const x = Math.pow(10, c || 0);
-    return Math.round((a / b) * x) / x;
-};

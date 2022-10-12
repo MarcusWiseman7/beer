@@ -12,7 +12,6 @@ const UserSchema = new Schema<IUser>(
         avatarURL: { type: String, trim: true },
         avatarPublicId: { type: String, trim: true },
         reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
-        darkMode: { type: Boolean, default: false },
         tempEmail: { type: String, trim: true },
         tempEmailToken: { type: String },
         gdprApproval: { type: Boolean, default: false },

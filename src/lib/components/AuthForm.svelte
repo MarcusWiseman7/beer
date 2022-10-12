@@ -2,34 +2,40 @@
     import { createEventDispatcher } from 'svelte';
     import WButton from '$lib/components/WButton.svelte';
 
-    $: email = '';
-    $: password = '';
+    // $: email = '';
+    // $: password = '';
 
     const dispatch = createEventDispatcher();
 
-    const submit = (): void => {
-        if (!email) {
-            dispatch('error', { msg: 'Please enter a valid email...' });
-            return;
-        }
-        if (!password) {
-            dispatch('error', { msg: 'Please enter a password...' });
-            return;
-        }
-        dispatch('submit', { email, password });
+    // const submit = (): void => {
+    //     // very basic email test "something + @ + something + . + something"
+    //     if (!email || !/\S+@\S+\.\S+/gi.test(email)) {
+    //         dispatch('error', { msg: 'Please enter a valid email...' });
+    //         return;
+    //     }
+    //     if (!password || password.length < 6) {
+    //         dispatch('error', { msg: 'Please enter a password with min 6 chars' });
+    //         return;
+    //     }
+
+    //     dispatch('submit', { email, password });
+    // };
+
+    const handleSubmit = (event: SubmitEvent): void => {
+        dispatch('submit', event);
     };
 </script>
 
-<form on:submit|preventDefault={submit}>
+<form method="POST" on:submit|preventDefault={handleSubmit}>
     <div class="inputs">
         <div class="input">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" bind:value={email} />
+            <input type="email" name="email" id="email" />
         </div>
 
         <div class="input">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" bind:value={password} />
+            <input type="password" name="password" id="password" />
         </div>
     </div>
 

@@ -3,8 +3,8 @@
     import type { IBeer, IBrewery } from '$lib/ts-interfaces';
 
     // props
-    export let brewery: IBrewery;
-    export let beers: [IBeer];
+    /** @type {import('./$types').PageData} */
+    export let data: { brewery: IBrewery; beers: [IBeer] };
 
     // components
     import InlineSVG from 'svelte-inline-svg';
@@ -20,6 +20,8 @@
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
 
     // variables
+    $: brewery = data.brewery;
+    $: beers = data.beers;
 
     // methods
     const descriptionClick = ($event: Event): void => {
@@ -35,55 +37,59 @@
 
 <WBack />
 
-<div class="brewery">
-    <div class="brewery__images" />
+{#if brewery}
+    <div class="brewery">
+        <div class="brewery__images" />
 
-    <div class="brewery__info">
-        <div>
-            <h1 class="brewery__name">{brewery.name}</h1>
-            <p class="brewery__description line-clamp" on:click={descriptionClick}>{brewery.description}</p>
-        </div>
-        <div>
-            {#if brewery.location}
-                <div class="pill-wrapper">
-                    <WPill type="location">
-                        <svelte:fragment slot="image">
-                            <InlineSVG src={cz_src} width="28" />
-                        </svelte:fragment>
-                        <svelte:fragment slot="title">{brewery.location}</svelte:fragment>
-                    </WPill>
+        <div class="brewery__info">
+            <div>
+                <h1 class="brewery__name">{brewery.name}</h1>
+                <p class="brewery__description line-clamp" on:click={descriptionClick}>{brewery.description}</p>
+            </div>
+            <div>
+                {#if brewery.location}
+                    <div class="pill-wrapper">
+                        <WPill type="location">
+                            <svelte:fragment slot="image">
+                                <InlineSVG src={cz_src} width="28" />
+                            </svelte:fragment>
+                            <svelte:fragment slot="title">{brewery.location}</svelte:fragment>
+                        </WPill>
+                    </div>
+                {/if}
+
+                <div class="bottom-pills">
+                    {#if beers?.length}
+                        <div class="pill-wrapper">
+                            <WPill type="">
+                                <svelte:fragment slot="image">
+                                    <div />
+                                </svelte:fragment>
+                                <svelte:fragment slot="title">{beers.length} beers</svelte:fragment>
+                            </WPill>
+                        </div>
+                    {/if}
+                    {#if brewery.averageBeerRating}
+                        <div class="pill-wrapper">
+                            <WPill type="rating">
+                                <svelte:fragment slot="image">
+                                    <InlineSVG src={star_src} />
+                                </svelte:fragment>
+                                <svelte:fragment slot="title">{brewery.averageBeerRating}</svelte:fragment>
+                                <svelte:fragment slot="info"
+                                    >({brewery.totalNumberOfBeerRatings} reviews)</svelte:fragment
+                                >
+                            </WPill>
+                        </div>
+                    {/if}
                 </div>
-            {/if}
-
-            <div class="bottom-pills">
-                {#if beers?.length}
-                    <div class="pill-wrapper">
-                        <WPill type="">
-                            <svelte:fragment slot="image">
-                                <div />
-                            </svelte:fragment>
-                            <svelte:fragment slot="title">{beers.length} beers</svelte:fragment>
-                        </WPill>
-                    </div>
-                {/if}
-                {#if brewery.averageBeerRating}
-                    <div class="pill-wrapper">
-                        <WPill type="rating">
-                            <svelte:fragment slot="image">
-                                <InlineSVG src={star_src} />
-                            </svelte:fragment>
-                            <svelte:fragment slot="title">{brewery.averageBeerRating}</svelte:fragment>
-                            <svelte:fragment slot="info">({brewery.totalNumberOfBeerRatings} reviews)</svelte:fragment>
-                        </WPill>
-                    </div>
-                {/if}
             </div>
         </div>
     </div>
-</div>
 
-<h2 class="beer-list-title">Beer list</h2>
-<WHorizontalScroller items={beers} />
+    <h2 class="beer-list-title">Beer list</h2>
+    <WHorizontalScroller items={beers} />
+{/if}
 
 <style lang="scss">
     .brewery {

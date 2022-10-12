@@ -1,25 +1,26 @@
 <script lang="ts">
-    export let topBeers: IBeer[];
+    /** @type {import('./$types').PageData} */
+    export let data: { topBeers: IBeer[] };
 
     import type { IBeer } from '$lib/ts-interfaces';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import WWrapper from '$lib/components/WWrapper.svelte';
     import { onMount } from 'svelte';
-    // import { myProfile } from '$lib/stores';
+    import { myProfile } from '$lib/stores';
 
     onMount(() => {
-        // console.log('myProfile :>> ', $myProfile);
+        console.log('myProfile :>> ', $myProfile);
     });
 </script>
 
 <h1 class="popular">New and popular</h1>
-<WWrapper items={topBeers} size="big" />
+<WWrapper items={data.topBeers} size="big" />
 
 <div class="row">
     <h1 class="top">Top rated beer</h1>
     <a href="#" class="link">Show all ></a>
 </div>
-<WHorizontalScroller items={topBeers} />
+<WHorizontalScroller items={data.topBeers} />
 
 <style lang="scss">
     .popular {

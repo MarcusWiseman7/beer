@@ -3,7 +3,10 @@
     import type { IBeer } from '$lib/ts-interfaces';
 
     // props
-    export let beer: IBeer;
+    /** @type {import('./$types').PageData} */
+    export let data: { beer: IBeer };
+
+    $: beer = data.beer;
 
     // components
     import WBack from '$lib/components/WBack.svelte';

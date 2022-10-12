@@ -7,7 +7,7 @@
     let fromURL: string | null = null;
 
     afterNavigate(({ from }) => {
-        fromURL = from?.pathname || null;
+        fromURL = from?.url?.pathname || null;
     });
 
     const goBack = () => {

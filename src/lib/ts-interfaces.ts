@@ -1,4 +1,4 @@
-import type { Types } from 'mongoose';
+import type { MongooseOptions, Types } from 'mongoose';
 
 export interface IPosts {
     title: string;
@@ -103,7 +103,6 @@ export interface IUser {
     avatarURL?: string;
     avatarPublicId?: string;
     reviews?: Types.Array<Types.ObjectId>;
-    darkMode?: boolean;
     tempEmail?: string;
     tempEmailToken?: string;
     gdprApproval?: boolean;
