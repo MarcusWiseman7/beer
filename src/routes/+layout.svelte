@@ -5,6 +5,7 @@
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import { cloudinaryPicURL } from '$lib/helpers';
 
     // components
     import WFooter from '$lib/components/WFooter.svelte';
@@ -14,19 +15,20 @@
     import InlineSVG from 'svelte-inline-svg';
     import WLoading from '$lib/components/WLoading.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
+    import WTag from '$lib/components/WTag.svelte';
+    import WPub from '$lib/components/WPub.svelte';
+    import WInput from '$lib/components/WInput.svelte';
 
     // icons
     import menu_src from '$lib/assets/icons/nav/menu.svg';
     import foam_src from '$lib/assets/icons/layout/foam.svg';
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
-    import WInput from '$lib/components/WInput.svelte';
     // import facebook_src from '$lib/assets/icons/social/facebook-dark.svg';
     // import instagram_src from '$lib/assets/icons/social/instagram-dark.svg';
     import facebook_src from '$lib/assets/icons/social/facebook.svg';
     // import instagram_src from '$lib/assets/icons/social/instagram.svg';
     import twitter_src from '$lib/assets/icons/social/twitter.svg';
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
-    import WTag from '$lib/components/WTag.svelte';
 
     const staticTags = [
         {
@@ -40,6 +42,38 @@
         },
         {
             title: '🇨🇿 Zichov, Czech Republic',
+        },
+        {
+            title: '#Beers ',
+        },
+        {
+            title: '#IPA',
+        },
+    ];
+    const pubs = [
+        {
+            title: 'NUBEERBAR',
+            image: '/stock/b6_k7y5gk',
+        },
+        {
+            title: 'Bad Flash Bar Krymská',
+            image: '/stock/b5_tpwqfg',
+        },
+        {
+            title: 'Pivovarský Klub Benedict long name',
+            image: '/stock/b4_xsn93f',
+        },
+        {
+            title: 'U Slovanské Lípy',
+            image: '/stock/b3_ytdxaa',
+        },
+        {
+            title: 'Medovinárna',
+            image: '/stock/b2_koxyps',
+        },
+        {
+            title: 'Pivotéka Zlý Časy',
+            image: '/stock/b1_y41vkg',
         },
     ];
 
@@ -155,9 +189,28 @@
                 {/each}
             </div>
 
-            <div class="socials">
-                <h2>Share on socials</h2>
-                <WSocials socialNetworks={shareNetworks} />
+            <div class="wrapper">
+                <h2 class="wrapper__title">Local places 🇨🇿</h2>
+                <div class="pubs">
+                    <!-- TODO: show emoji of country and pubs by IP -->
+                    {#each pubs as item}
+                        <WPub>
+                            <svelte:fragment slot="image">
+                                {#if item.image}
+                                    <img src={cloudinaryPicURL(item.image)} class="img-object-fit-cover" alt="logo" />
+                                {/if}
+                            </svelte:fragment>
+                            <svelte:fragment slot="title">{item.title}</svelte:fragment>
+                        </WPub>
+                    {/each}
+                </div>
+            </div>
+
+            <div class="wrapper">
+                <div class="socials">
+                    <h2>Share on socials</h2>
+                    <WSocials socialNetworks={shareNetworks} />
+                </div>
             </div>
         </div>
     </main>
@@ -304,7 +357,7 @@
         @media (min-width: $tablet) {
             width: 55%;
             padding: 0;
-            width: calc(100% - 240px - 320px);
+            width: calc(100% - 240px - 360px);
         }
     }
 
@@ -315,10 +368,29 @@
         max-width: 300px;
         display: flex;
         flex-flow: column;
-        gap: 16px;
 
         .wrapper {
             overflow: hidden;
+            &:not(&:first-child) {
+                margin-top: 50px;
+            }
+
+            &__title {
+                margin-bottom: 12px;
+            }
+        }
+
+        .tags {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .pubs {
+            display: flex;
+            flex-flow: column;
+            gap: 8px;
         }
 
         .socials {
@@ -333,11 +405,6 @@
                 line-height: 24px;
                 margin-bottom: 16px;
             }
-        }
-        .tags {
-            display: flex;
-            flex-flow: row wrap;
-            gap: 6px;
         }
     }
 

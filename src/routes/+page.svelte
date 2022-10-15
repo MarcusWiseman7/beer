@@ -13,11 +13,11 @@
     });
 </script>
 
-<h1 class="popular">New and popular</h1>
+<h2 class="popular">New and popular</h2>
 <WWrapper items={data.topBeers} size="big" />
 
 <div class="row">
-    <h1 class="top">Top rated beer</h1>
+    <h2 class="top">Top rated beer</h2>
     <a href="#" class="link">Show all ></a>
 </div>
 <WHorizontalScroller items={data.topBeers} />
