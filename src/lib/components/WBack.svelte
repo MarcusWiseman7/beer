@@ -25,8 +25,9 @@
     .back {
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        padding: 3px 0;
         cursor: pointer;
+        height: 42px;
 
         span {
             font-weight: 600;

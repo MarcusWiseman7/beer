@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { cloudinaryPicURL } from '$lib/helpers';
+
     // types
     import type { IBeer, IBrewery } from '$lib/ts-interfaces';
 
@@ -10,10 +12,17 @@
     import InlineSVG from 'svelte-inline-svg';
     import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
+    import WSocials from '$lib/components/WSocials.svelte';
 
     // icons
     import cz_src from '$lib/assets/icons/flags/czech.svg';
     import star_src from '$lib/assets/icons/general/star.svg';
+    // import facebook_src from '$lib/assets/icons/social/facebook-dark.svg';
+    // import instagram_src from '$lib/assets/icons/social/instagram-dark.svg';
+    import facebook_src from '$lib/assets/icons/social/facebook.svg';
+    import instagram_src from '$lib/assets/icons/social/instagram.svg';
+    import twitter_src from '$lib/assets/icons/social/twitter.svg';
+    import telegram_src from '$lib/assets/icons/social/telegram.svg';
 
     // directives
     import { onMount } from 'svelte';
@@ -22,6 +31,13 @@
     // variables
     $: brewery = data.brewery;
     $: beers = data.beers;
+
+    const socialNetworks = [
+        { id: 'facebook', icon: facebook_src },
+        { id: 'instagram', icon: instagram_src },
+        // { id: 'twitter', icon: twitter_src },
+        // { id: 'telegram', icon: telegram_src },
+    ];
 
     // methods
     const descriptionClick = ($event: Event): void => {
@@ -35,11 +51,21 @@
     });
 </script>
 
-<WBack />
+<div class="top">
+    <WBack />
+    <WSocials {socialNetworks} />
+</div>
 
 {#if brewery}
     <div class="brewery">
-        <div class="brewery__images" />
+        <div class="brewery__images">
+            <div class="main-image">
+                <img src={cloudinaryPicURL('/stock/b6_k7y5gk')} class="" alt="logo" />
+                <div class="logo">
+                    <img src={brewery.logo} class="" alt="logo" />
+                </div>
+            </div>
+        </div>
 
         <div class="brewery__info">
             <div>
@@ -48,7 +74,7 @@
             </div>
             <div>
                 {#if brewery.location}
-                    <div class="pill-wrapper">
+                    <div class="location">
                         <WPill type="location">
                             <svelte:fragment slot="image">
                                 <InlineSVG src={cz_src} width="28" />
@@ -92,31 +118,79 @@
 {/if}
 
 <style lang="scss">
+    .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
     .brewery {
         display: flex;
         gap: 18px;
 
         &__images {
+            position: relative;
             // placeholder space...
-            height: 400px;
-            min-width: 30%;
+
+            min-width: 35%;
+
+            .main-image {
+                height: 170px;
+                position: relative;
+                border-radius: 3px;
+                overflow: hidden;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    background: linear-gradient(
+                        180deg,
+                        rgba(0, 0, 0, 0.7) 0%,
+                        rgba(0, 0, 0, 0.601562) 23.96%,
+                        rgba(0, 0, 0, 0.399668) 59.9%,
+                        rgba(0, 0, 0, 0) 100%
+                    );
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 80%;
+                    // transform: rotate(-180deg);
+                    z-index: 1;
+                }
+                img {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    object-fit: cover;
+                }
+            }
+            .logo {
+                position: absolute;
+                z-index: 5;
+                left: 10px;
+                top: 10px;
+                padding: 2px;
+                background-color: var(--page);
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
         }
 
         &__info {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
         &__name {
             font-weight: 600;
             font-size: 26px;
             line-height: 26px;
-            margin-bottom: 16px;
+            margin-bottom: 15px;
         }
 
         &__description {
-            font-weight: 500;
+            font-weight: 400;
             font-size: 16px;
             line-height: 25px;
             color: var(--text-3);
@@ -126,10 +200,15 @@
         }
     }
 
-    .bottom-pills {
-        margin-top: 12px;
+    .location {
+        margin-top: 24px;
         display: flex;
-        gap: 18px;
+    }
+
+    .bottom-pills {
+        margin-top: 6px;
+        display: flex;
+        gap: 6px;
     }
 
     .pill-wrapper {
@@ -141,7 +220,7 @@
     }
 
     .beer-list-title {
-        margin: 30px 0 22px 0;
+        margin: 30px 0 18px 0;
         font-weight: 600;
         font-size: 21px;
         line-height: 26px;
