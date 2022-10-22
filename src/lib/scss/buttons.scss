@@ -1,11 +1,26 @@
+a {
+    color: var(--link);
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+button {
+    outline: none;
+}
+
 .btn {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 30px;
     padding: 0 42px;
-    border-radius: var(--main-btn-border-radius);
-    >text {
+    border-radius: var(--main-border-radius);
+    font-size: 14px;
+    &--default {
+        background-color: var(--hover);
+    }
+    &--text {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;

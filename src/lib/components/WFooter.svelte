@@ -6,7 +6,7 @@
     footer {
         width: 100%;
         text-align: center;
-        padding: 16px 0;
+        margin-top: 90px;
 
         span {
             font-size: 14px;

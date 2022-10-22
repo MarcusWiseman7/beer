@@ -16,6 +16,7 @@
     --tw-content: '';
 }
 
+
 /*
 1. Use a consistent sensible line-height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
@@ -27,17 +28,10 @@ html {
     -webkit-text-size-adjust: 100%;
     -moz-tab-size: 4;
     tab-size: 4;
-    font-family: 
-        system-ui,
-        -apple-system, /* Firefox supports this but not yet `system-ui` */
-        'Segoe UI',
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif,
-        'Apple Color Emoji',
-        'Segoe UI Emoji';
+    font-family: system-ui, -apple-system, /* Firefox supports this but not yet `system-ui` */
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 }
+
 
 /*
 1. Remove the margin in all browsers.
@@ -48,6 +42,7 @@ body {
     margin: 0;
     line-height: inherit;
 }
+
 
 /*
 1. Add the correct height in Firefox.
@@ -61,6 +56,7 @@ hr {
     border-top-width: 1px;
 }
 
+
 /*
 Add the correct text decoration in Chrome, Edge, and Safari.
 */
@@ -68,6 +64,7 @@ Add the correct text decoration in Chrome, Edge, and Safari.
 abbr[title] {
     text-decoration: underline dotted;
 }
+
 
 /*
 Remove the default font size and weight for headings.
@@ -83,6 +80,7 @@ h6 {
     font-weight: inherit;
 }
 
+
 /*
 Reset links to optimize for opt-in styling instead of opt-out.
 */
@@ -91,6 +89,7 @@ a {
     color: inherit;
     text-decoration: inherit;
 }
+
 
 /*
 Add the correct font weight in Edge and Safari.
@@ -101,6 +100,7 @@ strong {
     font-weight: bolder;
 }
 
+
 /*
 1. Use the user's configured `mono` font family by default.
 2. Correct the odd `em` font sizing in all browsers.
@@ -110,18 +110,11 @@ code,
 kbd,
 samp,
 pre {
-    font-family: 
-        system-ui,
-        -apple-system, /* Firefox supports this but not yet `system-ui` */
-        'Segoe UI',
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif,
-        'Apple Color Emoji',
-        'Segoe UI Emoji';
+    font-family: system-ui, -apple-system, /* Firefox supports this but not yet `system-ui` */
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
     font-size: 1em;
 }
+
 
 /*
 Add the correct font size in all browsers.
@@ -130,6 +123,7 @@ Add the correct font size in all browsers.
 small {
     font-size: 80%;
 }
+
 
 /*
 Prevent `sub` and `sup` elements from affecting the line height in all browsers.
@@ -151,6 +145,7 @@ sup {
     top: -0.5em;
 }
 
+
 /*
 1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
 2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
@@ -162,6 +157,7 @@ table {
     border-color: inherit;
     border-collapse: collapse;
 }
+
 
 /*
 1. Change the font styles in all browsers.
@@ -183,6 +179,7 @@ textarea {
     padding: 0;
 }
 
+
 /*
 Remove the inheritance of text transform in Edge and Firefox.
 */
@@ -191,6 +188,7 @@ button,
 select {
     text-transform: none;
 }
+
 
 /*
 1. Correct the inability to style clickable types in iOS and Safari.
@@ -206,6 +204,7 @@ button,
     background-image: none;
 }
 
+
 /*
 Use the modern Firefox focus style for all focusable elements.
 */
@@ -213,6 +212,7 @@ Use the modern Firefox focus style for all focusable elements.
 :-moz-focusring {
     outline: auto;
 }
+
 
 /*
 Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
@@ -222,6 +222,7 @@ Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/
     box-shadow: none;
 }
 
+
 /*
 Add the correct vertical alignment in Chrome and Firefox.
 */
@@ -229,6 +230,7 @@ Add the correct vertical alignment in Chrome and Firefox.
 progress {
     vertical-align: baseline;
 }
+
 
 /*
 Correct the cursor style of increment and decrement buttons in Safari.
@@ -238,6 +240,7 @@ Correct the cursor style of increment and decrement buttons in Safari.
 ::-webkit-outer-spin-button {
     height: auto;
 }
+
 
 /*
 1. Correct the odd appearance in Chrome and Safari.
@@ -249,6 +252,7 @@ Correct the cursor style of increment and decrement buttons in Safari.
     outline-offset: -2px;
 }
 
+
 /*
 Remove the inner padding in Chrome and Safari on macOS.
 */
@@ -256,6 +260,7 @@ Remove the inner padding in Chrome and Safari on macOS.
 ::-webkit-search-decoration {
     -webkit-appearance: none;
 }
+
 
 /*
 1. Correct the inability to style clickable types in iOS and Safari.
@@ -267,6 +272,7 @@ Remove the inner padding in Chrome and Safari on macOS.
     font: inherit;
 }
 
+
 /*
 Add the correct display in Chrome and Safari.
 */
@@ -274,6 +280,7 @@ Add the correct display in Chrome and Safari.
 summary {
     display: list-item;
 }
+
 
 /*
 Removes the default spacing and border for appropriate elements.
@@ -312,6 +319,7 @@ menu {
     padding: 0;
 }
 
+
 /*
 Prevent resizing textareas horizontally by default.
 */
@@ -319,6 +327,7 @@ Prevent resizing textareas horizontally by default.
 textarea {
     resize: vertical;
 }
+
 
 /*
 1. Reset the default placeholder opacity in Firefox.
@@ -330,6 +339,7 @@ textarea::placeholder {
     color: #9ca3af;
 }
 
+
 /*
 Set the default cursor for buttons.
 */
@@ -339,12 +349,15 @@ button,
     cursor: pointer;
 }
 
+
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
+
 :disabled {
     cursor: default;
 }
+
 
 /*
 1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
@@ -363,6 +376,7 @@ object {
     display: block;
     vertical-align: middle;
 }
+
 
 /*
 Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)

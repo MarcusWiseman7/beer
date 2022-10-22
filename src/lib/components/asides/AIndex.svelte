@@ -59,9 +59,6 @@
 
 <AsideBlock>
     <WInput />
-</AsideBlock>
-
-<AsideBlock>
     <div class="tags">
         {#each staticTags as item}
             <WTag>

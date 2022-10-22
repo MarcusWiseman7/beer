@@ -90,6 +90,7 @@
             <!-- PAGE SLOT -->
             <div class="page">
                 <slot />
+                <WFooter />
             </div>
         </div>
 
@@ -99,8 +100,6 @@
             </div>
         {/if}
     </main>
-
-    <WFooter />
 </div>
 
 <!-- MOBILE MENU -->
@@ -247,7 +246,7 @@
     }
 
     .aside {
-        padding: 0 30px 0 20px;
+        padding: 0 20px;
         height: 100%;
         width: 100%;
         max-width: 300px;

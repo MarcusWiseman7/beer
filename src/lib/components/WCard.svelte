@@ -46,7 +46,7 @@
         <div class="card__content">
             <!-- name/title -->
             {#if item.beerName}
-                <h3 class="card__content__title">{item.beerName}</h3>
+                <h3 class="card__content__title">{item.beerName} {item.degrees} °</h3>
             {/if}
 
             <!-- style -->
@@ -173,7 +173,7 @@
                 font-size: 14px;
                 line-height: 20px;
                 font-weight: 500;
-                color: var(--text-2);
+                color: var(--text-3);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;

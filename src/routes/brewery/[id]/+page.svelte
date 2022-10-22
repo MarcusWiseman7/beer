@@ -13,6 +13,7 @@
     import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
+    import WCard from '$lib/components/WCard.svelte';
 
     // icons
     import cz_src from '$lib/assets/icons/flags/czech.svg';
@@ -23,6 +24,7 @@
     import instagram_src from '$lib/assets/icons/social/instagram.svg';
     import twitter_src from '$lib/assets/icons/social/twitter.svg';
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
+    import brewery_machine_src from '$lib/assets/icons/general/brewery_machine.svg';
 
     // directives
     import { onMount } from 'svelte';
@@ -53,14 +55,13 @@
 
 <div class="top">
     <WBack />
-    <WSocials {socialNetworks} />
 </div>
 
 {#if brewery}
     <div class="brewery">
         <div class="brewery__images">
             <div class="main-image">
-                <img src={cloudinaryPicURL('/stock/b6_k7y5gk')} class="" alt="logo" />
+                <div class="icon"><InlineSVG src={brewery_machine_src} width="56" height="60" /></div>
                 <div class="logo">
                     <img src={brewery.logo} class="" alt="logo" />
                 </div>
@@ -114,7 +115,12 @@
     </div>
 
     <h2 class="beer-list-title">Beer list</h2>
-    <WHorizontalScroller items={beers} />
+    <!-- <WHorizontalScroller items={beers} /> -->
+    <div class="grid">
+        {#each beers as item}
+            <WCard {item} size="small" />
+        {/each}
+    </div>
 {/if}
 
 <style lang="scss">
@@ -126,54 +132,34 @@
     }
     .brewery {
         display: flex;
-        gap: 18px;
+        gap: 28px;
 
         &__images {
             position: relative;
+            min-width: 170px;
             // placeholder space...
 
-            min-width: 35%;
-
             .main-image {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 height: 170px;
                 position: relative;
                 border-radius: 3px;
                 overflow: hidden;
+                background-color: var(--body);
+            }
 
-                &:before {
-                    content: '';
-                    position: absolute;
-                    background: linear-gradient(
-                        180deg,
-                        rgba(0, 0, 0, 0.7) 0%,
-                        rgba(0, 0, 0, 0.601562) 23.96%,
-                        rgba(0, 0, 0, 0.399668) 59.9%,
-                        rgba(0, 0, 0, 0) 100%
-                    );
-                    left: 0;
-                    right: 0;
-                    top: 0;
-                    width: 100%;
-                    height: 80%;
-                    // transform: rotate(-180deg);
-                    z-index: 1;
-                }
-                img {
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    object-fit: cover;
-                }
+            .icon {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
             }
             .logo {
-                position: absolute;
-                z-index: 5;
-                left: 10px;
-                top: 10px;
-                padding: 2px;
                 background-color: var(--page);
-                height: 40px;
-                width: 40px;
+                height: 80px;
+                width: 80px;
                 border-radius: 50%;
                 overflow: hidden;
             }
@@ -224,5 +210,16 @@
         font-weight: 600;
         font-size: 21px;
         line-height: 26px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 20px 12px;
+        grid-template-areas:
+            '. . . .'
+            '. . . .'
+            '. . . .';
     }
 </style>
