@@ -73,7 +73,6 @@
         </div>
         <h1>Beer</h1>
     </header>
-
     <main>
         <!-- DESKTOP MENU -->
         <div class="menu--desktop">
@@ -142,11 +141,12 @@
         height: 48px;
         display: flex;
         align-items: center;
+        max-width: 1500px;
+        margin: 0 auto;
 
         @media (min-width: $tablet) {
             position: relative;
-            height: auto;
-            padding: 64px 0 20px 56px;
+            height: 170px;
         }
 
         h1 {

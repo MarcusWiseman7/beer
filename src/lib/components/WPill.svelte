@@ -23,7 +23,7 @@
         border-radius: 30px;
         border: 1px solid var(--c-pill-border);
         background-color: var(--c-pill-bg);
-        height: 32px;
+        height: 28px;
         padding: 2px 16px 2px 2px;
 
         &__image {
@@ -46,7 +46,7 @@
         }
 
         &__title {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 20px;
             overflow: hidden;
             text-overflow: ellipsis;

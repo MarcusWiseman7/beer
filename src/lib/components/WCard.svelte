@@ -156,10 +156,10 @@
         &__content {
             height: 100%;
             width: 100%;
-            padding: 9px 12px;
+            padding: 8px 12px;
 
             @media (min-width: $desktop) {
-                padding: 16px;
+                padding: 12px 16px;
             }
 
             &__title {
@@ -167,6 +167,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                font-size: 16px;
             }
 
             &__style {
@@ -197,6 +198,14 @@
 
             .card__content__info {
                 // grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+    }
+    // types
+    .card--small {
+        .card {
+            &__title {
+                font-size: 16px;
             }
         }
     }
