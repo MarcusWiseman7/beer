@@ -8,14 +8,13 @@
 
     // icons
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
-    
+
     import twitter_src from '$lib/assets/icons/nav/twitter.svg';
     import instagram_src from '$lib/assets/icons/nav/instagram.svg';
     import telegram_src from '$lib/assets/icons/nav/telegram.svg';
 
     // data
     const shareNetworks = [
-        
         { id: 'instagram', icon: instagram_src },
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
@@ -49,12 +48,10 @@
     </ul>
     <!-- TODO: Create socials accounts patrik! save the username -->
     <div class="menu-footer">
-        <h4 class="menu-footer__title">
-            Follow us
-        </h4>
+        <h4 class="menu-footer__title">Follow us</h4>
         <ul class="menu-footer__socials">
             <li>
-                <a href=""><InlineSVG src={instagram_src}  width="18" height="18" /></a>
+                <a href=""><InlineSVG src={instagram_src} width="18" height="18" /></a>
             </li>
             <li>
                 <a href=""><InlineSVG src={twitter_src} width="18" height="18" /></a>
@@ -64,9 +61,9 @@
             </li>
         </ul>
         <ul class="menu-footer__list">
-            <li><a href="#">Privacy  </a></li>
-            <li><a href="#">Terms  </a></li>
-            <li><a href="#">Cookies  </a></li>
+            <li><a href="#">Privacy </a></li>
+            <li><a href="#">Terms </a></li>
+            <li><a href="#">Cookies </a></li>
         </ul>
     </div>
 </nav>
@@ -161,7 +158,7 @@
             display: flex;
             flex-flow: row wrap;
             gap: 16px;
-            
+
             a {
                 display: flex;
                 align-items: center;
@@ -184,7 +181,7 @@
                 line-height: 1.7;
                 &:not(&:first-child) {
                     &:before {
-                        content: "·";
+                        content: '·';
                         color: var(--text-3);
                         margin: 0 8px;
                         color: inherit;

@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { cloudinaryPicURL } from '$lib/helpers';
-
     // types
     import type { IBeer, IBrewery } from '$lib/ts-interfaces';
 
@@ -12,7 +10,6 @@
     import InlineSVG from 'svelte-inline-svg';
     import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
-    import WSocials from '$lib/components/WSocials.svelte';
     import WCard from '$lib/components/WCard.svelte';
 
     // icons
@@ -22,13 +19,10 @@
     // import instagram_src from '$lib/assets/icons/social/instagram-dark.svg';
     import facebook_src from '$lib/assets/icons/social/facebook.svg';
     import instagram_src from '$lib/assets/icons/social/instagram.svg';
-    import twitter_src from '$lib/assets/icons/social/twitter.svg';
-    import telegram_src from '$lib/assets/icons/social/telegram.svg';
     import brewery_machine_src from '$lib/assets/icons/general/brewery_machine.svg';
 
     // directives
     import { onMount } from 'svelte';
-    import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
 
     // variables
     $: brewery = data.brewery;
@@ -89,9 +83,7 @@
                     {#if beers?.length}
                         <div class="pill-wrapper">
                             <WPill type="">
-                                <svelte:fragment slot="image">
-                                    <div />
-                                </svelte:fragment>
+                                <svelte:fragment slot="image">🍺</svelte:fragment>
                                 <svelte:fragment slot="title">{beers.length} beers</svelte:fragment>
                             </WPill>
                         </div>
@@ -137,6 +129,7 @@
         &__images {
             position: relative;
             min-width: 170px;
+            max-width: 170px;
             // placeholder space...
 
             .main-image {
@@ -166,6 +159,7 @@
         }
 
         &__info {
+            width: 100%;
         }
 
         &__name {

@@ -87,24 +87,4 @@
     .timeline {
         margin: 40px 0 20px 0;
     }
-
-    .posts {
-        &-holder {
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            position: relative;
-            &:not(&:last-child) {
-                &:after {
-                    content: '';
-                    display: block;
-                    height: 1px;
-                    background: var(--border);
-                    width: calc(100% + 56px);
-                    position: absolute;
-                    bottom: 0;
-                    left: -28px;
-                }
-            }
-        }
-    }
 </style>
