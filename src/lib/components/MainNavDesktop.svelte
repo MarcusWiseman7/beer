@@ -8,6 +8,18 @@
 
     // icons
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
+    
+    import twitter_src from '$lib/assets/icons/nav/twitter.svg';
+    import instagram_src from '$lib/assets/icons/nav/instagram.svg';
+    import telegram_src from '$lib/assets/icons/nav/telegram.svg';
+
+    // data
+    const shareNetworks = [
+        
+        { id: 'instagram', icon: instagram_src },
+        { id: 'twitter', icon: twitter_src },
+        { id: 'telegram', icon: telegram_src },
+    ];
 
     $: activeRoute = $page.url.pathname;
 </script>
@@ -35,6 +47,28 @@
             </button>
         </li>
     </ul>
+    <!-- TODO: Create socials accounts patrik! save the username -->
+    <div class="menu-footer">
+        <h4 class="menu-footer__title">
+            Follow us
+        </h4>
+        <ul class="menu-footer__socials">
+            <li>
+                <a href=""><InlineSVG src={instagram_src}  width="18" height="18" /></a>
+            </li>
+            <li>
+                <a href=""><InlineSVG src={twitter_src} width="18" height="18" /></a>
+            </li>
+            <li>
+                <a href=""><InlineSVG src={telegram_src} width="18" height="18" /></a>
+            </li>
+        </ul>
+        <ul class="menu-footer__list">
+            <li><a href="#">Privacy  </a></li>
+            <li><a href="#">Terms  </a></li>
+            <li><a href="#">Cookies  </a></li>
+        </ul>
+    </div>
 </nav>
 
 <style lang="scss">
@@ -43,13 +77,9 @@
         top: 100px;
         right: 0px;
         z-index: 5;
-    }
-
-    ul {
-        // position: absolute;
-        // right: 0;
-        // top: 96px;
-        // width: 288px;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
     }
 
     .list-item {
@@ -73,11 +103,11 @@
         }
 
         &--button {
-            padding-right: 40px;
+            padding-right: 50px;
             margin-top: 40px;
             .btn {
                 height: 48px;
-                width: 90%;
+                width: 100%;
                 margin: 0 auto;
                 border-radius: 12px;
                 font-weight: 600;
@@ -114,6 +144,58 @@
             bottom: -60px;
             border-radius: 0 30px 0 0;
             box-shadow: 0 -30px 0 0 var(--page);
+        }
+    }
+
+    .menu-footer {
+        margin: 100% 25px 0;
+        max-width: calc(100% - 30px);
+
+        &__title {
+            margin-bottom: 18px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        &__socials {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 16px;
+            
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: var(--text-2);
+            }
+        }
+
+        &__list {
+            margin-top: 16px;
+            display: flex;
+            flex-flow: row wrap;
+            // gap: 12px;
+            li {
+                font-size: 12px;
+                color: var(--text-2);
+                line-height: 1.7;
+                &:not(&:first-child) {
+                    &:before {
+                        content: "·";
+                        color: var(--text-3);
+                        margin: 0 8px;
+                        color: inherit;
+                        font-size: inherit;
+                    }
+                }
+            }
+            a {
+                color: inherit;
+                font-size: inherit;
+            }
         }
     }
 </style>

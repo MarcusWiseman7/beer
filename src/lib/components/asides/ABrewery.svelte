@@ -112,7 +112,7 @@
 </AsideBlock>
 
 <AsideBlock title="Pub's socials">
-    <WSocials socialNetworks={shareNetworks} />
+    <WSocials socialNetworks={shareNetworks} addMore={true} />
 </AsideBlock>
 
 <style lang="scss">

@@ -4,6 +4,7 @@
 
     // props
     export let socialNetworks: ISocialNetwork[] = [];
+    export let addMore: boolean = false;
 
     // components
     import ShareNetwork from './ShareNetwork.svelte';
@@ -22,9 +23,11 @@
         we will let user add socials or contacts
         then we check it and change status to visible
      -->
-    <button class="socials-add">
-        <InlineSVG src={plus_src} width="24" height="24" />
-    </button>
+     {#if addMore}   
+     <button class="socials-add">
+         <InlineSVG src={plus_src} width="24" height="24" />
+     </button>
+     {/if}
 </div>
 
 <style lang="scss">
