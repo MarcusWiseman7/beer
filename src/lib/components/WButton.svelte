@@ -1,17 +1,9 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
-
-    export let type: string = 'main';
-
-    const dispatch = createEventDispatcher();
+    export let modifiers: string[] = [];
+    export let disabled = false;
 </script>
 
-<button
-    class={'button--' + type}
-    on:click={() => {
-        dispatch('click');
-    }}
->
+<button class={modifiers.map((m) => 'button--' + m)} on:click {disabled}>
     <slot />
 </button>
 
@@ -26,6 +18,11 @@
         padding: 4px 24px;
         font-size: 12px;
         line-height: 16px;
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.4;
+        }
     }
 
     .button {
@@ -37,6 +34,12 @@
             font-weight: 500;
             font-size: 20px;
             line-height: 28px;
+        }
+
+        &--medium {
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 32px;
         }
     }
 </style>

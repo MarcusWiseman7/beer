@@ -1,22 +1,32 @@
 <script lang="ts">
-    import { loading } from '$lib/stores';
+    import { loading, myProfile } from '$lib/stores';
     import { invalidateAll, goto } from '$app/navigation';
     import { applyAction } from '$app/forms';
     import WButton from '$lib/components/WButton.svelte';
+    import { setAppMessage } from '$lib/helpers';
 
     /** @type {import('./$types').ActionData} */
     export let form;
 
+    // data
     let email: string;
     let password: string;
+    let displayName: string;
+    let signup = false;
 
+    $: buttonDisabled = signup ? !email || !password || !displayName : !email || !password;
+
+    // methods
+    const toggleAuth = (): void => {
+        signup = !signup;
+    };
     const handleSubmit = async (event: SubmitEvent): Promise<void> => {
-        if (!email || !password) return;
+        if (!email || !password || (signup && !displayName)) return;
 
         try {
             loading.set(true);
             const data = new FormData(event.target);
-            const response = await fetch('/login', {
+            const response = await fetch(signup ? '?/signup' : '?/login', {
                 method: 'POST',
                 body: data,
                 headers: {
@@ -31,6 +41,15 @@
                 // re-run all `load` functions, following the successful update
                 await invalidateAll();
                 applyAction(result);
+
+                if ($myProfile) {
+                    setAppMessage({
+                        timeout: 3000,
+                        message: `Welcome ${$myProfile.displayName}!`,
+                        type: 'success',
+                        id: Date.now(),
+                    });
+                }
                 goto('/');
             }
 
@@ -43,13 +62,20 @@
     };
 </script>
 
-<h1>Login</h1>
+<h1>{signup ? 'Signup' : 'Login'}</h1>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
     {#if form?.missing}<p class="error">The email field is required</p>{/if}
     {#if form?.incorrect}<p class="error">Invalid credentials!</p>{/if}
 
     <div class="inputs">
+        {#if signup}
+            <div class="input">
+                <label for="displayName">Display name</label>
+                <input type="text" name="displayName" id="displayName" bind:value={displayName} />
+            </div>
+        {/if}
+
         <div class="input">
             <label for="email">Email</label>
             <input type="email" name="email" id="email" bind:value={email} />
@@ -61,8 +87,13 @@
         </div>
     </div>
 
-    <WButton type="submit">Login</WButton>
+    <WButton disabled={buttonDisabled} modifiers={['medium']}>{signup ? 'Signup' : 'Login'}</WButton>
 </form>
+
+<div class="need-account">
+    <span>{signup ? 'Have an account?' : 'New?'}</span>
+    <WButton modifiers={['small']} on:click={toggleAuth}>{signup ? 'Login' : 'Signup'}</WButton>
+</div>
 
 <style lang="scss">
     h1 {
@@ -100,5 +131,13 @@
             padding: 0 12px;
             border-radius: 6px;
         }
+    }
+
+    .need-account {
+        display: flex;
+        margin-top: 60px;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
     }
 </style>

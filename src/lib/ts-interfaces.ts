@@ -97,9 +97,7 @@ export interface IUser {
     _id: Types.ObjectId;
     password: string;
     email: string;
-    altEmails?: Types.Array<string>;
     displayName?: string;
-    name?: string;
     avatarURL?: string;
     avatarPublicId?: string;
     reviews?: Types.Array<Types.ObjectId>;
@@ -114,4 +112,8 @@ export interface IUser {
 export interface ILogin {
     email: string;
     password: string;
+}
+
+export interface ISignup extends ILogin {
+    displayName: string;
 }

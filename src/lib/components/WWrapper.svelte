@@ -36,7 +36,7 @@
 
 {#if which != 'topBeers' && items?.length > maxResults}
     <div class="more">
-        <WButton type="quick" on:click={increaseMax}>Show more</WButton>
+        <WButton modifiers={['quick']} on:click={increaseMax}>Show more</WButton>
     </div>
 {/if}
 

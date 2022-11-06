@@ -6,9 +6,7 @@ const UserSchema = new Schema<IUser>(
     {
         password: { type: String, required: true, trim: true },
         email: { type: String, required: true, trim: true, unique: true },
-        altEmails: [{ type: String, trim: true, unique: true }],
         displayName: { type: String, trim: true, unique: true },
-        name: { type: String, trim: true },
         avatarURL: { type: String, trim: true },
         avatarPublicId: { type: String, trim: true },
         reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
