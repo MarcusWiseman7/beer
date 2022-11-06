@@ -2,11 +2,15 @@
     import { loading, myProfile } from '$lib/stores';
     import { invalidateAll, goto } from '$app/navigation';
     import { applyAction } from '$app/forms';
-    import WButton from '$lib/components/WButton.svelte';
     import { setAppMessage } from '$lib/helpers';
 
+    // form data
     /** @type {import('./$types').ActionData} */
     export let form;
+
+    // components
+    import WButton from '$lib/components/WButton.svelte';
+    import WBack from '$lib/components/WBack.svelte';
 
     // data
     let email: string;
@@ -61,6 +65,10 @@
         }
     };
 </script>
+
+<div class="top">
+    <WBack />
+</div>
 
 <h1>{signup ? 'Signup' : 'Login'}</h1>
 

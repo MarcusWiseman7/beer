@@ -58,20 +58,20 @@ export const actions = {
         const alreadyUser: HydratedDocument<IUser> | null = await User.findOne({ email: userData.email }).exec();
         if (alreadyUser) return invalid(403, { message: 'User with that email address already in system' });
 
-        // create user
-        const user: HydratedDocument<IUser> = await User.create(userData);
-
+        // create username
+        const username = userData.displayName.trim().replaceAll(' ', '').toLowerCase();
         // create a session token
-        const token = jwt.sign({ email: user.email, date: new Date() }, secret, { expiresIn: exp });
-        
-        // update user in db with session token
-        user.loginToken = token;
+        const loginToken = jwt.sign({ email: userData.email, date: new Date() }, secret, { expiresIn: exp });
+
+        // create user
+        const user: HydratedDocument<IUser> = await User.create({ ...userData, username, loginToken });
+
         await user.save(err => {
             if (err) return invalid(500, { message: 'Server error, please try again...' });
         });
 
         // set session to cookies
-        cookies.set('session', token);
+        cookies.set('session', loginToken);
     
         return { success: true };
     },

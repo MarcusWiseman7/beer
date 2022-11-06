@@ -89,15 +89,15 @@
             </li>
             <li>
                 <img class="icon" src={link_src} alt="menu" height="24" width="24" />
-                <a href="#" rel="”nofollow”">www.pivovarmatuska.cz</a>
+                <a href="#" rel="nofollow">www.pivovarmatuska.cz</a>
             </li>
             <li>
                 <img class="icon" src={phone_src} alt="menu" height="24" width="24" />
-                <a href="tel:" rel="”nofollow”">012 345 6789</a>
+                <a href="tel:" rel="nofollow">012 345 6789</a>
             </li>
             <li>
                 <img class="icon" src={email_src} alt="menu" height="24" width="24" />
-                <a href="mailto:email@website.com" rel="”nofollow”">email@website.com</a>
+                <a href="mailto:email@website.com" rel="nofollow">email@website.com</a>
             </li>
             <li>
                 <img class="icon" src={bw_tag_src} alt="menu" height="24" width="24" />

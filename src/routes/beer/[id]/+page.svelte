@@ -13,14 +13,14 @@
     import InlineSVG from 'svelte-inline-svg';
     import WBack from '$lib/components/WBack.svelte';
     import WPill from '$lib/components/WPill.svelte';
-    import WPost from '$lib/components/WPost.svelte';
+    import WPost from '$lib/components/WReview.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
 
     // icons
     import star_src from '$lib/assets/icons/general/star.svg';
 
     // data
-    const posts = [
+    const reviews = [
         {
             username: 'Marcus',
             displayName: 'Beer lover',
@@ -164,10 +164,10 @@
 <WHorizontalScroller items={beers} />
 
 <h2 class="beer-posts-title">Last user's reviews</h2>
-<div class="posts">
-    {#each posts as item}
+<div class="reviews">
+    {#each reviews as review}
         <div class="posts-holder">
-            <WPost {item} />
+            <WPost {review} />
         </div>
     {/each}
 </div>

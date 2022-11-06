@@ -1,34 +1,40 @@
 <script lang="ts">
+    // types
+    import type { IReview } from '$lib/ts-interfaces';
+
+    // props
     export let type: string = 'normal';
+    export let review: IReview;
 
     // icons
     import like_src from '$lib/assets/icons/post/like.svg';
     import comment_src from '$lib/assets/icons/post/comment.svg';
     import share_src from '$lib/assets/icons/post/share.svg';
-    
+
     // components
     import WAvatar from '$lib/components/WAvatar.svelte';
-    
+
     // helpers
     import { cloudinaryPicURL } from '$lib/helpers';
-    
-    export let item: IPost;
 </script>
-{#if item}
-    <div class={`post post--${type}`}>
-        <div class="post__head">
-            <WAvatar mediaCDN={cloudinaryPicURL(item.image)} size={48} />
+
+{#if review}
+    <div class={`review review--${type}`}>
+        <div class="review__head">
+            {#if review.reviewer?.avatarURL}
+                <WAvatar mediaCDN={cloudinaryPicURL(review.reviewer.avatarURL)} size={48} />
+            {/if}
             <div class="info">
                 <ul class="list d-flex-row-wrap">
-                    <li>{ item.username }</li>
-                    <li>18h</li>
+                    <li>{review.reviewer?.displayName}</li>
+                    <li>{review.date}</li>
                 </ul>
                 <p class="bio">
-                    {item.bio}
+                    {review.notes}
                 </p>
             </div>
         </div>
-        <div class="post__content">
+        <div class="review__content">
             <ul class="share-list">
                 <li>
                     <button class="cta">
@@ -46,27 +52,28 @@
                     </button>
                 </li>
             </ul>
-            <div class="image">
-                <img src={cloudinaryPicURL(item.image)} class="img-object-fit-cover" alt="logo" />
-            </div>
+            {#if review.picURL}
+                <div class="image">
+                    <img src={cloudinaryPicURL(review.picURL)} class="img-object-fit-cover" alt="logo" />
+                </div>
+            {/if}
         </div>
     </div>
 {/if}
 
 <style lang="scss">
-    .post {
+    .review {
         &__head {
             display: flex;
             align-items: center;
             gap: 12px;
 
             .list {
-
                 li {
                     font-size: 14px;
                     font-weight: 400;
                     color: var(--text-3);
-                     &:not(&:last-child) {
+                    &:not(&:last-child) {
                         &:after {
                             content: '•';
                             margin: 0 3px;
@@ -87,7 +94,6 @@
             margin-top: 12px;
             gap: 20px;
             .share-list {
-
                 .cta {
                     display: flex;
                     align-items: center;
@@ -104,7 +110,7 @@
                 border-radius: var(--main-border-radius);
                 overflow: hidden;
             }
-        }    
+        }
 
         &:hover,
         &:focus {

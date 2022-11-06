@@ -1,6 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    import { mainNav } from '$lib/stores';
+    import { mainNav, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { fly } from 'svelte/transition';
@@ -13,9 +13,13 @@
 
     $: activeRoute = $page.url.pathname;
 
+    // methods
     const dispatch = createEventDispatcher();
     const close = (): void => {
         dispatch('close');
+    };
+    const addBeer = (): void => {
+        if (!$myProfile) goto('/login');
     };
 </script>
 
@@ -45,7 +49,7 @@
             {/each}
 
             <li class="list-item--button">
-                <button>
+                <button on:click={addBeer}>
                     <InlineSVG src={add_beer_src} width="20" height="20" />
                     <span>Add beer</span>
                 </button>

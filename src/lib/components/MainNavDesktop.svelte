@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { mainNav } from '$lib/stores';
+    import { mainNav, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 
@@ -8,7 +8,6 @@
 
     // icons
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
-
     import twitter_src from '$lib/assets/icons/nav/twitter.svg';
     import instagram_src from '$lib/assets/icons/nav/instagram.svg';
     import telegram_src from '$lib/assets/icons/nav/telegram.svg';
@@ -21,6 +20,11 @@
     ];
 
     $: activeRoute = $page.url.pathname;
+
+    // methods
+    const addBeer = (): void => {
+        if (!$myProfile) goto('/login');
+    };
 </script>
 
 <nav>
@@ -40,7 +44,7 @@
         {/each}
 
         <li class="list-item--button">
-            <button class="btn btn--primary">
+            <button class="btn btn--primary" on:click={addBeer}>
                 <InlineSVG src={add_beer_src} width="17" height="18" />
                 <span class="text">Add beer</span>
             </button>

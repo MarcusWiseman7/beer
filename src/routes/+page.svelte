@@ -1,19 +1,18 @@
 <script lang="ts">
+    // types
+    import type { IBeer } from '$lib/ts-interfaces';
+
+    // props
     /** @type {import('./$types').PageData} */
     export let data: { topBeers: IBeer[] };
 
-    import type { IBeer } from '$lib/ts-interfaces';
     // components
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import WWrapper from '$lib/components/WWrapper.svelte';
-    import WPost from '$lib/components/WPost.svelte';
-
-    // helpers
-    import { onMount } from 'svelte';
-    import { myProfile } from '$lib/stores';
+    import WReview from '$lib/components/WReview.svelte';
 
     // data
-    const posts = [
+    const reviews = [
         {
             username: 'Marcus',
             displayName: 'Beer lover',
@@ -45,10 +44,6 @@
             commentCount: 3,
         },
     ];
-
-    onMount(() => {
-        console.log('myProfile :>> ', $myProfile);
-    });
 </script>
 
 <h2 class="popular">New and popular</h2>
@@ -61,10 +56,10 @@
 <WHorizontalScroller items={data.topBeers} />
 
 <h2 class="timeline">Reviews timeline</h2>
-<div class="posts">
-    {#each posts as item}
+<div class="reviews">
+    {#each reviews as review}
         <div class="posts-holder">
-            <WPost {item} />
+            <WReview {review} />
         </div>
     {/each}
 </div>

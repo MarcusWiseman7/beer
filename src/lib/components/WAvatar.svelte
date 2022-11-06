@@ -1,11 +1,10 @@
 <script lang="ts">
-    export let type: string = 'normal';
-    export let modifiers: Array = [];
+    export let modifiers: [] = [];
     export let mediaCDN: string = '';
-    export let size: Number = 40;
+    export let size: number = 40;
 </script>
 
-<div class={`avatar avatar--${type} ${modifiers}`} style={`--size: ${size}px`}>
+<div class={`avatar ${modifiers.map((m) => 'avatar--' + m)}`} style={`--size: ${size}px`}>
     <div class="avatar-holder">
         <img class="avatar__img" src={mediaCDN} alt="avatar" />
     </div>
@@ -33,7 +32,7 @@
             object-fit: cover;
         }
 
-        &.with-border {
+        &--with-border {
             border: 1px solid var(--page);
         }
     }

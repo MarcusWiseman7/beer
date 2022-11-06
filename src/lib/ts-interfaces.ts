@@ -1,13 +1,14 @@
-import type { MongooseOptions, Types } from 'mongoose';
+import type { Types } from 'mongoose';
 
-export interface IPosts {
+export interface IPost {
     title: string;
     slug: string;
     author: {
-        name: string;
-        image: {};
+        displayName: string;
+        image: string;
+        bio: string;
     };
-    mainImage?: {};
+    mainImage?: string;
     categories?: [
         {
             category: {};
@@ -89,18 +90,19 @@ export interface IReview {
     notes?: string;
     date?: Date;
     dateCreated?: Date;
-    beer: Types.ObjectId;
-    reviewer: Types.ObjectId;
+    beer: IBeer;
+    reviewer: IUser;
 };
 
 export interface IUser {
     _id: Types.ObjectId;
     password: string;
     email: string;
-    displayName?: string;
+    displayName: string;
+    username: string;
     avatarURL?: string;
     avatarPublicId?: string;
-    reviews?: Types.Array<Types.ObjectId>;
+    reviews?: IReview[];
     tempEmail?: string;
     tempEmailToken?: string;
     gdprApproval?: boolean;
