@@ -4,7 +4,7 @@
 
     // props
     /** @type {import('./$types').PageData} */
-    export let data: { brewery: IBrewery; beers: [IBeer] };
+    export let data: { brewery: IBrewery; beers: IBeer[] };
 
     // components
     import InlineSVG from 'svelte-inline-svg';

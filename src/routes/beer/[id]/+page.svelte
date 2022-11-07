@@ -7,7 +7,7 @@
 
     // props
     /** @type {import('./$types').PageData} */
-    export let data: { beer: IBeer };
+    export let data: { beer: IBeer, siblingBeers: IBeer[] };
 
     // components
     import InlineSVG from 'svelte-inline-svg';
@@ -95,8 +95,9 @@
 
     $: beer = data.beer;
     onMount(() => {
+        console.log('data :>> ', data);
         // just to see what we have to work with...
-        console.log('/:beerid beer :>> ', beer);
+        // console.log('/:beerid beer :>> ', beer);
     });
 </script>
 

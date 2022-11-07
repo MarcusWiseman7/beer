@@ -11,8 +11,14 @@ export async function load({ params }) {
         .populate<{ brewery: IBrewery; }>('brewery')
         .orFail()
         .exec();
+    
+    const siblingBeers = await Beer
+        .find({ brewery: beer.brewery._id })
+        .select(beerSelect)
+        .sort({'averageRating': 'desc'})
+        .exec();
 
     if (beer) {
-        return JSON.stringify(beer);
+        return JSON.stringify({ beer, siblingBeers });
     }
 }
