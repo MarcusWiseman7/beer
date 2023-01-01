@@ -1,18 +1,21 @@
 <script lang="ts">
     // types
     import type { IBeer, IBrewery } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/ts-interfaces';
+    interface IData extends IPageData {
+        brewery: IBrewery;
+        beers: IBeer[];
+    }
 
     // props
     /** @type {import('./$types').PageData} */
-    export let data: { brewery: IBrewery; beers: IBeer[] };
+    export let data: IData;
 
     // components
     import InlineSVG from 'svelte-inline-svg';
     import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import WCard from '$lib/components/WCard.svelte';
-
-    // icons
     import cz_src from '$lib/assets/icons/flags/czech.svg';
     import star_src from '$lib/assets/icons/general/star.svg';
     // import facebook_src from '$lib/assets/icons/social/facebook-dark.svg';
@@ -21,12 +24,14 @@
     import instagram_src from '$lib/assets/icons/social/instagram.svg';
     import brewery_machine_src from '$lib/assets/icons/general/brewery_machine.svg';
 
-    // directives
+    // helpers
     import { onMount } from 'svelte';
 
-    // variables
-    $: brewery = data.brewery;
-    $: beers = data.beers;
+    // data
+    $: brewery = data?.brewery;
+    $: beers = data?.beers;
+    $: description = data?.description || '';
+    $: hashtags = data?.hashtags || '';
 
     const socialNetworks = [
         { id: 'facebook', icon: facebook_src },
@@ -46,6 +51,21 @@
         console.log('/breweryid brewery beers :>> ', beers);
     });
 </script>
+
+<svelte:head>
+    <title>Find Brews | {brewery?.name || 'Brewery'}</title>
+    <meta property="og:title" content={`Find Brews | ${brewery?.name || 'Brewery'}`} />
+    <meta property="og:url" content={`https://find-brews.com/brewery/${brewery?._id}`} />
+
+    {#if brewery?.description || description}
+        <meta name="description" content={brewery?.description || description} />
+        <meta property="og:description" content={brewery?.description || description} />
+    {/if}
+    {#if hashtags}
+        <meta name="hashtags" content={hashtags} />
+        <meta property="og:hashtags" content={hashtags} />
+    {/if}
+</svelte:head>
 
 <div class="top">
     <WBack />

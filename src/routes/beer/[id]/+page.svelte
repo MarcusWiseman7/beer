@@ -1,13 +1,19 @@
 <script lang="ts">
+    // types
+    import type { IBeer } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/ts-interfaces';
+    interface IData extends IPageData {
+        beer: IBeer;
+        siblingBeers: IBeer[];
+    }
+
+    // helpers
     import { onMount } from 'svelte';
     import { cloudinaryPicURL } from '$lib/helpers';
 
-    // types
-    import type { IBeer } from '$lib/ts-interfaces';
-
     // props
     /** @type {import('./$types').PageData} */
-    export let data: { beer: IBeer, siblingBeers: IBeer[] };
+    export let data: IData;
 
     // components
     import InlineSVG from 'svelte-inline-svg';
@@ -15,11 +21,13 @@
     import WPill from '$lib/components/WPill.svelte';
     import WPost from '$lib/components/WReview.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
-
-    // icons
     import star_src from '$lib/assets/icons/general/star.svg';
 
     // data
+    $: beer = data?.beer;
+    $: description = data?.description || '';
+    $: hashtags = data?.hashtags || '';
+
     const reviews = [
         {
             username: 'Marcus',
@@ -93,13 +101,26 @@
         },
     ];
 
-    $: beer = data.beer;
+    // methods
     onMount(() => {
         console.log('data :>> ', data);
-        // just to see what we have to work with...
-        // console.log('/:beerid beer :>> ', beer);
     });
 </script>
+
+<svelte:head>
+    <title>Find Brews | {beer?.beerName || 'Beer'}</title>
+    <meta property="og:title" content={`Find Brews | ${beer?.beerName || 'Beer'}`} />
+    <meta property="og:url" content={`https://find-brews.com/beer/${beer?._id}`} />
+
+    {#if beer?.description || description}
+        <meta name="description" content={beer?.description || description} />
+        <meta property="og:description" content={beer?.description || description} />
+    {/if}
+    {#if hashtags}
+        <meta name="hashtags" content={hashtags} />
+        <meta property="og:hashtags" content={hashtags} />
+    {/if}
+</svelte:head>
 
 <div class="top">
     <WBack />
@@ -120,9 +141,9 @@
                 {beer.degrees} °
             </h1>
             <small class="beer__style">({beer.style})</small>
-            <!-- TODO: to add a beer description -->
+            <!-- TODO: write generic beer style descriptions, for default -->
             <p class="beer__description line-clamp">
-                {beer.description ??
+                {beer.description ||
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque quia voluptatibus sint delectus accusamus? Natus consequuntur quam quis alias, incidunt nam perferendis aspernatur laboriosam distinctio enim molestiae, id commodi aliquam!'}
             </p>
             <div class="beer__pills">

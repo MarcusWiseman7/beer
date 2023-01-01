@@ -47,22 +47,6 @@
     };
 </script>
 
-<!-- TODO move this to pages... -->
-<!-- <svelte:head>
-    <title>{title}</title>
-    <meta property="og:title" content={title} />
-    <meta property="og:url" content={'https://wounded-soldier.com' + pathname} />
-
-    {#if description}
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head> -->
-
 <div class="layout">
     <header class="header">
         <div on:click={logoClick} class="header__logo">
@@ -71,7 +55,7 @@
             </div>
             <img class="header__logo--mobile" src={menu_src} alt="menu" height="24" width="24" />
         </div>
-        <h1>Beer</h1>
+        <h1>Find Brews</h1>
     </header>
     <main>
         <!-- DESKTOP MENU -->

@@ -1,4 +1,9 @@
 <script lang="ts">
+    // types
+    import type { IPageData } from '$lib/ts-interfaces';
+    interface IData extends IPageData {}
+
+    // helpers
     import { loading, myProfile } from '$lib/stores';
     import { invalidateAll, goto } from '$app/navigation';
     import { applyAction } from '$app/forms';
@@ -7,6 +12,10 @@
     // form data
     /** @type {import('./$types').ActionData} */
     export let form;
+
+    // props
+    /** @type {import('./$types').PageData} */
+    export let data: IData;
 
     // components
     import WButton from '$lib/components/WButton.svelte';
@@ -19,6 +28,8 @@
     let signup = false;
 
     $: buttonDisabled = signup ? !email || !password || !displayName : !email || !password;
+    $: description = data?.description || '';
+    $: hashtags = data?.hashtags || '';
 
     // methods
     const toggleAuth = (): void => {
@@ -65,6 +76,21 @@
         }
     };
 </script>
+
+<svelte:head>
+    <title>Find Brews | Login</title>
+    <meta property="og:title" content="Find Brews | Login" />
+    <meta property="og:url" content="https://find-brews.com/login/'" />
+
+    {#if description}
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
+    {/if}
+    {#if hashtags}
+        <meta name="hashtags" content={hashtags} />
+        <meta property="og:hashtags" content={hashtags} />
+    {/if}
+</svelte:head>
 
 <div class="top">
     <WBack />

@@ -1,4 +1,5 @@
 import type { Types } from 'mongoose';
+import type { SanityDocument } from '@sanity/client';
 
 export interface IPost {
     title: string;
@@ -15,12 +16,26 @@ export interface IPost {
         }
     ];
     publishedAt: Date;
+    summary: string;
     body: [];
 };
 
 export interface ITranslations {
     [key: string]: string | undefined;
 };
+
+export interface ILocaleString {
+    en: string;
+    sk: string;
+    cs: string;
+    _type?: string;
+}
+
+export interface IPageData extends SanityDocument {
+    title?: ILocaleString;
+    description?: string;
+    hashtags?: string;
+}
 
 export interface IMessage {
     message: string;
