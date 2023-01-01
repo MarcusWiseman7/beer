@@ -10,7 +10,6 @@ const UserSchema = new Schema<IUser>(
         username: { type: String, trim: true, unique: true },
         avatarURL: { type: String, trim: true },
         avatarPublicId: { type: String, trim: true },
-        reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
         level: { type: Number, default: 1 },
         tempEmail: { type: String, trim: true },
         tempEmailToken: { type: String },

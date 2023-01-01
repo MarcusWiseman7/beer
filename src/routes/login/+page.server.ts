@@ -21,7 +21,7 @@ export const actions = {
         }
 
         // try to find user in db
-        const user: HydratedDocument<IUser> | null = await User.findOne({ email: userData.email }).populate('reviews').exec();
+        const user: HydratedDocument<IUser> | null = await User.findOne({ email: userData.email }).exec();
         if (!user) return invalid(404, { message: 'No user with that email address...' });
 
         // check if password matches

@@ -122,7 +122,6 @@ export interface IUser {
     username: string;
     avatarURL?: string;
     avatarPublicId?: string;
-    reviews: IReview[];
     level: number;
     tempEmail?: string;
     tempEmailToken?: string;

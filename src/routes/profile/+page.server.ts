@@ -23,7 +23,7 @@ export const actions = {
 };
 
 /** @type {import('./$types').LayoutServerLoad} */
-export function load({ cookies }) {
+export async function load({ cookies }) {
     const session = cookies.get('session');
     
     if (!session) {

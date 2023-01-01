@@ -1,9 +1,9 @@
 import type { IUser } from '$lib/ts-interfaces';
 
 // mongoose helpers
-export const userSelect = ['_id', 'avatarURL', 'avatarPublicId', 'dateCreated', 'breweriesILike', 'beersILike', 'level', 'displayName'];
+export const userSelect = ['_id', 'avatarURL', 'avatarPublicId', 'dateCreated', 'level', 'displayName'];
 export const beerSelect =
-    '_id beerName brewery style degrees abv bi logoPublicId description averageRating totalNumberOfRatings';
+    '_id beerName brewery style degrees abv bi logoPublicId description averageRating totalNumberOfRatings reviews';
 export const tempBeerSelect = beerSelect + ' tempBeer tempBrewery';
 export const brewerySelect = '-__v -sumOfAllBeerRatings -dateCreated';
 
