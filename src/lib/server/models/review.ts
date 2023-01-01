@@ -5,7 +5,6 @@ const reviewSchema = new Schema<IReview>(
     {
         picURL: { type: String, trim: true },
         picPublicId: { type: String, trim: true },
-        price: { type: Number },
         location: { type: String, trim: true },
         rating: { type: Number, required: true },
         bitter: { type: Number },

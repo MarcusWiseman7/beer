@@ -78,12 +78,10 @@ export interface IBrewery {
     averageBeerRating?: number;
 };
 
-// TODO: remove price, mdw
 export interface IReview {
     _id: Types.ObjectId;
     picURL?: string;
     picPublicId?: string;
-    price?: number;
     location?: string;
     rating: number;
     bitter?: number;
