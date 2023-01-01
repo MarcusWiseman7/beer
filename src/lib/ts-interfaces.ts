@@ -50,6 +50,13 @@ export interface ISocialNetwork {
 };
 
 export interface ICard { };
+
+export interface IBeerType {
+    _id: Types.ObjectId;
+    name: string;
+    description?: string;
+};
+
 export interface IBeer {
     _id: Types.ObjectId;
     dateCreated: Date;
@@ -57,6 +64,7 @@ export interface IBeer {
     altName?: string;
     brewery?: IBrewery;
     style?: string;
+    type?: IBeerType;
     degrees?: number;
     abv?: number;
     bi?: number;
@@ -69,11 +77,8 @@ export interface IBeer {
     sumOfAllRatings?: number;
     totalNumberOfRatings?: number;
     averageRating?: number;
-    highestAverageRatingLocation?: string;
-    sumOfAllPrices?: number;
-    totalNumberOfPrices?: number;
-    averagePrice?: number;
-    lowestPriceLocation?: string;
+    usersWhoLike: IUser[];
+    reviews: IReview[];
 };
 
 export interface IBrewery {
@@ -91,6 +96,7 @@ export interface IBrewery {
     sumOfAllBeerRatings?: number;
     totalNumberOfBeerRatings?: number;
     averageBeerRating?: number;
+    usersWhoLike: IUser[];
 };
 
 export interface IReview {
@@ -116,7 +122,8 @@ export interface IUser {
     username: string;
     avatarURL?: string;
     avatarPublicId?: string;
-    reviews?: IReview[];
+    reviews: IReview[];
+    level: number;
     tempEmail?: string;
     tempEmailToken?: string;
     gdprApproval?: boolean;

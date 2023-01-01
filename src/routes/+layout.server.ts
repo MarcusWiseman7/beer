@@ -41,7 +41,7 @@ export async function load({ request, cookies }) {
     // check if logged in
     const session = cookies.get('session');
     if (session) {
-        const user: HydratedDocument<IUser> | null = await User.findOne({ loginToken: session }).populate('reviews').exec();
+        const user: HydratedDocument<IUser> | null = await User.findOne({ loginToken: session }).exec();
 
         if (user) {
             const muser = JSON.stringify(generateReturnUser(user));

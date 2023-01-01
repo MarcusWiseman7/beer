@@ -8,6 +8,7 @@ const beerSchema = new Schema<IBeer>(
         altName: { type: String, trim: true },
         brewery: { type: Schema.Types.ObjectId, ref: 'Brewery' },
         style: { type: String, trim: true },
+        type: { type: Schema.Types.ObjectId, ref: 'BeerType' },
         degrees: { type: Number },
         abv: { type: Number },
         bi: { type: Number },
@@ -20,11 +21,8 @@ const beerSchema = new Schema<IBeer>(
         sumOfAllRatings: { type: Number, default: 0 },
         totalNumberOfRatings: { type: Number, default: 0 },
         averageRating: { type: Number, default: 0 },
-        highestAverageRatingLocation: { type: String },
-        sumOfAllPrices: { type: Number, default: 0 },
-        totalNumberOfPrices: { type: Number, default: 0 },
-        averagePrice: { type: Number, default: 0 },
-        lowestPriceLocation: { type: String },
+        usersWhoLike: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+        reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
     }
 );
 

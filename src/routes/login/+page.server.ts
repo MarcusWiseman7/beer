@@ -7,6 +7,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { invalid } from '@sveltejs/kit';
 
+const secret = import.meta.env.VITE_LOGIN_SECRET;
+const exp = import.meta.env.VITE_LOGIN_EXP;
+
 /** @type {import('./$types').Actions} */
 export const actions = {
     login: async ({ cookies, request }) => {
@@ -16,9 +19,6 @@ export const actions = {
         for (const pair of data.entries()) {
             userData[pair[0] as keyof ILogin] = pair[1];
         }
-
-        const secret = import.meta.env.VITE_LOGIN_SECRET;
-        const exp = import.meta.env.VITE_LOGIN_EXP;
 
         // try to find user in db
         const user: HydratedDocument<IUser> | null = await User.findOne({ email: userData.email }).populate('reviews').exec();
@@ -50,9 +50,6 @@ export const actions = {
         for (const pair of data.entries()) {
             userData[pair[0] as keyof ISignup] = pair[1];
         }
-        
-        const secret = import.meta.env.VITE_LOGIN_SECRET;
-        const exp = import.meta.env.VITE_LOGIN_EXP;
 
         // try to find user in db
         const alreadyUser: HydratedDocument<IUser> | null = await User.findOne({ email: userData.email }).exec();
