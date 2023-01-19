@@ -7,7 +7,7 @@ import User from '$lib/server/models/user';
 main().catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://localhost:27017/WoundedSoldier');
+    await mongoose.connect('mongodb://localhost:27017/FindBeers');
 };
 
 export default mongoose;
