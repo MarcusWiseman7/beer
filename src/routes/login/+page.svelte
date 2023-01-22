@@ -123,7 +123,7 @@
                 loading.set(false);
 
                 setAppMessage({
-                    timeout: $myProfile ? 3000 : 9000,
+                    timeout: $myProfile ? 3000 : 16000,
                     message: $myProfile
                         ? `Welcome ${$myProfile.displayName}!`
                         : `Welcome! Please check your email to verify and log in!`,

@@ -7,6 +7,17 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { invalid } from '@sveltejs/kit';
 import { randomBytes } from 'crypto';
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp-mail.outlook.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: 'no-reply.findbrews@outlook.com',
+        pass: import.meta.env.VITE_EMAIL_PASS,
+    },
+});
 
 const secret = import.meta.env.VITE_LOGIN_SECRET;
 const exp = import.meta.env.VITE_LOGIN_EXP;
@@ -82,8 +93,20 @@ export const actions = {
             await user.save(err => {
                 if (err) return invalid(500, { message: 'Server error, please try again...' });
             });
-        
-            return { success: true };
+
+            const email = await transporter.sendMail({
+                from: 'Find-Brews.com <no-reply.findbrews@outlook.com>',
+                to: userData.tempEmail,
+                subject: 'Verify your email',
+                html: `
+                    <h2>Verify your email by clicking the link below!</h2>
+                    <h4><a href="https://find-brews.com/login/${tempEmailToken}">https://find-brews.com/login/${tempEmailToken}</a></h4>
+                    <h4>Find Brews team</h4>
+                `,
+            });
+
+            if (!!email) return { success: true };
+            else return invalid(500, { message: 'Email error, please try again' });
         } catch (err) {
             return invalid(500, { message: 'Server error, please try again...' });
         }
