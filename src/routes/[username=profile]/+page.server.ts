@@ -8,9 +8,10 @@ import type { IUser } from '$lib/ts-interfaces';
 export async function load({ params }) {
     try {
         const { username } = params;
+        const name = username.replace('@', '');
 
         // find user
-        const user: IUser | null = await User.findOne({ username }).select(userSelect).lean();
+        const user: IUser | null = await User.findOne({ username: name }).select(userSelect).lean();
         if (!user) return invalid(404, { message: 'No user with that username...' });
         
         return { success: true, user: JSON.stringify(user) };

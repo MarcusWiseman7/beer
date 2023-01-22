@@ -45,7 +45,7 @@ export const derivedNav = derived(myProfile, ($myProfile) => {
     const profileTab = nav.find(n => n.name === 'profile');
 
     if (profileTab) {
-        if ($myProfile?.username) profileTab.href += `/profile/${$myProfile.username}`;
+        if ($myProfile?.username) profileTab.href += `/@${$myProfile.username}`;
         else profileTab.href = '/login';
     }
 
