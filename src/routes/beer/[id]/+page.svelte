@@ -22,6 +22,7 @@
     import WPost from '$lib/components/WReview.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import star_src from '$lib/assets/icons/general/star.svg';
+    import WBreweryBox from '$lib/components/WBreweryBox.svelte';
 
     // data
     $: beer = data?.beer;
@@ -143,8 +144,7 @@
             <small class="beer__style">({beer.style})</small>
             <!-- TODO: write generic beer style descriptions, for default -->
             <p class="beer__description line-clamp">
-                {beer.description ||
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque quia voluptatibus sint delectus accusamus? Natus consequuntur quam quis alias, incidunt nam perferendis aspernatur laboriosam distinctio enim molestiae, id commodi aliquam!'}
+                {beer.description || 'TODO: beer has no description'}
             </p>
             <div class="beer__pills">
                 {#if beer.brewery?.location}
@@ -167,16 +167,13 @@
                     </div>
                 {/if}
             </div>
-            <!-- TODO: to style brewery snippet in beer detail -->
-            <div style="max-width: 90%; overflow: hidden; font-size: 13px;padding: 30px 0">
-                {beer.brewery?.name} <br />
-                {beer.brewery?.averageBeerRating} <br />
-                {beer.brewery?.dateCreated} <br />
-                {beer.brewery?.description} <br />
-                {beer.brewery?.location} <br />
-                {beer.brewery?.logo} <br />
-                {beer.brewery?.totalNumberOfBeerRatings} <br />
-                {beer.brewery?.type} <br />
+            <div class="breweryBox-wrapper">
+                <WBreweryBox
+                    id={beer.brewery?._id}
+                    text={beer.brewery?.description}
+                    logoUrl={beer.brewery?.logo}
+                    name={beer.brewery?.name}
+                />
             </div>
         </div>
     </div>
@@ -255,6 +252,12 @@
             display: flex;
             gap: 6px;
         }
+    }
+
+    .breweryBox-wrapper {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
     }
     .beer-posts-title {
         margin: 50px 0 22px 0;

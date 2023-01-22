@@ -2,11 +2,15 @@ a {
     color: var(--link);
     &:hover {
         text-decoration: underline;
+        cursor: pointer;
     }
 }
 
 button {
     outline: none;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .btn {
@@ -30,7 +34,15 @@ button {
         background-color: var(--main-color);
         color: var(--main-light);
     }
-    // 
+    //
+    &--third {
+        transition: var(--main-transition);
+        color: var(--text);
+        &:hover {
+            background: var(--hover);
+            transition: var(--main-transition);
+        }
+    }
 }
 
 .link {

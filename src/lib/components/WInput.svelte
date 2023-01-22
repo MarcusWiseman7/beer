@@ -27,6 +27,7 @@
         overflow: hidden;
         background-color: var(--page);
         border-radius: var(--main-border-radius);
+
         position: relative;
         padding-left: 10px;
 
@@ -60,6 +61,7 @@
             z-index: 10;
             font-size: 12px;
             color: var(--c-text);
+            
             &:focus {
                 outline: none;
             }

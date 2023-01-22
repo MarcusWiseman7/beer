@@ -77,11 +77,11 @@
             </div>
         </div>
 
-        {#if asideComponent}
-            <div class="aside">
+        <div class="aside">
+            {#if asideComponent}
                 <svelte:component this={asideComponent} />
-            </div>
-        {/if}
+            {/if}
+        </div>
     </main>
 </div>
 
