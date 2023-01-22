@@ -117,7 +117,7 @@ export interface IReview {
 export interface IUser {
     _id: Types.ObjectId;
     password: string;
-    email: string;
+    email?: string;
     displayName: string;
     username: string;
     avatarURL?: string;
@@ -136,6 +136,9 @@ export interface ILogin {
     password: string;
 }
 
-export interface ISignup extends ILogin {
+export interface ISignup {
     displayName: string;
+    username: string;
+    password: string;
+    tempEmail: string;
 }

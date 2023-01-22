@@ -1,4 +1,4 @@
-import { readable, writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 import type { IUser, IBeer, IMessage, ITranslations } from './ts-interfaces';
 
 /**
@@ -31,8 +31,23 @@ export let myProfile = writable<IUser | null>(null);
 /**
  * READABLE EXPORTS
  */
-export const mainNav = readable([
-    { name: 'home', icon: Home__SvelteComponent_, href: '/' },
-    { name: 'discover', icon: Discover__SvelteComponent_, href: '/discover' },
-    { name: 'profile', icon: Profile__SvelteComponent_, href: '/profile' },
-]);
+
+/**
+ * DERIVED EXPORTS
+ */
+export const derivedNav = derived(myProfile, ($myProfile) => {
+    const nav = [
+        { name: 'home', icon: Home__SvelteComponent_, href: '/' },
+        { name: 'discover', icon: Discover__SvelteComponent_, href: '/discover' },
+        { name: 'profile', icon: Profile__SvelteComponent_, href: '' },
+    ];
+
+    const profileTab = nav.find(n => n.name === 'profile');
+
+    if (profileTab) {
+        if ($myProfile?.username) profileTab.href += `/profile/${$myProfile.username}`;
+        else profileTab.href = '/login';
+    }
+
+    return nav;
+});

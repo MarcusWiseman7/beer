@@ -1,9 +1,8 @@
 // types
 import type { IUser } from '$lib/ts-interfaces';
-import type { HydratedDocument } from 'mongoose';
 
 import User from '$lib/server/models/user';
-import { generateReturnUser } from '$lib/server/server-helpers';
+import { userSelect } from '$lib/server/server-helpers';
 import sanity from '$lib/sanity';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -41,11 +40,10 @@ export async function load({ request, cookies }) {
     // check if logged in
     const session = cookies.get('session');
     if (session) {
-        const user: HydratedDocument<IUser> | null = await User.findOne({ loginToken: session }).exec();
+        const user: IUser | null = await User.findOne({ loginToken: session }).select(userSelect).lean();
 
         if (user) {
-            const muser = JSON.stringify(generateReturnUser(user));
-            return { user: muser, locale, i18n };
+            return { user: JSON.stringify(user), locale, i18n };
         }
     }
 

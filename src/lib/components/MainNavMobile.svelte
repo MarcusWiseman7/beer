@@ -1,6 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    import { mainNav, myProfile } from '$lib/stores';
+    import { derivedNav, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { fly } from 'svelte/transition';
@@ -36,7 +36,7 @@
 
         <!-- nav -->
         <ul>
-            {#each $mainNav as link}
+            {#each $derivedNav as link}
                 <li
                     on:click={() => {
                         goto(link.href);

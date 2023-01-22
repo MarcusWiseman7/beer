@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { mainNav, myProfile } from '$lib/stores';
+    import { derivedNav, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 
@@ -29,7 +29,7 @@
 
 <nav>
     <ul>
-        {#each $mainNav as link}
+        {#each $derivedNav as link}
             <li
                 on:click={() => {
                     goto(link.href);
@@ -50,6 +50,7 @@
             </button>
         </li>
     </ul>
+
     <!-- TODO: Create socials accounts patrik! save the username -->
     <div class="menu-footer">
         <h4 class="menu-footer__title">Follow us</h4>

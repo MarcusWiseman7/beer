@@ -8,10 +8,7 @@
     import { invalidateAll, goto } from '$app/navigation';
     import { applyAction } from '$app/forms';
     import { setAppMessage } from '$lib/helpers';
-
-    // form data
-    /** @type {import('./$types').ActionData} */
-    export let form;
+    import { debounce } from 'lodash';
 
     // props
     /** @type {import('./$types').PageData} */
@@ -25,9 +22,18 @@
     let email: string;
     let password: string;
     let displayName: string;
+    let username: string;
     let signup = false;
+    let checkingEmail = false;
+    let emailExists = true;
+    let checkingUsername = false;
+    let usernameExists = true;
 
-    $: buttonDisabled = signup ? !email || !password || !displayName : !email || !password;
+    // computed
+    $: realEmail = email && /^\S+@\S+\.\S+$/.test(email);
+    $: buttonDisabled = signup
+        ? emailExists || usernameExists || !realEmail || !password || !displayName
+        : !realEmail || !password;
     $: description = data?.description || '';
     $: hashtags = data?.hashtags || '';
 
@@ -35,15 +41,73 @@
     const toggleAuth = (): void => {
         signup = !signup;
     };
-    const handleSubmit = async (event: SubmitEvent): Promise<void> => {
-        if (!email || !password || (signup && !displayName)) return;
+
+    const checkEmail = debounce(async (): Promise<void> => {
+        if (signup && realEmail && !checkingEmail) {
+            checkingEmail = true;
+
+            const body = new FormData();
+            body.append('email', email);
+
+            const response = await fetch('?/checkEmail', {
+                method: 'POST',
+                body,
+                headers: {
+                    'x-sveltekit-action': 'true',
+                },
+            });
+
+            /** @type {import('@sveltejs/kit').ActionResult} */
+            const result = await response.json();
+
+            emailExists = result.data?.emailExists;
+            checkingEmail = false;
+        }
+    }, 200);
+
+    const checkUsername = debounce(async (): Promise<void> => {
+        username = displayName.toLocaleLowerCase().replaceAll(' ', '');
+
+        if (username && !checkingUsername) {
+            checkingUsername = true;
+
+            const body = new FormData();
+            body.append('username', username);
+
+            const response = await fetch('?/checkUsername', {
+                method: 'POST',
+                body,
+                headers: {
+                    'x-sveltekit-action': 'true',
+                },
+            });
+
+            /** @type {import('@sveltejs/kit').ActionResult} */
+            const result = await response.json();
+
+            usernameExists = result.data?.usernameExists;
+            checkingUsername = false;
+        }
+    }, 200);
+
+    const handleSubmit = async (): Promise<void> => {
+        if (buttonDisabled) return;
 
         try {
             loading.set(true);
-            const data = new FormData(event.target);
+
+            const body = new FormData();
+            body.append('password', password);
+            body.append(signup ? 'tempEmail' : 'email', email);
+
+            if (signup) {
+                body.append('displayName', displayName);
+                body.append('username', username);
+            }
+
             const response = await fetch(signup ? '?/signup' : '?/login', {
                 method: 'POST',
-                body: data,
+                body,
                 headers: {
                     'x-sveltekit-action': 'true',
                 },
@@ -56,20 +120,21 @@
                 // re-run all `load` functions, following the successful update
                 await invalidateAll();
                 applyAction(result);
+                loading.set(false);
 
-                if ($myProfile) {
-                    setAppMessage({
-                        timeout: 3000,
-                        message: `Welcome ${$myProfile.displayName}!`,
-                        type: 'success',
-                        id: Date.now(),
-                    });
-                }
+                setAppMessage({
+                    timeout: $myProfile ? 3000 : 9000,
+                    message: $myProfile
+                        ? `Welcome ${$myProfile.displayName}!`
+                        : `Welcome! Please check your email to verify and log in!`,
+                    type: 'success',
+                    id: Date.now(),
+                });
                 goto('/');
+                return;
             }
 
             applyAction(result);
-
             loading.set(false);
         } catch (err) {
             console.warn(err);
@@ -99,20 +164,28 @@
 <h1>{signup ? 'Signup' : 'Login'}</h1>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-    {#if form?.missing}<p class="error">The email field is required</p>{/if}
-    {#if form?.incorrect}<p class="error">Invalid credentials!</p>{/if}
-
     <div class="inputs">
         {#if signup}
             <div class="input">
                 <label for="displayName">Display name</label>
-                <input type="text" name="displayName" id="displayName" bind:value={displayName} />
+                <input
+                    type="text"
+                    name="displayName"
+                    id="displayName"
+                    bind:value={displayName}
+                    on:input={() => checkUsername()}
+                />
+            </div>
+
+            <div class="input">
+                <label for="name">Username</label>
+                <input type="text" id="name" readonly bind:value={username} />
             </div>
         {/if}
 
         <div class="input">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" bind:value={email} />
+            <input type="email" name="email" id="email" bind:value={email} on:input={() => checkEmail()} />
         </div>
 
         <div class="input">
