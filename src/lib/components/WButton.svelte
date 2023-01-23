@@ -3,21 +3,19 @@
     export let disabled = false;
 </script>
 
-<button class={modifiers.map((m) => 'button--' + m)} on:click {disabled}>
+<button class={modifiers.map((m) => 'button--' + m).join(' ')} on:click {disabled}>
     <slot />
 </button>
 
 <style lang="scss">
     button {
         display: flex;
-        justify-content: center;
         align-items: center;
-        width: max-content;
-        border: 2px solid var(--border);
-        border-radius: 6px;
-        padding: 4px 24px;
-        font-size: 12px;
-        line-height: 16px;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 42px;
+        border-radius: var(--main-border-radius);
+        font-size: 14px;
 
         &:disabled {
             cursor: not-allowed;
@@ -26,20 +24,40 @@
     }
 
     .button {
-        &--main {
-            border: 4px solid var(--border);
-            border-radius: 12px;
-            padding: 16px 48px;
-            width: 100%;
-            font-weight: 500;
-            font-size: 20px;
-            line-height: 28px;
+        // color variants
+        &--default {
+            background-color: var(--hover);
+        }
+        &--text {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        &--primary {
+            background-color: var(--main-color);
+            color: var(--main-light);
         }
 
-        &--medium {
-            font-size: 16px;
-            font-weight: 500;
-            padding: 8px 32px;
+        &--third {
+            transition: var(--main-transition);
+            color: var(--text);
+            &:hover {
+                background: var(--hover);
+                transition: var(--main-transition);
+            }
+        }
+        // size variants
+        &--w100 {
+            width: 100%;
+        }
+        &--lg {
+            min-height: 60px;
+        }
+        &--md {
+            min-height: 48px;
+        }
+        &--sm {
+            min-height: 32px;
         }
     }
 </style>

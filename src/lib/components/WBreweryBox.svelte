@@ -3,7 +3,6 @@
     export let id: number;
     export let logoUrl: string = '';
     export let text: string = '';
-    export let link: string = '';
     export let name: string = '';
 </script>
 

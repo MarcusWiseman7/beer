@@ -11,6 +11,7 @@
     import twitter_src from '$lib/assets/icons/nav/twitter.svg';
     import instagram_src from '$lib/assets/icons/nav/instagram.svg';
     import telegram_src from '$lib/assets/icons/nav/telegram.svg';
+    import WButton from './WButton.svelte';
 
     // data
     const shareNetworks = [
@@ -42,12 +43,11 @@
                 <span class="list-item__title">{link.name}</span>
             </li>
         {/each}
-
         <li class="list-item--button">
-            <button class="btn btn--primary" on:click={addBeer}>
+            <WButton on:click={addBeer} modifiers={['primary', 'md', 'w100']}>
                 <InlineSVG src={add_beer_src} width="17" height="18" />
                 <span class="text">Add beer</span>
-            </button>
+            </WButton>
         </li>
     </ul>
 
