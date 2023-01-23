@@ -2,7 +2,8 @@ import User from '$lib/server/models/user';
 import { invalid } from '@sveltejs/kit';
 import { userSelect } from '$lib/server/server-helpers';
 import { myProfile } from '$lib/stores';
-import type { IUser } from '$lib/ts-interfaces';
+import type { IReview, IUser } from '$lib/ts-interfaces';
+import Review from '$lib/server/models/review';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({ params }) {
@@ -13,8 +14,23 @@ export async function load({ params }) {
         // find user
         const user: IUser | null = await User.findOne({ username: name }).select(userSelect).lean();
         if (!user) return invalid(404, { message: 'No user with that username...' });
+
+        // get reviews count
+        const reviewsCount = await Review.where({ reviewer: user._id }).countDocuments();
         
-        return { success: true, user: JSON.stringify(user) };
+        // get first 30 user reviews
+        const reviews: IReview[] = reviewsCount
+            ? await Review.find({ reviewer: user._id }).sort('dateCreated').limit(30).populate('beer').lean()
+            : [];
+        
+        const canFetchMoreReviews = (reviewsCount - reviews.length) > 0;
+
+        return {
+            success: true,
+            user: JSON.stringify(user),
+            reviews: JSON.stringify(reviews),
+            canFetchMoreReviews,
+        };
     } catch (err) {
         console.warn('Server error in load function :>> ', err);
     }
@@ -23,15 +39,45 @@ export async function load({ params }) {
 /** @type {import('./$types').Actions} */
 export const actions = {
     logout: async ({ cookies }) => {
-        const session = cookies.get('session');
+        try {
+            const session = cookies.get('session');
         
-        if (session) {
-            // remove token from user in db
-            await User.findOneAndUpdate({ loginToken: session }, { $set: { loginToken: Date.now().toString() } }).select('_id').lean();
-            myProfile.set(null);
-            cookies.delete('session');
-        }
+            if (session) {
+                // remove token from user in db
+                await User.findOneAndUpdate({ loginToken: session }, { $set: { loginToken: Date.now().toString() } }).select('_id').lean();
+                myProfile.set(null);
+                cookies.delete('session');
+            }
 
-        return { success: true };
+            return { success: true };
+        } catch (err) {
+            return invalid(500, { message: 'Server error, please try again...' });
+        }
+    },
+    getUserReviews: async ({ request }) => {
+        try {
+            const data = await request.formData();
+            const offset: number = parseInt(data.get('offset') || '0');
+            const limit: number = parseInt(data.get('limit') || '30');
+            const userId = data.get('userId');
+
+            // get count
+            const reviewsCount = await Review.where({ reviewer: userId }).countDocuments();
+            
+            // get next 30 user reviews
+            const reviews: IReview[] = await Review
+                .find({ reviewer: userId })
+                .sort('dateCreated')
+                .skip(offset)
+                .limit(limit)
+                .populate('beer')
+                .lean();
+            
+            const canFetchMoreReviews = (reviewsCount - (offset + reviews.length)) > 0;
+            
+            return { reviews: JSON.stringify(reviews), canFetchMoreReviews };
+        } catch (err) {
+            return invalid(500, { message: 'Server error, please try again...' });
+        }
     },
 };
