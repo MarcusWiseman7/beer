@@ -3,7 +3,7 @@
     export let disabled = false;
 </script>
 
-<button class={modifiers.map((m) => 'button--' + m)} on:click {disabled}>
+<button class={modifiers.map((m) => 'button--' + m).join(' ')} on:click {disabled}>
     <slot />
 </button>
 

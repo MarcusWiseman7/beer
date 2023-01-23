@@ -16,7 +16,7 @@ export async function load({ params, cookies }) {
 
         // try to find user in db
         const user: HydratedDocument<IUser> | null = await User.findOne({ tempEmailToken: token }).select('email tempEmail tempEmailToken loginToken displayName');
-        if (!user || !user.tempEmail) return redirect(303, '/login');
+        if (!user || !user.tempEmail) throw redirect(303, '/login');
 
         // create a session token
         const loginToken = jwt.sign({ email: user.tempEmail, date: new Date() }, secret, { expiresIn: exp });
