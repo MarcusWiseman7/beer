@@ -67,22 +67,24 @@
     {/if}
 </svelte:head>
 
-<h2 class="popular">New and popular</h2>
-<WWrapper items={data.topBeers} size="big" />
+<div class="page">
+    <h2 class="popular">New and popular</h2>
+    <WWrapper items={data.topBeers} size="big" />
 
-<div class="row">
-    <h2 class="top">Top rated beer</h2>
-    <a href="" class="link">Show all ></a>
-</div>
-<WHorizontalScroller items={data.topBeers} />
+    <div class="row">
+        <h2 class="top">Top rated beer</h2>
+        <a href="" class="link">Show all ></a>
+    </div>
+    <WHorizontalScroller items={data.topBeers} />
 
-<h2 class="timeline">Reviews timeline</h2>
-<div class="reviews">
-    {#each reviews as review}
-        <div class="posts-holder">
-            <WReview {review} />
-        </div>
-    {/each}
+    <h2 class="timeline">Reviews timeline</h2>
+    <div class="reviews">
+        {#each reviews as review}
+            <div class="posts-holder">
+                <WReview {review} />
+            </div>
+        {/each}
+    </div>
 </div>
 
 <style lang="scss">

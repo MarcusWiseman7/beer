@@ -29,3 +29,7 @@
         <meta property="og:hashtags" content={hashtags} />
     {/if}
 </svelte:head>
+
+<div class="page">
+    <!--  -->
+</div>

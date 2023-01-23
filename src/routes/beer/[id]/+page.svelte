@@ -123,72 +123,74 @@
     {/if}
 </svelte:head>
 
-<div class="top">
-    <WBack />
-</div>
-
-{#if beer}
-    <div class="beer">
-        <div class="beer__images">
-            <!-- TODO: to add beer image -->
-            <div class="main-image">
-                <img src={cloudinaryPicURL('/stock/b6_k7y5gk')} class="img-object-fit-cover" alt="logo" />
-            </div>
-        </div>
-
-        <div class="beer__info">
-            <h1 class="beer__name">
-                {beer.beerName}
-                {beer.degrees} °
-            </h1>
-            <small class="beer__style">({beer.style})</small>
-            <!-- TODO: write generic beer style descriptions, for default -->
-            <p class="beer__description line-clamp">
-                {beer.description || 'TODO: beer has no description'}
-            </p>
-            <div class="beer__pills">
-                {#if beer.brewery?.location}
-                    <div class="location">
-                        <WPill type="location">
-                            <svelte:fragment slot="title">{beer.brewery?.location}</svelte:fragment>
-                        </WPill>
-                    </div>
-                {/if}
-
-                {#if beer.averageRating}
-                    <div class="pill-wrapper">
-                        <WPill type="rating">
-                            <svelte:fragment slot="image">
-                                <InlineSVG src={star_src} />
-                            </svelte:fragment>
-                            <svelte:fragment slot="title">{beer.averageRating}</svelte:fragment>
-                            <svelte:fragment slot="info">({beer.totalNumberOfRatings} reviews)</svelte:fragment>
-                        </WPill>
-                    </div>
-                {/if}
-            </div>
-            <div class="breweryBox-wrapper">
-                <WBreweryBox
-                    id={beer.brewery?._id}
-                    text={beer.brewery?.description}
-                    logoUrl={beer.brewery?.logo}
-                    name={beer.brewery?.name}
-                />
-            </div>
-        </div>
+<div class="page">
+    <div class="top">
+        <WBack />
     </div>
-{/if}
 
-<h2 class="beer-posts-title">Similar beers</h2>
-<WHorizontalScroller items={beers} />
+    {#if beer}
+        <div class="beer">
+            <div class="beer__images">
+                <!-- TODO: to add beer image -->
+                <div class="main-image">
+                    <img src={cloudinaryPicURL('/stock/b6_k7y5gk')} class="img-object-fit-cover" alt="logo" />
+                </div>
+            </div>
 
-<h2 class="beer-posts-title">Last user's reviews</h2>
-<div class="reviews">
-    {#each reviews as review}
-        <div class="posts-holder">
-            <WPost {review} />
+            <div class="beer__info">
+                <h1 class="beer__name">
+                    {beer.beerName}
+                    {beer.degrees} °
+                </h1>
+                <small class="beer__style">({beer.style})</small>
+                <!-- TODO: write generic beer style descriptions, for default -->
+                <p class="beer__description line-clamp">
+                    {beer.description || 'TODO: beer has no description'}
+                </p>
+                <div class="beer__pills">
+                    {#if beer.brewery?.location}
+                        <div class="location">
+                            <WPill type="location">
+                                <svelte:fragment slot="title">{beer.brewery?.location}</svelte:fragment>
+                            </WPill>
+                        </div>
+                    {/if}
+
+                    {#if beer.averageRating}
+                        <div class="pill-wrapper">
+                            <WPill type="rating">
+                                <svelte:fragment slot="image">
+                                    <InlineSVG src={star_src} />
+                                </svelte:fragment>
+                                <svelte:fragment slot="title">{beer.averageRating}</svelte:fragment>
+                                <svelte:fragment slot="info">({beer.totalNumberOfRatings} reviews)</svelte:fragment>
+                            </WPill>
+                        </div>
+                    {/if}
+                </div>
+                <div class="breweryBox-wrapper">
+                    <WBreweryBox
+                        id={beer.brewery?._id}
+                        text={beer.brewery?.description}
+                        logoUrl={beer.brewery?.logo}
+                        name={beer.brewery?.name}
+                    />
+                </div>
+            </div>
         </div>
-    {/each}
+    {/if}
+
+    <h2 class="beer-posts-title">Similar beers</h2>
+    <WHorizontalScroller items={beers} />
+
+    <h2 class="beer-posts-title">Last user's reviews</h2>
+    <div class="reviews">
+        {#each reviews as review}
+            <div class="posts-holder">
+                <WPost {review} />
+            </div>
+        {/each}
+    </div>
 </div>
 
 <style lang="scss">

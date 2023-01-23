@@ -8,7 +8,7 @@
 
 <a href={'/brewery/' + id} class={`breweryBox breweryBox--${type}`}>
     <div class="breweryBox__image">
-        <img src={logoUrl} alt="brewery image" />
+        <img src={logoUrl} alt="brewery" />
     </div>
     <p class="breweryBox__text">{text.substring(0, 90) + '...'}</p>
     <button type="button" class="breweryBox__button btn btn--third">About {name}</button>

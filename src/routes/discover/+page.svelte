@@ -32,8 +32,10 @@
     {/if}
 </svelte:head>
 
-<div class="top">
-    <WBack />
+<div class="page">
+    <div class="top">
+        <WBack />
+    </div>
 </div>
 
 <style lang="scss">

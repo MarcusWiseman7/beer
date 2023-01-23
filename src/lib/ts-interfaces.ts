@@ -55,6 +55,9 @@ export interface IBeerType {
     _id: Types.ObjectId;
     name: string;
     description?: string;
+    abv?: string;
+    ibu?: string;
+    color?: string;
 };
 
 export interface IBeer {

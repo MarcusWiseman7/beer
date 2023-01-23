@@ -1,27 +1,35 @@
 <script lang="ts">
     // types
-    import type { IPageData, IUser } from '$lib/ts-interfaces';
+    import type { IPageData, IReview, IUser } from '$lib/ts-interfaces';
     interface IData extends IPageData {
         user: IUser;
+        reviews: IReview[];
+        canFetchMoreReviews: boolean;
     }
 
     // helpers
     import { loading, myProfile } from '$lib/stores';
+    import { onMount } from 'svelte';
+    import { setAppMessage } from '$lib/helpers';
 
     // components
     import WBack from '$lib/components/WBack.svelte';
-    import { onMount } from 'svelte';
-    import { setAppMessage } from '$lib/helpers';
 
     // props
     /** @type {import('./$types').PageData} */
     export let data: IData;
 
     // data
+    let moreReviews = true;
+    let fetchingReviews = false;
+    const reviews: IReview[] = [];
+
+    // computed
     $: description = data?.description || '';
     $: hashtags = data?.hashtags || '';
     $: profile = data?.profile;
     $: myProfilePage = !!($myProfile && $myProfile._id === profile?._id);
+    $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
 
     // methods
     const logout = async (): Promise<void> => {
@@ -40,7 +48,6 @@
             const result = await response.json();
 
             if (result.type === 'success') {
-                loading.set(false);
                 window.location.reload();
 
                 setAppMessage({
@@ -52,26 +59,68 @@
                 return;
             }
 
-            loading.set(false);
             setAppMessage({
                 timeout: 3000,
                 message: 'Error logging out, please try again...',
                 type: 'error',
                 id: Date.now(),
             });
-        } catch (err) {}
+        } catch (err) {
+            setAppMessage({
+                timeout: 3000,
+                message: 'Error logging out, please try again...',
+                type: 'error',
+                id: Date.now(),
+            });
+        } finally {
+            loading.set(false);
+        }
+    };
+
+    const getUserReviews = async (): Promise<void> => {
+        try {
+            if (!canFetchMoreReviews || fetchingReviews) return;
+            fetchingReviews = true;
+
+            const body = new FormData();
+            body.append('offset', reviews.length.toString());
+            body.append('userId', profile._id);
+
+            const response = await fetch('?/getUserReviews', {
+                method: 'POST',
+                body,
+                headers: {
+                    'x-sveltekit-action': 'true',
+                },
+            });
+
+            /** @type {import('@sveltejs/kit').ActionResult} */
+            const result = await response.json();
+
+            if (result.type === 'success' && result.data?.reviews) {
+                const dataReviews: IReview[] = JSON.parse(result.data.reviews);
+                reviews.push(...dataReviews);
+                moreReviews = result.data.canFetchMoreReviews;
+            }
+        } catch (err) {
+            console.warn('Error getting more user reviews :>> ', err);
+        } finally {
+            setTimeout(() => {
+                fetchingReviews = false;
+            }, 200);
+        }
     };
 
     onMount(() => {
-        console.log('profile :>> ', profile);
-        console.log('myProfilePage :>> ', myProfilePage);
+        canFetchMoreReviews = !!data?.canFetchMoreReviews;
     });
 </script>
 
 <svelte:head>
-    <title>Find Brews | Profile</title>
-    <meta property="og:title" content="Find Brews | Profile" />
-    <meta property="og:url" content="https://find-brews.com/profile/'" />
+    <title>Find Brews | @{profile?.username}</title>
+    <meta property="og:title" content={`Find Brews | @${profile?.username}`} />
+    <meta property="og:url" content={`https://find-brews.com/@${profile?.username}`} />
+    <link rel="canonical" href={`https://find-brews.com/@${profile?.username}`} />
 
     {#if description}
         <meta name="description" content={description} />
@@ -83,16 +132,18 @@
     {/if}
 </svelte:head>
 
-<div class="top">
-    <WBack />
-</div>
+<div class="page">
+    <div class="top">
+        <WBack />
+    </div>
 
-<div class="profile">
-    {#if myProfilePage}
-        <div class="log-out">
-            <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
-        </div>
-    {/if}
+    <div class="profile">
+        {#if myProfilePage}
+            <div class="log-out">
+                <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
+            </div>
+        {/if}
+    </div>
 </div>
 
 <style lang="scss">
