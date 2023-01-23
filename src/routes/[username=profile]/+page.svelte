@@ -48,7 +48,6 @@
             const result = await response.json();
 
             if (result.type === 'success') {
-                loading.set(false);
                 window.location.reload();
 
                 setAppMessage({
@@ -60,14 +59,22 @@
                 return;
             }
 
-            loading.set(false);
             setAppMessage({
                 timeout: 3000,
                 message: 'Error logging out, please try again...',
                 type: 'error',
                 id: Date.now(),
             });
-        } catch (err) {}
+        } catch (err) {
+            setAppMessage({
+                timeout: 3000,
+                message: 'Error logging out, please try again...',
+                type: 'error',
+                id: Date.now(),
+            });
+        } finally {
+            loading.set(false);
+        }
     };
 
     const getUserReviews = async (): Promise<void> => {
@@ -95,12 +102,12 @@
                 reviews.push(...dataReviews);
                 moreReviews = result.data.canFetchMoreReviews;
             }
-
+        } catch (err) {
+            console.warn('Error getting more user reviews :>> ', err);
+        } finally {
             setTimeout(() => {
                 fetchingReviews = false;
             }, 200);
-        } catch (err) {
-            console.warn('Error getting more user reviews :>> ', err);
         }
     };
 
@@ -125,16 +132,18 @@
     {/if}
 </svelte:head>
 
-<div class="top">
-    <WBack />
-</div>
+<div class="page">
+    <div class="top">
+        <WBack />
+    </div>
 
-<div class="profile">
-    {#if myProfilePage}
-        <div class="log-out">
-            <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
-        </div>
-    {/if}
+    <div class="profile">
+        {#if myProfilePage}
+            <div class="log-out">
+                <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
+            </div>
+        {/if}
+    </div>
 </div>
 
 <style lang="scss">
