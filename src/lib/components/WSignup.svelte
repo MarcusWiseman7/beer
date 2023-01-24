@@ -208,7 +208,7 @@
             </div>
             <div class="needAccount">
                 {signup ? "Don't have an account?" : 'I have an account.'}
-                <button on:click={toggleAuth} class="link">{signup ? 'Signup' : 'Login'}</button>
+                <button on:click={toggleAuth} type="button" class="link">{signup ? 'Signup' : 'Login'}</button>
             </div>
         </div>
     </div>
