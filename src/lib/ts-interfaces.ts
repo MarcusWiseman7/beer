@@ -51,13 +51,15 @@ export interface ISocialNetwork {
 
 export interface ICard { };
 
-export interface IBeerType {
-    _id: Types.ObjectId;
+export interface INewBeerType {
     name: string;
     description?: string;
     abv?: string;
     ibu?: string;
     color?: string;
+};
+export interface IBeerType extends INewBeerType {
+    _id: Types.ObjectId;
 };
 
 export interface IBeer {

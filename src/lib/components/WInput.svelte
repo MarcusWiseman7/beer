@@ -1,21 +1,16 @@
 <script lang="ts">
-    export let id: string;
-    export let label: string;
-    export let errorMsg: string;
-    export let autocomplete: string;
-
-    let isFocused = false;
-
-    const onFocus = () => (isFocused = true);
-    const onBlur = () => (isFocused = false);
+    export let id: string = '';
+    export let label: string = '';
+    export let errorMsg: string = '';
+    export let focused = false;
 </script>
 
-<div class={`w-input ${isFocused ? 'w-input--focused' : ''} ${errorMsg ? 'w-input--error' : ''}`}>
+<div class={`w-input ${focused ? 'w-input--focused' : ''} ${errorMsg ? 'w-input--error' : ''}`}>
     {#if label}
         <label for={id}>{label}</label>
     {/if}
 
-    <input type="text" name={id} {id} {autocomplete} on:input on:focus={onFocus} on:blur={onBlur} />
+    <slot />
 
     {#if errorMsg}
         <p class="error-msg">{errorMsg}</p>

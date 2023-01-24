@@ -1,5 +1,5 @@
 import type { IUser, ISignup, ILogin } from '$lib/ts-interfaces';
-import type { HydratedDocument } from 'mongoose';
+import type { HydratedDocument, LeanDocument } from 'mongoose';
 
 import _db from '$lib/server/database';
 import User from '$lib/server/models/user';
@@ -65,7 +65,7 @@ export const actions = {
             const email = data.get('email');
 
             // try to find user in db
-            const foundUser: HydratedDocument<IUser> | null = await User.findOne({ email }).select('_id').lean();
+            const foundUser: LeanDocument<IUser> | null = await User.findOne({ email }).select('_id').lean();
             return { emailExists: !!foundUser };
         } catch (err) {
             return invalid(500, { message: 'Server error, please try again...' });
@@ -77,7 +77,7 @@ export const actions = {
             const username = data.get('username');
 
             // try to find user in db
-            const foundUser: HydratedDocument<IUser> | null = await User.findOne({ username }).select('_id').lean();
+            const foundUser: LeanDocument<IUser> | null = await User.findOne({ username }).select('_id').lean();
             return { usernameExists: !!foundUser };
         } catch (err) {
             return invalid(500, { message: 'Server error, please try again...' });
@@ -93,7 +93,7 @@ export const actions = {
             }
 
             // try to find user with email/username in db
-            const alreadyUser: HydratedDocument<IUser> | null = await User.findOne({ $or: [{ email: userData.tempEmail }, { username: userData.username }] }).select('_id').lean();
+            const alreadyUser: LeanDocument<IUser> | null = await User.findOne({ $or: [{ email: userData.tempEmail }, { username: userData.username }] }).select('_id').lean();
             if (alreadyUser) return invalid(403, { message: 'User with that email address already in system' });
             
             // create temp email token
