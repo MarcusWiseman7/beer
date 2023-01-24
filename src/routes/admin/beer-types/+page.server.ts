@@ -30,6 +30,9 @@ export async function load({ cookies, params }) {
     /**
      * END ROUTE GUARD
      */
+
+    const types: IBeerType[] = await BeerType.find().select('-__v').lean();
+    return JSON.stringify({ types });
 }
 
 /** @type {import('./$types').Actions} */
@@ -53,7 +56,7 @@ export const actions = {
                 if (err) return invalid(500, { message: 'Mongoose error on save!' });
             });
 
-            return { success: true };
+            return { beerType: JSON.stringify(beerType) };
         } catch (err) {
             return invalid(500, { message: 'Server error, please try again...' });
         }
