@@ -9,8 +9,9 @@
         margin-top: 90px;
 
         span {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 20px;
+            color: var(--text-3);
         }
     }
 </style>
