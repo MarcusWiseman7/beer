@@ -13,38 +13,6 @@ button {
     }
 }
 
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 30px;
-    padding: 0 42px;
-    border-radius: var(--main-border-radius);
-    font-size: 14px;
-    &--default {
-        background-color: var(--hover);
-    }
-    &--text {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-    // color variants
-    &--primary {
-        background-color: var(--main-color);
-        color: var(--main-light);
-    }
-    //
-    &--third {
-        transition: var(--main-transition);
-        color: var(--text);
-        &:hover {
-            background: var(--hover);
-            transition: var(--main-transition);
-        }
-    }
-}
-
 .link {
     font-size: 14px;
     color: var(--text);
