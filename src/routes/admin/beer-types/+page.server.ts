@@ -1,35 +1,20 @@
 // types
-import type { IBeerType, INewBeerType, IUser } from '$lib/ts-interfaces';
+import type { IBeerType, INewBeerType } from '$lib/ts-interfaces';
 import type { HydratedDocument, LeanDocument } from 'mongoose';
 
 // models
 import BeerType from '$lib/server/models/beerType';
-import User from '$lib/server/models/user';
 
 // helpers
-import { invalid, redirect } from '@sveltejs/kit';
+import { invalid } from '@sveltejs/kit';
+import { adminLevelRouteGuard } from '$lib/server/admin-guard';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ cookies, params }) {
     /**
      * ROUTE GUARD
      */
-    let level;
-    const session = cookies.get('session');
-
-    if (params.level) {
-        level = params.level;
-    } else if (session) {
-        const user: IUser | null = await User.findOne({ loginToken: session }).select('level').lean();
-        if (user) level = user.level;
-    }
-
-    if (!session || !level || level < 100) {
-        throw redirect(303, '/');
-    }
-    /**
-     * END ROUTE GUARD
-     */
+    await adminLevelRouteGuard(cookies, params);
 
     const types: IBeerType[] = await BeerType.find().select('-__v').lean();
     return JSON.stringify({ types });
@@ -55,6 +40,29 @@ export const actions = {
             await beerType.save(err => {
                 if (err) return invalid(500, { message: 'Mongoose error on save!' });
             });
+
+            return { beerType: JSON.stringify(beerType) };
+        } catch (err) {
+            return invalid(500, { message: 'Server error, please try again...' });
+        }
+    },
+    updateBeerType: async ({ request }) => {
+        try {
+            const data = await request.formData();
+            const _id = data.get('_id');
+            const typeData = {};
+
+            for (const pair of data.entries()) {
+                if (pair[0] !== '_id') {
+                    typeData[pair[0] as keyof Object] = pair[1];
+                }
+            }
+
+            // update in db
+            const beerType: LeanDocument<IBeerType> = await BeerType
+                .findOneAndUpdate({ _id }, { $set: typeData }, { new: true })
+                .select('-_v')
+                .lean();
 
             return { beerType: JSON.stringify(beerType) };
         } catch (err) {

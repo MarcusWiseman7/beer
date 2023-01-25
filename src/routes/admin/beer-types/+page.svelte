@@ -21,6 +21,8 @@
     // data
     let controlList: IBeerType[] = [];
     let addBeerTypeForm = false;
+    let query = '';
+    let filteredBeerTypesList: IBeerType[] = [];
     const payload: INewBeerType = {
         name: '',
         description: '',
@@ -54,21 +56,23 @@
             const result = await response.json();
 
             if (result.type === 'success') {
-                setAppMessage({
-                    timeout: 3000,
-                    message: 'Beer type added!',
-                    type: 'success',
-                    id: Date.now(),
-                });
-
+                // reset form
                 Object.keys(payload).forEach((p) => {
                     payload[p as keyof INewBeerType] = '';
                 });
 
+                // update list
                 const beerType = JSON.parse(result.data.beerType);
                 delete beerType._v;
                 data.types.unshift(beerType);
                 createControlList();
+
+                setAppMessage({
+                    timeout: 3000,
+                    message: `${beerType.name} added!`,
+                    type: 'success',
+                    id: Date.now(),
+                });
             } else {
                 setAppMessage({
                     timeout: 3000,
@@ -92,12 +96,62 @@
     };
 
     const updateBeerType = async (beerType: IBeerType): Promise<void> => {
-        const y = controlList.find((x) => x._id === beerType._id);
-        const changed = !isEqual(y, beerType);
+        try {
+            const y = controlList.find((x) => x._id === beerType._id);
+            const changed = !isEqual(y, beerType);
 
-        console.log('changed :>> ', changed);
+            if (y && changed) {
+                loading.set(true);
+                const body = new FormData();
+                body.append('_id', beerType._id.toString());
 
-        if (changed) {
+                Object.entries(beerType).forEach((b) => {
+                    if (b[1] !== y[b[0] as keyof IBeerType]) {
+                        body.append(b[0], b[1]);
+                    }
+                });
+
+                const response = await fetch('?/updateBeerType', {
+                    method: 'POST',
+                    body,
+                    headers: {
+                        'x-sveltekit-action': 'true',
+                    },
+                });
+
+                /** @type {import('@sveltejs/kit').ActionResult} */
+                const result = await response.json();
+
+                if (result.type === 'success') {
+                    // update list
+                    createControlList();
+
+                    setAppMessage({
+                        timeout: 3000,
+                        message: `${beerType.name} updated!`,
+                        type: 'success',
+                        id: Date.now(),
+                    });
+                } else {
+                    setAppMessage({
+                        timeout: 3000,
+                        message: `Error updating ${beerType.name}!`,
+                        type: 'error',
+                        id: Date.now(),
+                    });
+                }
+            }
+        } catch (err) {
+            console.warn('Error updating beer type :>> ', err);
+
+            setAppMessage({
+                timeout: 3000,
+                message: `Error updating ${beerType.name}!`,
+                type: 'error',
+                id: Date.now(),
+            });
+        } finally {
+            loading.set(false);
         }
     };
 
@@ -105,6 +159,10 @@
         if (data?.types) {
             controlList = JSON.parse(JSON.stringify(data.types));
         }
+    };
+
+    const searchQuery = (): void => {
+        filteredBeerTypesList = beerTypesList.filter((b) => b.name.toLowerCase().includes(query.toLowerCase()));
     };
 
     onMount(() => {
@@ -136,8 +194,14 @@
             <WButton on:click={() => (addBeerTypeForm = !addBeerTypeForm)}>Add new type</WButton>
         </div>
 
+        <div class="search">
+            <WInput label="Search">
+                <input type="text" bind:value={query} on:input={() => searchQuery()} />
+            </WInput>
+        </div>
+
         <ul>
-            {#each beerTypesList as beerType}
+            {#each query ? filteredBeerTypesList : beerTypesList as beerType}
                 <li>
                     <form on:submit|preventDefault>
                         <div class="questions">
@@ -162,6 +226,10 @@
     .title {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 40px;
+    }
+
+    .search {
         margin-bottom: 40px;
     }
 
