@@ -1,16 +1,17 @@
 <script lang="ts">
+    // helpers
     import { createEventDispatcher } from 'svelte';
     import { derivedNav, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { fly } from 'svelte/transition';
     import { linear } from 'svelte/easing';
-    import InlineSVG from 'svelte-inline-svg';
 
     // icons
     import close_src from '$lib/assets/icons/general/closer.svg';
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
 
+    // computed
     $: activeRoute = $page.url.pathname;
 
     // methods
@@ -31,7 +32,7 @@
     <nav>
         <!-- closer -->
         <div class="closer">
-            <InlineSVG src={close_src} />
+            <img src={close_src} alt="Close" />
         </div>
 
         <!-- nav -->
@@ -50,7 +51,7 @@
 
             <li class="list-item--button">
                 <button on:click={addBeer}>
-                    <InlineSVG src={add_beer_src} width="20" height="20" />
+                    <img src={add_beer_src} alt="Beer mug" width="20" height="20" />
                     <span>Add beer</span>
                 </button>
             </li>

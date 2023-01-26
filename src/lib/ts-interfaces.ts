@@ -1,4 +1,4 @@
-import type { Types } from 'mongoose';
+import type { ObjectId } from 'mongoose';
 import type { SanityDocument } from '@sanity/client';
 
 export interface IPost {
@@ -59,11 +59,11 @@ export interface INewBeerType {
     color?: string;
 };
 export interface IBeerType extends INewBeerType {
-    _id: Types.ObjectId;
+    _id: ObjectId;
 };
 
 export interface IBeer {
-    _id: Types.ObjectId;
+    _id: ObjectId;
     dateCreated: Date;
     beerName: string;
     altName?: string;
@@ -87,7 +87,7 @@ export interface IBeer {
 };
 
 export interface IBrewery {
-    _id: Types.ObjectId;
+    _id: ObjectId;
     dateCreated?: Date;
     name: string;
     altName?: string;
@@ -105,7 +105,7 @@ export interface IBrewery {
 };
 
 export interface IReview {
-    _id: Types.ObjectId;
+    _id: ObjectId;
     picURL?: string;
     picPublicId?: string;
     location?: string;
@@ -120,7 +120,7 @@ export interface IReview {
 };
 
 export interface IUser {
-    _id: Types.ObjectId;
+    _id: ObjectId;
     password: string;
     email?: string;
     displayName: string;

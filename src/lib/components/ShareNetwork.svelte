@@ -2,7 +2,6 @@
     import networks from '../social-networks';
     import { createEventDispatcher } from 'svelte';
     import { page } from '$app/stores';
-    import InlineSVG from 'svelte-inline-svg';
 
     // directives
     const dispatch = createEventDispatcher();
@@ -187,7 +186,7 @@
     href="javascript:void(0);"
     on:click={() => (rawLink.substring(0, 4) === 'http' ? share() : touch())}
 >
-    <InlineSVG src={icon} height={size} width={size} />
+    <img src={icon} height={size} width={size} alt="social icon" />
 </svelte:element>
 
 <style lang="scss">

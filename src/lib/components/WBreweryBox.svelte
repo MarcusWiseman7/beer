@@ -1,6 +1,10 @@
 <script lang="ts">
+    // types
+    import type { ObjectId } from 'mongoose';
+
+    // props
     export let type: string = 'normal';
-    export let id: number;
+    export let id: ObjectId;
     export let logoUrl: string = '';
     export let text: string = '';
     export let name: string = '';

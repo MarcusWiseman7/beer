@@ -1,6 +1,5 @@
 <script lang="ts">
     import back_src from '$lib/assets/icons/nav/arrow_back.svg';
-    import InlineSVG from 'svelte-inline-svg';
 
     import { goto, afterNavigate } from '$app/navigation';
 
@@ -17,7 +16,7 @@
 </script>
 
 <div class="back" on:click={goBack}>
-    <InlineSVG src={back_src} />
+    <img src={back_src} alt="Back arrow" />
     <span>back</span>
 </div>
 

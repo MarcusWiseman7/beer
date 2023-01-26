@@ -1,39 +1,43 @@
 <script lang="ts">
-    import InlineSVG from 'svelte-inline-svg';
-    import WCard from './WCard.svelte';
+    // types
     import type { IBeer } from '$lib/ts-interfaces';
+
+    // components
+    import WCard from './WCard.svelte';
 
     // icons
     import leftarrow_src from '$lib/assets/icons/scroller/left.svg';
     import rightarrow_src from '$lib/assets/icons/scroller/right.svg';
+
+    // helpers
     import { getPointFromEvent } from '$lib/helpers';
     import { onMount } from 'svelte';
 
+    // props
     export let arrowsDisabled: boolean = false;
     export let items: IBeer[];
 
+    // data
     let scroller: HTMLDivElement;
 
+    // computed
     $: scrollerInitialized = false;
-
     $: canShowArrows = false;
     $: showLeftArrow = !arrowsDisabled && canShowArrows && scrollPosition > 0;
     $: showRightArrow =
         !arrowsDisabled && canShowArrows && scroller?.scrollWidth - 20 > scroller?.clientWidth + scrollPosition;
-
     $: scrollPosition = 0;
     $: ticking = false;
-
     $: drag = false;
     $: wantDrag = false;
     $: startX = 0;
     $: finalX = 0;
     $: startScroll = 0;
-
     $: numberOfVisibleItems = 2;
     $: gapAdjustment = 12 * (numberOfVisibleItems - 1);
     $: itemWidth = (scroller?.clientWidth - gapAdjustment) / numberOfVisibleItems;
 
+    // methods
     const updateCanShowArrows = (bool: boolean): void => {
         canShowArrows = bool;
     };
@@ -48,6 +52,7 @@
             ticking = true;
         }
     };
+
     const dragstart = ($event: PointerEvent): void => {
         if (scroller) {
             startX = getPointFromEvent($event).x;
@@ -55,6 +60,7 @@
             wantDrag = true;
         }
     };
+
     const draging = ($event: PointerEvent): void => {
         if (wantDrag) {
             const distance = startX - getPointFromEvent($event).x;
@@ -65,6 +71,7 @@
             }
         }
     };
+
     const dragend = (): void => {
         if (drag) {
             setTimeout(() => {
@@ -79,6 +86,7 @@
             finalX = 0;
         }, 300);
     };
+
     const arrowClick = (direction: number): void => {
         scroller.scrollBy({ top: 0, left: direction * (itemWidth * 3), behavior: 'smooth' });
     };
@@ -116,7 +124,7 @@
             class={`arrow__wrapper arrow__wrapper--left ${showLeftArrow ? '' : 'hidden'}`}
         >
             <div class="arrow arrow--left">
-                <InlineSVG src={leftarrow_src} />
+                <img src={leftarrow_src} alt="Left arrow" />
             </div>
         </div>
 
@@ -141,7 +149,7 @@
             class={`arrow__wrapper arrow__wrapper--right ${showRightArrow ? '' : 'hidden'}`}
         >
             <div class="arrow arrow--right">
-                <InlineSVG src={rightarrow_src} />
+                <img src={rightarrow_src} alt="Right arrow" />
             </div>
         </div>
     </div>

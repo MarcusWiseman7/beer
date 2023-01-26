@@ -12,7 +12,6 @@
     export let data: IData;
 
     // components
-    import InlineSVG from 'svelte-inline-svg';
     import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import WCard from '$lib/components/WCard.svelte';
@@ -76,10 +75,15 @@
         <div class="brewery">
             <div class="brewery__images">
                 <div class="main-image">
-                    <div class="icon"><InlineSVG src={brewery_machine_src} width="56" height="60" /></div>
-                    <div class="logo">
-                        <img src={brewery.logo} class="" alt="logo" />
-                    </div>
+                    {#if brewery.logo}
+                        <div class="logo">
+                            <img src={brewery.logo} class="" alt="logo" />
+                        </div>
+                    {:else}
+                        <div class="icon">
+                            <img src={brewery_machine_src} width="56" height="60" alt="Brewery still" />
+                        </div>
+                    {/if}
                 </div>
             </div>
 
@@ -93,7 +97,7 @@
                         <div class="location">
                             <WPill type="location">
                                 <svelte:fragment slot="image">
-                                    <InlineSVG src={cz_src} width="28" />
+                                    <img src={cz_src} width="28" alt="Star" />
                                 </svelte:fragment>
                                 <svelte:fragment slot="title">{brewery.location}</svelte:fragment>
                             </WPill>
@@ -113,7 +117,7 @@
                             <div class="pill-wrapper">
                                 <WPill type="rating">
                                     <svelte:fragment slot="image">
-                                        <InlineSVG src={star_src} />
+                                        <img src={star_src} alt="Star" />
                                     </svelte:fragment>
                                     <svelte:fragment slot="title">{brewery.averageBeerRating}</svelte:fragment>
                                     <svelte:fragment slot="info"

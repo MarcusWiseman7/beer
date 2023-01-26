@@ -13,7 +13,6 @@
     export let data: IData;
 
     // components
-    import InlineSVG from 'svelte-inline-svg';
     import WBack from '$lib/components/WBack.svelte';
     import WSignup from '$lib/components/WSignup.svelte';
 
@@ -42,24 +41,24 @@
 </div>
 <div class="form-wrapper">
     <div class="form-wrapper__top">
-        <InlineSVG src={stone1_src} />
+        <img src={stone1_src} alt="stone" />
     </div>
     <div class="form-wrapper__middle">
         <WSignup />
     </div>
     <div class="form-wrapper__bottom">
-        <InlineSVG src={stone2_src} />
+        <img src={stone2_src} alt="stone" />
     </div>
 </div>
 <div class="content-wrapper">
     <span class="content-wrapper__small"> Story begins </span>
     <h2 class="content-wrapper__title">Raise a Glass and Join the Craft Beer Revolution</h2>
     <p class="content-wrapper__text">
-        Joining "Find-Brew" is a great way to connect with other beer enthusiasts and expand your knowledge of different
-        brews.
+        Joining "Find-Brews" is a great way to connect with other beer enthusiasts and expand your knowledge of
+        different brews.
     </p>
     <div class="content-wrapper__icon">
-        <InlineSVG src={people_src} style="margin: 0 auto;" />
+        <img src={people_src} alt="" style="margin: 0 auto;" />
     </div>
 </div>
 

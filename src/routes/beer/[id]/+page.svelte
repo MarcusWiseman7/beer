@@ -16,19 +16,21 @@
     export let data: IData;
 
     // components
-    import InlineSVG from 'svelte-inline-svg';
     import WBack from '$lib/components/WBack.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WPost from '$lib/components/WReview.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
-    import star_src from '$lib/assets/icons/general/star.svg';
     import WBreweryBox from '$lib/components/WBreweryBox.svelte';
 
-    // data
+    // icons
+    import star_src from '$lib/assets/icons/general/star.svg';
+
+    // computed
     $: beer = data?.beer;
     $: description = data?.description || '';
     $: hashtags = data?.hashtags || '';
 
+    // data
     const reviews = [
         {
             username: 'Marcus',
@@ -160,7 +162,7 @@
                         <div class="pill-wrapper">
                             <WPill type="rating">
                                 <svelte:fragment slot="image">
-                                    <InlineSVG src={star_src} />
+                                    <img src={star_src} alt="Star" />
                                 </svelte:fragment>
                                 <svelte:fragment slot="title">{beer.averageRating}</svelte:fragment>
                                 <svelte:fragment slot="info">({beer.totalNumberOfRatings} reviews)</svelte:fragment>
@@ -168,14 +170,17 @@
                         </div>
                     {/if}
                 </div>
-                <div class="breweryBox-wrapper">
-                    <WBreweryBox
-                        id={beer.brewery?._id}
-                        text={beer.brewery?.description}
-                        logoUrl={beer.brewery?.logo}
-                        name={beer.brewery?.name}
-                    />
-                </div>
+
+                {#if beer.brewery}
+                    <div class="breweryBox-wrapper">
+                        <WBreweryBox
+                            id={beer.brewery._id}
+                            text={beer.brewery.description}
+                            logoUrl={beer.brewery.logo}
+                            name={beer.brewery.name}
+                        />
+                    </div>
+                {/if}
             </div>
         </div>
     {/if}
