@@ -2,7 +2,7 @@
     export let id: string = '';
     export let label: string = '';
     export let errorMsg: string = '';
-    export let activeLabel = false;
+    export let activeLabel: boolean = false;
 </script>
 
 <div class={`w-input ${activeLabel ? 'w-input--activeLabel' : ''} ${errorMsg ? 'w-input--error' : ''}`}>

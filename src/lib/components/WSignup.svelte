@@ -26,7 +26,11 @@
     let emailExists = true;
     let checkingUsername = false;
     let usernameExists = true;
-    const focused = {};
+    const focused = {
+        email: false,
+        password: false,
+        displayName: false,
+    };
 
     // computed
     $: realEmail = email && /^\S+@\S+\.\S+$/.test(email);
@@ -63,7 +67,7 @@
     }, 200);
 
     const checkUsername = debounce(async (): Promise<void> => {
-        username = displayName.toLocaleLowerCase().replaceAll(' ', '');
+        username = displayName.toLocaleLowerCase().replaceAll(' ', '.');
 
         if (username && !checkingUsername) {
             checkingUsername = true;
@@ -147,7 +151,7 @@
                 <p class="signup__text">The goal is to facilitate usability and efficiency as much as possible.</p>
                 <div class="signup__inputs">
                     <div class="input-group">
-                        <WInput label={'Display name'} activeLabel={focused.displayName || displayName}>
+                        <WInput label={'Display name'} activeLabel={!!(focused.displayName || displayName)}>
                             <svelte:fragment slot="icon">
                                 <InlineSVG src={user_src} />
                             </svelte:fragment>
@@ -164,30 +168,15 @@
                     </div>
 
                     <div class="input-group">
-                        <WInput label={'Username'} activeLabel={focused.username || username}>
-                            <svelte:fragment slot="icon">
-                                <InlineSVG src={user_src} />
-                            </svelte:fragment>
-                            <input
-                                type="text"
-                                id="name"
-                                readonly
-                                bind:value={username}
-                                on:focus={() => (focused.username = true)}
-                                on:blur={() => (focused.username = false)}
-                            />
-                        </WInput>
-                    </div>
-
-                    <div class="input-group">
-                        <WInput label={'Email'} activeLabel={focused.email || email}>
+                        <WInput label={'Email'} activeLabel={!!(focused.email || email)}>
                             <svelte:fragment slot="icon">
                                 <InlineSVG src={email_src} />
                             </svelte:fragment>
                             <input
                                 type="email"
-                                name="email"
-                                id="email"
+                                name="username"
+                                id="username"
+                                autocomplete="username"
                                 bind:value={email}
                                 on:input={() => checkEmail()}
                                 on:focus={() => (focused.email = true)}
@@ -197,14 +186,15 @@
                     </div>
 
                     <div class="input-group">
-                        <WInput label={'Password'} activeLabel={focused.password || password}>
+                        <WInput label={'Password'} activeLabel={!!(focused.password || password)}>
                             <svelte:fragment slot="icon">
                                 <InlineSVG src={lock_src} />
                             </svelte:fragment>
                             <input
                                 type="password"
-                                name="password"
-                                id="password"
+                                name="new-password"
+                                id="new-password"
+                                autocomplete="new-password"
                                 bind:value={password}
                                 on:focus={() => (focused.password = true)}
                                 on:blur={() => (focused.password = false)}
@@ -217,14 +207,15 @@
                 <p class="signup__text">Log into Find-Brew to start sharing a beer review with your fellas.</p>
 
                 <div class="input-group">
-                    <WInput label={'Email'} activeLabel={focused.email || email}>
+                    <WInput label={'Email'} activeLabel={!!(focused.email || email)}>
                         <svelte:fragment slot="icon">
                             <InlineSVG src={email_src} />
                         </svelte:fragment>
                         <input
                             type="email"
-                            name="email"
-                            id="email"
+                            name="username"
+                            id="username"
+                            autocomplete="username"
                             bind:value={email}
                             on:input={() => checkEmail()}
                             on:focus={() => (focused.email = true)}
@@ -234,14 +225,15 @@
                 </div>
 
                 <div class="input-group">
-                    <WInput label={'EPasswordmail'} activeLabel={focused.password || password}>
+                    <WInput label={'Password'} activeLabel={!!(focused.password || password)}>
                         <svelte:fragment slot="icon">
                             <InlineSVG src={lock_src} />
                         </svelte:fragment>
                         <input
                             type="password"
-                            name="password"
-                            id="password"
+                            name="current-password"
+                            id="current-password"
+                            autocomplete="current-password"
                             bind:value={password}
                             on:focus={() => (focused.password = true)}
                             on:blur={() => (focused.password = false)}
