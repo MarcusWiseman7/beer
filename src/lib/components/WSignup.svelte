@@ -1,12 +1,11 @@
 <script lang="ts">
     // icons
-    import email_src from '$lib/assets/icons/login/email.svg';
-    import user_src from '$lib/assets/icons/login/user.svg';
-    import lock_src from '$lib/assets/icons/login/lock.svg';
+    import EmailIcon from '$lib/components/icons/login/email.svelte';
+    import UserIcon from '$lib/components/icons/login/user.svelte';
+    import LockIcon from '$lib/components/icons/login/lock.svelte';
 
     // coomponents
     import WButton from './WButton.svelte';
-    import InlineSVG from 'svelte-inline-svg';
     import WInput from '$lib/components/WInput.svelte';
 
     // helpers
@@ -153,7 +152,7 @@
                     <div class="input-group">
                         <WInput label={'Display name'} activeLabel={!!(focused.displayName || displayName)}>
                             <svelte:fragment slot="icon">
-                                <InlineSVG src={user_src} />
+                                <UserIcon />
                             </svelte:fragment>
                             <input
                                 type="text"
@@ -170,8 +169,9 @@
                     <div class="input-group">
                         <WInput label={'Email'} activeLabel={!!(focused.email || email)}>
                             <svelte:fragment slot="icon">
-                                <InlineSVG src={email_src} />
+                                <EmailIcon />
                             </svelte:fragment>
+
                             <input
                                 type="email"
                                 name="username"
@@ -188,7 +188,7 @@
                     <div class="input-group">
                         <WInput label={'Password'} activeLabel={!!(focused.password || password)}>
                             <svelte:fragment slot="icon">
-                                <InlineSVG src={lock_src} />
+                                <LockIcon />
                             </svelte:fragment>
                             <input
                                 type="password"
@@ -209,7 +209,7 @@
                 <div class="input-group">
                     <WInput label={'Email'} activeLabel={!!(focused.email || email)}>
                         <svelte:fragment slot="icon">
-                            <InlineSVG src={email_src} />
+                            <EmailIcon height={!!(focused.email || email) ? 18 : 22} />
                         </svelte:fragment>
                         <input
                             type="email"
@@ -227,7 +227,7 @@
                 <div class="input-group">
                     <WInput label={'Password'} activeLabel={!!(focused.password || password)}>
                         <svelte:fragment slot="icon">
-                            <InlineSVG src={lock_src} />
+                            <LockIcon />
                         </svelte:fragment>
                         <input
                             type="password"
