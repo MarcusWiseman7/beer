@@ -1,6 +1,8 @@
 <script lang="ts">
+    // global scss
     import '../app.scss';
 
+    // helpers
     import { appMessages, loading } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
@@ -10,7 +12,6 @@
     import MainNavMobile from '$lib/components/MainNavMobile.svelte';
     import MainNavDesktop from '$lib/components/MainNavDesktop.svelte';
     import WMessage from '$lib/components/WMessage.svelte';
-    import InlineSVG from 'svelte-inline-svg';
     import WLoading from '$lib/components/WLoading.svelte';
     import ABrewery from '$lib/components/asides/ABrewery.svelte';
     import AIndex from '$lib/components/asides/AIndex.svelte';
@@ -25,8 +26,6 @@
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
 
     // data
-    $: pathname = $page.url.pathname;
-    $: openMenu = false;
     const asideComponents = {
         beer: ABeer,
         brewery: ABrewery,
@@ -35,6 +34,10 @@
         discover: ADiscover,
         index: AIndex,
     };
+
+    // computed
+    $: pathname = $page.url.pathname;
+    $: openMenu = false;
     $: asideComponent = asideComponents[(pathname.split('/')[1] || 'index') as keyof object];
 
     // methods
@@ -51,7 +54,7 @@
     <header class="header">
         <div on:click={logoClick} class="header__logo">
             <div class="header__logo--desktop">
-                <InlineSVG src={logo_beer_src} />
+                <img src={logo_beer_src} alt="Beer logo" />
             </div>
             <img class="header__logo--mobile" src={menu_src} alt="menu" height="24" width="24" />
         </div>
@@ -67,7 +70,7 @@
         <div class="content-wrapper">
             <!-- FOAM -->
             <div class="foam">
-                <InlineSVG style="fill:inherit;" src={foam_src} />
+                <img style="fill:inherit;" src={foam_src} alt="Foam" />
             </div>
 
             <!-- PAGE SLOT -->

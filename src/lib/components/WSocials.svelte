@@ -8,7 +8,6 @@
 
     // components
     import ShareNetwork from './ShareNetwork.svelte';
-    import InlineSVG from 'svelte-inline-svg';
 
     // icons
     import plus_src from '$lib/assets/icons/general/plus.svg';
@@ -23,11 +22,11 @@
         we will let user add socials or contacts
         then we check it and change status to visible
      -->
-     {#if addMore}   
-     <button class="socials-add">
-         <InlineSVG src={plus_src} width="24" height="24" />
-     </button>
-     {/if}
+    {#if addMore}
+        <button class="socials-add">
+            <img src={plus_src} width="24" height="24" alt="Plus" />
+        </button>
+    {/if}
 </div>
 
 <style lang="scss">

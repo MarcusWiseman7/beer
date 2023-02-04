@@ -1,18 +1,24 @@
 <script lang="ts">
+    // types
     import type { IBeer } from '$lib/ts-interfaces';
-    import WPill from './WPill.svelte';
-    import InlineSVG from 'svelte-inline-svg';
-    import { cloudinaryPicURL } from '$lib/helpers';
-    import { goto } from '$app/navigation';
 
     // icons
     import cz_src from '$lib/assets/icons/flags/czech.svg';
     import star_src from '$lib/assets/icons/general/star.svg';
 
+    // components
+    import WPill from './WPill.svelte';
+
+    // helpers
+    import { cloudinaryPicURL } from '$lib/helpers';
+    import { goto } from '$app/navigation';
+
+    // props
     export let item: IBeer;
     export let size: string = 'normal';
     export let dragging: boolean = false;
 
+    // data
     const stockPhotos = [
         '/stock/b6_k7y5gk',
         '/stock/b5_tpwqfg',
@@ -21,6 +27,8 @@
         '/stock/b2_koxyps',
         '/stock/b1_y41vkg',
     ];
+
+    // methods
     const stockPic = () => {
         return stockPhotos[Math.floor(Math.random() * stockPhotos.length)];
     };
@@ -79,7 +87,7 @@
                 <!-- {#if size === 'big' && item.averageRating}
                     <WPill type="rating">
                         <svelte:fragment slot="image">
-                            <InlineSVG src={star_src} />
+                            <img src={star_src} alt="Star" />
                         </svelte:fragment>
                         <svelte:fragment slot="title">{item.averageRating}</svelte:fragment>
                         <svelte:fragment slot="info">3 reviews</svelte:fragment>
@@ -89,7 +97,7 @@
                 {#if item?.brewery?.location}
                     <WPill type="location">
                         <svelte:fragment slot="image">
-                            <InlineSVG src={cz_src} width="28" />
+                            <img src={cz_src} width="28" alt="Flag" />
                         </svelte:fragment>
                         <svelte:fragment slot="title">{item.brewery.location}</svelte:fragment>
                     </WPill>
@@ -101,7 +109,7 @@
             <div class="rating-pill">
                 <WPill type="rating-fixed">
                     <svelte:fragment slot="image">
-                        <InlineSVG src={star_src} />
+                        <img src={star_src} alt="Star" />
                     </svelte:fragment>
                     <svelte:fragment slot="title">{item.averageRating}</svelte:fragment>
                 </WPill>

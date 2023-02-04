@@ -20,7 +20,6 @@
 
     // helpers
     import { cloudinaryPicURL } from '$lib/helpers';
-    import InlineSVG from 'svelte-inline-svg';
 
     // data
     const shareNetworks = [

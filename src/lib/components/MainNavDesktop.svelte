@@ -1,17 +1,17 @@
 <script lang="ts">
+    // helpers
     import { derivedNav, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 
     // components
-    import InlineSVG from 'svelte-inline-svg';
+    import WButton from './WButton.svelte';
 
     // icons
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
     import twitter_src from '$lib/assets/icons/nav/twitter.svg';
     import instagram_src from '$lib/assets/icons/nav/instagram.svg';
     import telegram_src from '$lib/assets/icons/nav/telegram.svg';
-    import WButton from './WButton.svelte';
 
     // data
     const shareNetworks = [
@@ -20,6 +20,7 @@
         { id: 'telegram', icon: telegram_src },
     ];
 
+    // computed
     $: activeRoute = $page.url.pathname;
 
     // methods
@@ -45,7 +46,7 @@
         {/each}
         <li class="list-item--button">
             <WButton on:click={addBeer} modifiers={['primary', 'md', 'w100']}>
-                <InlineSVG src={add_beer_src} width="17" height="18" />
+                <img src={add_beer_src} width="17" height="18" alt="Beer mug" />
                 <span class="text">Add beer</span>
             </WButton>
         </li>
@@ -56,13 +57,13 @@
         <h4 class="menu-footer__title">Follow us</h4>
         <ul class="menu-footer__socials">
             <li>
-                <a href=""><InlineSVG src={instagram_src} width="18" height="18" /></a>
+                <a href=""><img src={instagram_src} height="18" width="18" alt="Instagram" /></a>
             </li>
             <li>
-                <a href=""><InlineSVG src={twitter_src} width="18" height="18" /></a>
+                <a href=""><img src={twitter_src} width="18" height="18" alt="Twitter" /></a>
             </li>
             <li>
-                <a href=""><InlineSVG src={telegram_src} width="18" height="18" /></a>
+                <a href=""><img src={telegram_src} width="18" height="18" alt="Telegram" /></a>
             </li>
         </ul>
         <ul class="menu-footer__list">
