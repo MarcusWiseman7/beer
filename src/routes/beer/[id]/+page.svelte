@@ -63,6 +63,8 @@
     ];
 
     // TODO: to add similar beers data
+    // beerTypes will help with this
+    // also, some descriptive aspects that we can add to "add post/review" can help
     const beers = [
         {
             _id: '5cb745c36ab6360801bebdad',
