@@ -21,7 +21,7 @@
     // import instagram_src from '$lib/assets/icons/social/instagram-dark.svg';
     import facebook_src from '$lib/assets/icons/social/facebook.svg';
     import instagram_src from '$lib/assets/icons/social/instagram.svg';
-    import brewery_machine_src from '$lib/assets/icons/general/brewery_machine.svg';
+    import noBreweryImg from '$lib/assets/images/no-brewery.png';
 
     // helpers
     import { onMount } from 'svelte';
@@ -67,30 +67,32 @@
 </svelte:head>
 
 <div class="page">
-    <div class="top">
+    <div class="page-top">
         <WBack />
     </div>
 
     {#if brewery}
-        <div class="brewery">
-            <div class="brewery__images">
-                <div class="main-image">
+        <div class="page-hero">
+            <div class="page-hero__image">
+                <div class="image">
                     {#if brewery.logo}
                         <div class="logo">
                             <img src={brewery.logo} class="" alt="logo" />
                         </div>
                     {:else}
                         <div class="icon">
-                            <img src={brewery_machine_src} width="56" height="60" alt="Brewery still" />
+                            <img src={noBreweryImg} alt="Brewery still" />
                         </div>
                     {/if}
                 </div>
             </div>
 
-            <div class="brewery__info">
+            <div class="page-hero__content">
                 <div>
-                    <h1 class="brewery__name">{brewery.name}</h1>
-                    <p class="brewery__description line-clamp" on:click={descriptionClick}>{brewery.description}</p>
+                    <h1 class="page-hero__content__title">{brewery.name}</h1>
+                    <p class="page-hero__content__description line-clamp" on:click={descriptionClick}>
+                        {brewery.description}
+                    </p>
                 </div>
                 <div>
                     {#if brewery.location}
@@ -142,70 +144,6 @@
 </div>
 
 <style lang="scss">
-    .top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-    .brewery {
-        display: flex;
-        gap: 28px;
-
-        &__images {
-            position: relative;
-            min-width: 170px;
-            max-width: 170px;
-            // placeholder space...
-
-            .main-image {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 170px;
-                position: relative;
-                border-radius: 3px;
-                overflow: hidden;
-                background-color: var(--body);
-            }
-
-            .icon {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-            }
-            .logo {
-                background-color: var(--page);
-                height: 80px;
-                width: 80px;
-                border-radius: 50%;
-                overflow: hidden;
-            }
-        }
-
-        &__info {
-            width: 100%;
-        }
-
-        &__name {
-            font-weight: 600;
-            font-size: 26px;
-            line-height: 26px;
-            margin-bottom: 15px;
-        }
-
-        &__description {
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 25px;
-            color: var(--text-3);
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-    }
-
     .location {
         margin-top: 24px;
         display: flex;

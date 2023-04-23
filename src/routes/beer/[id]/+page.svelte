@@ -126,30 +126,30 @@
 </svelte:head>
 
 <div class="page">
-    <div class="top">
+    <div class="page-top">
         <WBack />
     </div>
 
     {#if beer}
-        <div class="beer">
-            <div class="beer__images">
+        <div class="page-hero">
+            <div class="page-hero__image">
                 <!-- TODO: to add beer image -->
-                <div class="main-image">
+                <div class="image">
                     <img src={cloudinaryPicURL('/stock/b6_k7y5gk')} class="img-object-fit-cover" alt="logo" />
                 </div>
             </div>
 
-            <div class="beer__info">
-                <h1 class="beer__name">
+            <div class="page-hero__content">
+                <h1 class="page-hero__content__title">
                     {beer.beerName}
                     {beer.degrees} °
                 </h1>
-                <small class="beer__style">({beer.style})</small>
+                <small class="page-hero__content__subtitle">({beer.style})</small>
                 <!-- TODO: write generic beer style descriptions, for default -->
-                <p class="beer__description line-clamp">
+                <p class="page-hero__content__description line-clamp">
                     {beer.description || 'TODO: beer has no description'}
                 </p>
-                <div class="beer__pills">
+                <div class="page-hero__content__pills">
                     {#if beer.brewery?.location}
                         <div class="location">
                             <WPill type="location">
@@ -199,68 +199,6 @@
 </div>
 
 <style lang="scss">
-    .top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-    .beer {
-        display: flex;
-        gap: 28px;
-
-        &__images {
-            position: relative;
-            min-width: 170px;
-            max-width: 170px;
-            // placeholder space...
-
-            .main-image {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 170px;
-                position: relative;
-                border-radius: 3px;
-                overflow: hidden;
-                background-color: var(--body);
-            }
-        }
-
-        &__info {
-            width: 100%;
-        }
-
-        &__name {
-            font-weight: 600;
-            font-size: 26px;
-            line-height: 26px;
-            margin-bottom: 12px;
-        }
-
-        &__style {
-            display: block;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-
-        &__description {
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 25px;
-            color: var(--text-3);
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        &__pills {
-            margin-top: 24px;
-            display: flex;
-            gap: 6px;
-        }
-    }
-
     .breweryBox-wrapper {
         margin-top: 16px;
         padding-top: 16px;

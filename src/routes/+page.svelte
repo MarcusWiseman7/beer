@@ -77,7 +77,7 @@
     </div>
     <WHorizontalScroller items={data.topBeers} />
 
-    <h2 class="timeline">Reviews timeline</h2>
+    <h2 class="timeline">Blog articles</h2>
     <div class="reviews">
         {#each reviews as review}
             <div class="posts-holder">
