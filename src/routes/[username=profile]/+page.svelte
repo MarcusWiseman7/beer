@@ -14,6 +14,7 @@
 
     // components
     import WBack from '$lib/components/WBack.svelte';
+    import noAvatarImg from '$lib/assets/images/no-avatar.png';
 
     // props
     /** @type {import('./$types').PageData} */
@@ -113,6 +114,8 @@
 
     onMount(() => {
         canFetchMoreReviews = !!data?.canFetchMoreReviews;
+        // just to see what we have to work with...
+        console.log('/profile :>> ', profile);
     });
 </script>
 
@@ -133,11 +136,26 @@
 </svelte:head>
 
 <div class="page">
-    <div class="top">
+    <div class="page-top">
         <WBack />
     </div>
 
-    <div class="profile">
+    <div class="page-hero">
+        <div class="page-hero__image">
+            <div class="image">
+                <img src={noAvatarImg} alt={'profile @' + profile.username} />
+            </div>
+        </div>
+        <div class="page-hero__content">
+            <h1 class="page-hero__content__title">{profile.displayName}</h1>
+            <h2 class="page-hero__content__subtitle">
+                @{profile.username}
+            </h2>
+            <p class="page-hero__content__description">
+                Welcome to my profile. I plenty beer every day am I can share it with my fellas to your fellas and
+                everybody who loves beer same as me.
+            </p>
+        </div>
         {#if myProfilePage}
             <div class="log-out">
                 <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
@@ -149,8 +167,38 @@
 <style lang="scss">
     .profile {
         position: relative;
-    }
+        display: flex;
+        gap: 28px;
 
+        &__image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 170px;
+            position: relative;
+            border-radius: 3px;
+            overflow: hidden;
+            background-color: var(--body);
+        }
+
+        // &__title {
+        //     width: 100%;
+        // }
+
+        // &__name {
+        //     font-weight: 600;
+        //     font-size: 26px;
+        //     line-height: 26px;
+        //     margin-bottom: 15px;
+        // }
+
+        // &__description {
+        //     font-weight: 400;
+        //     font-size: 16px;
+        //     line-height: 25px;
+        //     color: var(--text-3);
+        // }
+    }
     .log-out {
         position: absolute;
         top: 0;

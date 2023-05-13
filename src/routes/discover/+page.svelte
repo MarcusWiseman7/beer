@@ -33,7 +33,7 @@
 </svelte:head>
 
 <div class="page">
-    <div class="top">
+    <div class="page-top">
         <WBack />
     </div>
 </div>

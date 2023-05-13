@@ -179,7 +179,7 @@
 
     main {
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: row;
         position: relative;
         justify-content: center;
         margin-top: 96px;
@@ -233,12 +233,15 @@
     }
 
     .aside {
+        display: none;
         padding: 0 20px;
         height: 100%;
         width: 100%;
         max-width: 300px;
-        display: flex;
-        flex-flow: column;
+        @media (min-width: $tablet) {
+            display: flex;
+            flex-flow: column;
+        }
     }
 
     .foam {

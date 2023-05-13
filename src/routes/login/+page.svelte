@@ -36,7 +36,7 @@
     {/if}
 </svelte:head>
 
-<div class="top">
+<div class="page-top">
     <WBack />
 </div>
 <div class="form-wrapper">
