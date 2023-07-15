@@ -1,15 +1,26 @@
 import type { ObjectId } from 'mongoose';
-import type { SanityDocument } from '@sanity/client';
+import type { SanityDocument, SanityImageAssetDocument } from '@sanity/client';
 
-export interface IPost {
+export interface IBlogContentBlock {
+    _type: string;
+    _key: string;
+    style: string;
+    children?: { _key: string; _type: string; text?: string; marks: string[], markDefs?: []; }[];
+    markDefs?: { _key: string; _type: string; href?: string; }[],
+}
+
+export interface IBlogPost extends SanityDocument {
     title: string;
-    slug: string;
+    slug: {
+        current: string;
+        _type: string;
+    };
     author: {
-        displayName: string;
-        image: string;
+        name: string;
+        image: SanityImageAssetDocument;
         bio: string;
     };
-    mainImage?: string;
+    mainImage?: SanityImageAssetDocument;
     categories?: [
         {
             category: {};
@@ -17,7 +28,7 @@ export interface IPost {
     ];
     publishedAt: Date;
     summary: string;
-    body: [];
+    body: IBlogContentBlock[];
 };
 
 export interface ITranslations {

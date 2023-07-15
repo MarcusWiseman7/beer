@@ -20,3 +20,12 @@ export const getPointFromEvent = ($event): { x: number, y: number } => {
     }
     return point;
 };
+
+export const timeAgo = (date: Date): string => {
+    const now = Date.now();
+    const referenceDate = new Date(date).getTime();
+    const diff = now - referenceDate;
+
+    if (diff > 72 * 60 * 60 * 1000) return new Date(date).toLocaleDateString();
+    else return `${Math.round(diff / (1000 * 60 * 60))}h ago`;
+};

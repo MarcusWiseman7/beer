@@ -14,19 +14,12 @@ import Profile__SvelteComponent_
  */
 export let appMessages = writable<IMessage[]>([]);
 export let locale = writable<string>('en');
+export let country = writable<string>('');
 export let i18n = writable<ITranslations>({});
 export let loading = writable<boolean>(false);
 
-export let allBeers = writable<IBeer[] | []>([]);
+export let allBeers = writable<IBeer[]>([]);
 export let myProfile = writable<IUser | null>(null);
-
-/**
- * SANITY FETCH FUNCTIONS
- */
-// const getBlogPosts = async (): Promise<IPosts[]> => {
-//     const blogQuery = `*[_type == 'post']`;
-//     return await sanity.fetch(blogQuery);
-// };
 
 /**
  * READABLE EXPORTS

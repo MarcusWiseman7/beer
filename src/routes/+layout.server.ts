@@ -3,22 +3,25 @@ import type { IUser } from '$lib/ts-interfaces';
 
 import User from '$lib/server/models/user';
 import { userSelect } from '$lib/server/server-helpers';
-import sanity from '$lib/sanity';
+import sanity from '$lib/sanity/sanity.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ request, cookies }) {
+    // get ip address for geolocation
+    // const ip = getClientAddress();
+
     // get browser preferred language
-    const siteAcceptedLanguages = ['en', 'es'];
+    const siteAcceptedLanguages = ['en', 'cs', 'sk'];
     const parsedHeaderLanguages: { locale: string; q: number }[] = [];
-    const headerAcceptedLangs: string = request.headers.get('accept-language');
+    const headerAcceptedLangs: string | null = request.headers.get('accept-language');
     
-    headerAcceptedLangs.split(',').forEach(x => {
+    headerAcceptedLangs?.split(',').forEach(x => {
         const sub = x.split(';');
         const locale = sub[0].slice(0, 2);
         if (siteAcceptedLanguages.includes(locale)) {
             parsedHeaderLanguages.push({ locale, q: sub[1] ? parseFloat(sub[1].split('=')[1]) : 1 });
         }
-    });;
+    });
     
     parsedHeaderLanguages.sort((a, b) => {
         if (a.q === b.q) return 0;

@@ -1,9 +1,13 @@
 <script lang="ts">
     // types
-    import type { IPageData, IPost } from '$lib/ts-interfaces';
+    import type { IPageData, IBlogPost } from '$lib/ts-interfaces';
     interface IData extends IPageData {
-        blogs: IPost[];
+        blogs: IBlogPost[];
     }
+
+    // helpers
+    import { onMount } from 'svelte';
+    import BlogPreview from '$lib/components/blog/BlogPreview.svelte';
 
     // props
     /** @type {import('./$types').PageData} */
@@ -13,6 +17,10 @@
     $: blogs = data?.blogs || [];
     $: description = data?.description || '';
     $: hashtags = data?.hashtags || '';
+
+    onMount(() => {
+        console.log('blogs :>> ', blogs);
+    });
 </script>
 
 <svelte:head>
@@ -31,5 +39,9 @@
 </svelte:head>
 
 <div class="page">
-    <!--  -->
+    <h1>Blog articles</h1>
+
+    {#each blogs as post}
+        <BlogPreview {post} />
+    {/each}
 </div>

@@ -1,10 +1,17 @@
+import type { IBrewery, IBlogPost } from '$lib/ts-interfaces';
 import _db from '$lib/server/database';
 import Beer from '$lib/server/models/beer';
 import { beerSelect } from '$lib/server/server-helpers';
-import type { IBrewery } from '$lib/ts-interfaces';
+import sanity from '$lib/sanity/sanity.js';
+
+type Response = {
+    topBeers?: string;
+    blogPosts?: string;
+}
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({}) {
+export async function load({ }) {
+    const response: Response = {};
     const topBeers = await Beer
         .find({ tempBeer: false, averageRating: { $gt: 4 } }, null, { limit: 6 })
         .select(beerSelect)
@@ -12,7 +19,15 @@ export async function load({}) {
         .orFail()
         .exec();
 
-    if (topBeers) return JSON.stringify(topBeers);
+    if (topBeers) response.topBeers = JSON.stringify(topBeers);
 
-    return {};
+    const blogsQuery = `*[_type == 'post'] {
+        ...,
+        "author": author->
+    }`;
+    const blogPosts: IBlogPost[] = await sanity.fetch(blogsQuery);
+    
+    if (blogPosts) response.blogPosts = JSON.stringify(blogPosts);
+
+    return response;
 }

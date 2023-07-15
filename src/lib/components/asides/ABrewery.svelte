@@ -75,7 +75,7 @@
         <p class="info-aside__text">90 people like this, 25 last week</p>
         <ul class="info-aside__users">
             <!-- TODO: add max 6 user, no click to profile -->
-            {#each users as item}
+            {#each users.slice(0, 6) as item}
                 <li>
                     <WAvatar mediaCDN={cloudinaryPicURL(item.image)} size={33} />
                 </li>

@@ -1,6 +1,6 @@
 <script lang="ts">
     // types
-    import type { IBeer } from '$lib/ts-interfaces';
+    import type { IBeer, IReview } from '$lib/ts-interfaces';
     import type { IPageData } from '$lib/ts-interfaces';
     interface IData extends IPageData {
         beer: IBeer;
