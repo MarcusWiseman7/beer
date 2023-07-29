@@ -52,7 +52,7 @@
     {#if data?.blogPosts}
         <h2 class="timeline">Blog articles</h2>
 
-        <div class="">
+        <div class="blog-wrapper">
             {#each data.blogPosts as post}
                 <BlogPreview {post} />
             {/each}
@@ -77,5 +77,11 @@
 
     .timeline {
         margin: 40px 0 20px 0;
+    }
+
+    .blog-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 </style>
