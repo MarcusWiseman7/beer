@@ -4,6 +4,7 @@
 
     // components
     import SanityImage from './SanityImage.svelte';
+    import { onMount } from 'svelte';
 
     // helpers
     import { timeAgo } from '$lib/helpers';
@@ -16,12 +17,39 @@
     import like_src from '$lib/assets/icons/post/like.svg';
     import comment_src from '$lib/assets/icons/post/comment.svg';
     import share_src from '$lib/assets/icons/post/share.svg';
+
+    onMount(() => {
+        console.log('post :>> ', post);
+    });
 </script>
 
 {#if post}
-    <a href={`/blog/${post.slug.current}`} class={`article article--${type}`}>
+    <div class={`article article--${type}`}>
+        <div class="article__author">
+            <!-- TODO add the author image to sanity -->
+            <!-- <SanityImage image={post.author.image} addClass="round" width={48} height={48} /> -->
+        </div>
         <div class="article__content">
-            <ul class="left">
+            <h5 class="name"><span>@{post.author.name}</span>•<span>{timeAgo(post.publishedAt)}</span></h5>
+            <p class="perex">
+                <!-- TODO add perex data -->
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's:
+                bit.ly/2kvf6yj
+            </p>
+            {#if post.mainImage}
+                <a href={`/blog/${post.slug.current}`} class="link">
+                    <!-- TODO: add article's categories -->
+                    <ul class="categories">
+                        <li>🍻 Summer beers</li>
+                    </ul>
+                    <div class="image">
+                        <SanityImage image={post.mainImage} addClass="cover" />
+                    </div>
+
+                    <h3 class="title">{post.title}</h3>
+                </a>
+            {/if}
+            <ul class="actions">
                 <li>
                     <button class="cta">
                         <img src={like_src} class="" alt="like" />
@@ -38,58 +66,54 @@
                     </button>
                 </li>
             </ul>
-
-            {#if post.mainImage}
-                <div class="right">
-                    <!-- TODO: add article's categories -->
-                    <ul class="categories">
-                        <li>🍻 Summer beers</li>
-                    </ul>
-                    <div class="image">
-                        <SanityImage image={post.mainImage} addClass="cover" />
-                    </div>
-
-                    <div class="bottom">
-                        <p class="name">
-                            <span>@{post.author.name}</span>•<span>{timeAgo(post.publishedAt)}</span>
-                        </p>
-                        <h3 class="title">{post.title}</h3>
-                    </div>
-                </div>
-            {/if}
         </div>
-    </a>
+    </div>
 {/if}
 
 <style lang="scss">
     .article {
-        text-decoration: none;
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        padding-bottom: 36px;
+        border-bottom: 1px solid var(--border);
+
+        &:last-child {
+            border: none;
+        }
+
+        &__author {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--border);
+            margin-top: 8px;
+        }
 
         &__content {
-            display: flex;
-            align-items: center;
-            margin-top: 12px;
-            gap: 28px;
-            .left {
-                display: flex;
-                flex-direction: column;
-                gap: 18px;
-                .cta {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 42px;
-                    height: 42px;
-                    border-radius: 50%;
-                    background-color: var(--c-bg-action-buttons);
-                }
+            .name {
+                font-size: 14px;
+                font-weight: 400;
+                color: var(--text-3);
+                padding: 0 3px;
             }
-            .right {
+
+            .perex {
+                padding: 0 5px;
+                font-size: 14px;
+                line-height: 1.6;
+                margin-bottom: 12px;
+                color: var(--text);
+            }
+
+            .link {
                 position: relative;
                 border-radius: var(--main-border-radius);
                 overflow: hidden;
                 display: block;
                 width: 100%;
+                text-decoration: none;
 
                 .image {
                     height: 400px;
@@ -109,24 +133,14 @@
                     right: 0;
                 }
 
-                .bottom {
+                .title {
                     position: absolute;
                     z-index: 1;
                     bottom: 30px;
                     padding: 0 30px;
-
-                    .name {
-                        font-size: 14px;
-                        font-weight: 400;
-                        color: var(--text-3);
-                        display: flex;
-                        gap: 4px;
-                    }
-                    .title {
-                        font-size: 32px;
-                        font-weight: 700;
-                        color: var(--main-light);
-                    }
+                    font-size: 32px;
+                    font-weight: 700;
+                    color: var(--main-light);
                 }
 
                 .categories {
@@ -147,18 +161,29 @@
                     }
                 }
             }
+
+            .actions {
+                display: flex;
+                flex-flow: row;
+                padding: 0 6px;
+                margin-top: 12px;
+
+                gap: 18px;
+                .cta {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 42px;
+                    height: 42px;
+                    border-radius: 50%;
+                    background-color: var(--c-bg-action-buttons);
+                }
+            }
         }
 
         &:hover,
         &:focus {
             cursor: pointer;
         }
-
-        // &__title {
-        //     overflow: hidden;
-        //     white-space: nowrap;
-        //     text-overflow: ellipsis;
-        //     font-size: 14px;
-        // }
     }
 </style>
