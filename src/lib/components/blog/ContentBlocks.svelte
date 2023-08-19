@@ -31,63 +31,36 @@
 
 <style lang="scss">
     .content-blocks {
-        letter-spacing: 1px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
 
-        .h1 {
-            font-size: 36px;
-            line-height: 40px;
-            font-weight: 600;
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6 {
+            margin-top: 16px;
         }
 
-        .h2 {
-            font-size: 28px;
-            margin: 30px 0;
-            font-weight: 600;
+        // .normal {
+        //     font-weight: 300;
+        //     font-size: 18px;
+        // }
 
-            @media (min-width: 600px) {
-                font-size: 32px;
-                clear: both;
-            }
-        }
+        // .strong {
+        //     font-weight: 600;
+        // }
 
-        .h3 {
-            font-size: 26px;
-            padding-top: 30px;
-            margin: 0 0 -30px 0;
-            font-weight: 600;
+        // .anchor {
+        //     font-size: 18px;
+        //     font-weight: 600;
+        // }
 
-            @media (min-width: 600px) {
-                clear: both;
-            }
-        }
-
-        .h4 {
-            font-size: 22px;
-            padding: 30px 0 0 0;
-            font-weight: 600;
-
-            @media (min-width: 600px) {
-                clear: both;
-            }
-        }
-
-        .normal {
-            font-weight: 300;
-            font-size: 18px;
-        }
-
-        .strong {
-            font-weight: 600;
-        }
-
-        .anchor {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .em {
-            font-style: italic;
-        }
+        // .em {
+        //     font-style: italic;
+        // }
 
         .image-wrapper {
             display: flex;
@@ -103,33 +76,33 @@
             }
         }
 
-        .caption {
-            font-size: 14px;
-            color: gray;
-            font-style: italic;
-            font-weight: 600;
-            white-space: pre-wrap;
-            text-align: center;
-            padding: 0 10px 8px;
-        }
+        // .caption {
+        //     font-size: 14px;
+        //     color: gray;
+        //     font-style: italic;
+        //     font-weight: 600;
+        //     white-space: pre-wrap;
+        //     text-align: center;
+        //     padding: 0 10px 8px;
+        // }
 
-        &--center-headers-mobile {
-            .h1,
-            .h2,
-            .h3,
-            .h4 {
-                text-align: center;
-            }
+        // &--center-headers-mobile {
+        //     .h1,
+        //     .h2,
+        //     .h3,
+        //     .h4 {
+        //         text-align: center;
+        //     }
 
-            @media (min-width: 600px) {
-                .h1,
-                .h2,
-                .h3,
-                .h4 {
-                    text-align: left;
-                }
-            }
-        }
+        //     @media (min-width: 600px) {
+        //         .h1,
+        //         .h2,
+        //         .h3,
+        //         .h4 {
+        //             text-align: left;
+        //         }
+        //     }
+        // }
 
         &--project {
             white-space: pre-wrap;

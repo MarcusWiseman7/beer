@@ -30,7 +30,7 @@
             <!-- <SanityImage image={post.author.image} addClass="round" width={48} height={48} /> -->
         </div>
         <div class="article__content">
-            <h5 class="name"><span>@{post.author.name}</span>•<span>{timeAgo(post.publishedAt)}</span></h5>
+            <h5 class="name"><span>@{post.author.name}</span> • <span>{timeAgo(post.publishedAt)}</span></h5>
             <p class="perex">
                 <!-- TODO add perex data -->
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's:
@@ -49,7 +49,7 @@
                     <h3 class="title">{post.title}</h3>
                 </a>
             {/if}
-            <ul class="actions">
+            <!-- <ul class="actions">
                 <li>
                     <button class="cta">
                         <img src={like_src} class="" alt="like" />
@@ -65,12 +65,13 @@
                         <img src={share_src} class="" alt="share" />
                     </button>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 {/if}
 
 <style lang="scss">
+    @import '../../scss/vars.scss';
     .article {
         display: flex;
         align-items: flex-start;
@@ -83,12 +84,17 @@
         }
 
         &__author {
+            display: none;
             flex-shrink: 0;
             width: 48px;
             height: 48px;
             border-radius: 50%;
             background-color: var(--border);
             margin-top: 8px;
+
+            @media (min-width: $tablet) {
+                display: flex;
+            }
         }
 
         &__content {

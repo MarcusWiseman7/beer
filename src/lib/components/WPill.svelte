@@ -1,11 +1,14 @@
 <script lang="ts">
     export let type: string = 'normal';
+    export let hasImage: Boolean = true;
 </script>
 
 <div class={`pill pill--${type}`}>
-    <div class="pill__image">
-        <slot name="image" />
-    </div>
+    {#if hasImage}
+        <div class="pill__image">
+            <slot name="image" />
+        </div>
+    {/if}
 
     <div class="pill__title">
         <slot name="title" />
@@ -93,6 +96,16 @@
             .pill__title {
                 font-weight: 600;
                 margin: 0 8px;
+            }
+        }
+
+        &--tag {
+            padding: 2px 16px;
+            height: 33px;
+
+            .pill__title {
+                margin: 0;
+                font-weight: 400;
             }
         }
     }

@@ -224,7 +224,6 @@
     .content-wrapper {
         position: relative;
         width: 100%;
-        padding: 0 14px;
         @media (min-width: $tablet) {
             width: 55%;
             padding: 0;
@@ -264,7 +263,7 @@
         position: relative;
         min-height: calc(100vh - 19rem);
         background-color: var(--page);
-        padding: 30px;
+        padding: 10px;
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
         box-shadow: var(--box-border-shadow);
