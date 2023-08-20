@@ -1,6 +1,14 @@
 // breakpoints:
+
+// from normal-size phones
 $xs: 350px;
+// until normal-size phones
 $s: 414px;
-$m: 600px;
-$tablet: 1024px;
-$desktop: 1536px;
+// tablet
+$tablet: 600px;
+//  desktop
+$desktop: 1024px;
+// desktop medium
+$desktop-m: 1280px;
+// fullsize
+$full: 1416px;

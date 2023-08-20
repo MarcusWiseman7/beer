@@ -36,6 +36,7 @@
         &--primary {
             background-color: var(--main-color);
             color: var(--main-light);
+            font-weight: 700;
         }
 
         &--third {

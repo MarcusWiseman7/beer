@@ -1,6 +1,7 @@
 // THEME - LIGHT
 @mixin lightTheme {
     --body: #ededed;
+    --body-m: #3c3737;
     --page: #ffffff;
     --hover: #f2f4f8;
     --border: #eee;
@@ -24,6 +25,7 @@
 // THEME - DARK
 @mixin darkTheme() {
     --body: #3c3737;
+    --body-m: #332D2D;
     --page: #332d2d;
     --hover: #514c4c;
     --border: #484c51;
