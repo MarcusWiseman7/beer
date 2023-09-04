@@ -17,6 +17,7 @@ export let locale = writable<string>('en');
 export let country = writable<string>('');
 export let i18n = writable<ITranslations>({});
 export let loading = writable<boolean>(false);
+export let newPost = writable<boolean>(false);
 
 export let allBeers = writable<IBeer[]>([]);
 export let myProfile = writable<IUser | null>(null);

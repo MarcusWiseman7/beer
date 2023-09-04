@@ -1,7 +1,7 @@
 <script lang="ts">
     // helpers
     import { createEventDispatcher } from 'svelte';
-    import { derivedNav, myProfile } from '$lib/stores';
+    import { derivedNav, myProfile, newPost } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { fly } from 'svelte/transition';
@@ -11,6 +11,8 @@
     import close_src from '$lib/assets/icons/general/closer.svg';
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
 
+    // components
+
     // computed
     $: activeRoute = $page.url.pathname;
 
@@ -19,8 +21,13 @@
     const close = (): void => {
         dispatch('close');
     };
+
     const addBeer = (): void => {
         if (!$myProfile) goto('/login');
+        else {
+            close();
+            newPost.set(true);
+        }
     };
 </script>
 
