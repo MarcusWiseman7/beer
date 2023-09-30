@@ -3,7 +3,6 @@ import type { IUser } from '$lib/ts-interfaces';
 
 import User from '$lib/server/models/user';
 import { userSelect } from '$lib/server/server-helpers';
-import sanity from '$lib/sanity/sanity.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ request, cookies }) {
@@ -31,24 +30,15 @@ export async function load({ request, cookies }) {
     
     const locale = parsedHeaderLanguages[0]?.locale || 'en';
 
-    // get translations -> i18n
-    const i18nQuery = `*[_type == 'i18n'] {
-        'list': list[] {
-            key,
-            'text': ${locale},
-        }
-    }[0]`;
-    const i18n = await sanity.fetch(i18nQuery);
-
     // check if logged in
     const session = cookies.get('session');
     if (session) {
         const user: IUser | null = await User.findOne({ loginToken: session }).select(userSelect).lean();
 
         if (user) {
-            return { user: JSON.stringify(user), locale, i18n };
+            return { user: JSON.stringify(user), locale };
         }
     }
 
-    return { locale, i18n };
+    return { locale };
 }

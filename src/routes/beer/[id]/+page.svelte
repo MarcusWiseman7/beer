@@ -1,6 +1,6 @@
 <script lang="ts">
     // types
-    import type { IBeer, IReview } from '$lib/ts-interfaces';
+    import type { IBeer } from '$lib/ts-interfaces';
     import type { IPageData } from '$lib/ts-interfaces';
     interface IData extends IPageData {
         beer: IBeer;
@@ -27,7 +27,8 @@
 
     // computed
     $: beer = data?.beer;
-    $: description = data?.description || '';
+    $: pageTitle = data?.page.seo.title.replaceAll('{beer_name}', beer?.beerName) || '';
+    $: pageDescription = data?.page.seo.description.replaceAll('{beer_name}', beer?.beerName) || '';
     $: hashtags = data?.hashtags || '';
 
     // data
@@ -113,13 +114,13 @@
 </script>
 
 <svelte:head>
-    <title>Find Brews | {beer?.beerName || 'Beer'}</title>
-    <meta property="og:title" content={`Find Brews | ${beer?.beerName || 'Beer'}`} />
+    <title>{pageTitle}</title>
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:url" content={`https://find-brews.com/beer/${beer?._id}`} />
 
-    {#if beer?.description || description}
-        <meta name="description" content={beer?.description || description} />
-        <meta property="og:description" content={beer?.description || description} />
+    {#if pageDescription}
+        <meta name="description" content={pageDescription} />
+        <meta property="og:description" content={pageDescription} />
     {/if}
     {#if hashtags}
         <meta name="hashtags" content={hashtags} />

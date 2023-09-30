@@ -31,10 +31,6 @@ export interface IBlogPost extends SanityDocument {
     body: IBlogContentBlock[];
 };
 
-export interface ITranslations {
-    [key: string]: string | undefined;
-};
-
 export interface ILocaleString {
     en: string;
     sk: string;
@@ -43,9 +39,11 @@ export interface ILocaleString {
 }
 
 export interface IPageData extends SanityDocument {
-    title?: ILocaleString;
-    description?: string;
-    hashtags?: string;
+    seo: {
+        title?: ILocaleString;
+        description?: string;
+        hashtags?: string;
+    };
 }
 
 export interface IMessage {

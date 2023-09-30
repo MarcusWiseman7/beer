@@ -1,5 +1,5 @@
 import { derived, writable } from 'svelte/store';
-import type { IUser, IBeer, IMessage, ITranslations } from './ts-interfaces';
+import type { IUser, IBeer, IMessage } from './ts-interfaces';
 
 /**
  * ICONS
@@ -15,7 +15,6 @@ import Profile__SvelteComponent_
 export let appMessages = writable<IMessage[]>([]);
 export let locale = writable<string>('en');
 export let country = writable<string>('');
-export let i18n = writable<ITranslations>({});
 export let loading = writable<boolean>(false);
 export let newPost = writable<boolean>(false);
 
