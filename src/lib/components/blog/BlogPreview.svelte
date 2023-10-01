@@ -26,29 +26,40 @@
 {#if post}
     <div class={`article article--${type}`}>
         <div class="article__author">
-            <!-- TODO add the author image to sanity -->
-            <!-- <SanityImage image={post.author.image} addClass="round" width={48} height={48} /> -->
+            {#if post.author?.image}
+                <SanityImage image={post.author.image} addClass="round" width={48} height={48} />
+            {/if}
         </div>
         <div class="article__content">
-            <h5 class="name"><span>@{post.author.name}</span> • <span>{timeAgo(post.publishedAt)}</span></h5>
+            <h5 class="name">
+                {#if post.author}
+                    <span><span>@{post.author.name}</span> • </span>
+                {/if}
+                <span>{timeAgo(post.publishedAt || post._updatedAt)}</span>
+            </h5>
             <p class="perex">
+                <!-- Patrik, what the fuck is "perex"? -->
                 <!-- TODO add perex data -->
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's:
                 bit.ly/2kvf6yj
             </p>
-            {#if post.mainImage}
-                <a href={`/blog/${post.slug.current}`} class="link">
-                    <!-- TODO: add article's categories -->
+            <a href={`/blog/${post.slug.current}`} class="link">
+                {#if post.tags}
                     <ul class="categories">
-                        <li>🍻 Summer beers</li>
+                        {#each post.tags as tag}
+                            <!-- TODO: Marcus, make locale text composable -->
+                            <li>{tag.title.en}</li>
+                        {/each}
                     </ul>
+                {/if}
+                {#if post.mainImage}
                     <div class="image">
                         <SanityImage image={post.mainImage} addClass="cover" />
                     </div>
+                {/if}
 
-                    <h3 class="title">{post.title}</h3>
-                </a>
-            {/if}
+                <h3 class="title">{post.title}</h3>
+            </a>
             <!-- <ul class="actions">
                 <li>
                     <button class="cta">

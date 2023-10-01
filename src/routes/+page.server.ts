@@ -23,7 +23,8 @@ export async function load({ }) {
 
     const blogsQuery = `*[_type == 'post'] {
         ...,
-        "author": author->
+        tags[]->{title},
+        author->,
     }`;
     const blogPosts: IBlogPost[] = await sanity.fetch(blogsQuery);
     

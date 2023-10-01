@@ -14,10 +14,15 @@
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import WWrapper from '$lib/components/WWrapper.svelte';
     import BlogPreview from '$lib/components/blog/BlogPreview.svelte';
+    import { onMount } from 'svelte';
 
     // data
     $: description = data?.description || '';
     $: hashtags = data?.hashtags || '';
+
+    onMount(() => {
+        console.log('data :>> ', data);
+    });
 </script>
 
 <svelte:head>
