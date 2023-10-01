@@ -90,7 +90,7 @@
         <div class="layout-middle">
             <!-- FOAM -->
             <div class="foam">
-                <img style="fill:inherit;" src={foam_src} alt="Foam" />
+                <img src={foam_src} alt="Foam" />
             </div>
             <div class="circle" />
         </div>

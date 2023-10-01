@@ -13,6 +13,12 @@ body {
     min-height: 100vh;
 }
 
+img {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
 input {
     height: 44px;
     width: 100%;

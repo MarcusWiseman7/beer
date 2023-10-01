@@ -9,6 +9,7 @@
     --text-2: #3c3737;
     --text-3: #999faa;
     --link: #0572ef;
+    --placeholder: #a0a0a0;
     --box-border-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
     // PILL
     --c-pill-bg: #fff;
@@ -25,7 +26,7 @@
 // THEME - DARK
 @mixin darkTheme() {
     --body: #3c3737;
-    --body-m: #332D2D;
+    --body-m: #332d2d;
     --page: #332d2d;
     --hover: #514c4c;
     --border: #484c51;
@@ -33,6 +34,7 @@
     --text-2: #999faa;
     --text-3: #999faa;
     --link: #65aaf9;
+    --placeholder: #a0a0a0;
     --box-border-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
     // PILL
     --c-pill-bg: #302c2c;
@@ -48,7 +50,7 @@
 
 :root {
     --main-color: #fb6d3a;
-    --error-color: rgb(220 38 38);
+    --error-color: #ec4f49;
     --main-light: #fff;
     --main-dark: #000000;
     --main-border-radius: 8px;
