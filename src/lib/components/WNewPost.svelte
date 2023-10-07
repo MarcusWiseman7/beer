@@ -1,6 +1,8 @@
 <script lang="ts">
     // helpers
     import { newPost } from '$lib/stores';
+    import { fly } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
 
     // icons
     import close_src from '$lib/assets/icons/general/closer.svg';
@@ -70,8 +72,8 @@
 
 {#if $newPost}
     <div class="new-post">
-        <div class="new-post-wrapper">
-            <div class="post">
+        <div class="new-post-wrapper" transition:fade={{ duration: 500 }}>
+            <div class="post" in:fly={{ y: 300, duration: 500 }} out:fly={{ y: 300, duration: 300 }}>
                 <div class="post-header">
                     <div class="post-header__left">
                         <button class="closer" on:click={close}>
@@ -164,28 +166,33 @@
     @import '../scss/vars.scss';
 
     .new-post {
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+
         &-wrapper {
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
+            display: flex;
+            align-items: flex-end;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
+            transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .post {
+            width: 100%;
+            height: 100%;
+            max-width: 600px;
+            max-height: 95vh;
+            margin: 0 auto;
+            overflow-y: auto;
             position: relative;
             background-color: var(--page);
             border-radius: calc(var(--main-border-radius) * 2) calc(var(--main-border-radius) * 2) 0 0;
-            margin: 40px auto 0;
-            width: 100%;
-            height: 100%;
-            max-height: 100vh;
-            max-width: 600px;
-            overflow-y: auto;
 
             &::-webkit-scrollbar {
                 display: none;
