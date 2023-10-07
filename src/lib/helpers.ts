@@ -39,7 +39,7 @@ export const getLocaleText = (text: LocaleObject | string | undefined, locale: s
 };
 
 export const parseTranslation = (rawText: string, replacements: TranslationReplacements): string => {
-    if (replacements) {
+    if (replacements && rawText) {
         let outputText = rawText.slice(0);
 
         replacements.forEach((replacement) => {
