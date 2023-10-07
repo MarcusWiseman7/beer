@@ -1,6 +1,7 @@
 <script lang="ts">
     // types
-    import type { IPageData, IBlogPost } from '$lib/ts-interfaces';
+    import type { IBlogPost } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/types/pageData';
     interface IData extends IPageData {
         blogs: IBlogPost[];
     }
@@ -8,40 +9,27 @@
     // helpers
     import { onMount } from 'svelte';
     import BlogPreview from '$lib/components/blog/BlogPreview.svelte';
+    import WHead from '$lib/components/WHead.svelte';
 
     // props
     /** @type {import('./$types').PageData} */
     export let data: IData;
 
     // data
-    $: blogs = data?.blogs || [];
-    $: description = data?.description || '';
-    $: hashtags = data?.hashtags || '';
+    $: blogPosts = data?.blogPosts || [];
+    $: translationReplacements = [];
 
     onMount(() => {
-        console.log('blogs :>> ', blogs);
+        console.log('data :>> ', data);
     });
 </script>
 
-<svelte:head>
-    <title>Find Brews | Blog</title>
-    <meta property="og:title" content="Find Brews | Blog" />
-    <meta property="og:url" content="https://find-brews.com/blog/" />
-
-    {#if description}
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head>
+<WHead seo={data?.page?.seo} canonicalURL="blog" {translationReplacements} />
 
 <div class="page">
     <h1>Blog articles</h1>
 
-    {#each blogs as post}
+    {#each blogPosts as post}
         <BlogPreview {post} />
     {/each}
 </div>

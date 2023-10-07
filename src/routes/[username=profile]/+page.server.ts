@@ -4,10 +4,15 @@ import { userSelect } from '$lib/server/server-helpers';
 import { myProfile } from '$lib/stores';
 import type { IReview, IUser } from '$lib/ts-interfaces';
 import Review from '$lib/server/models/review';
+import sanity from '$lib/sanity/sanity.js';
+import type { PageData } from '$lib/types/pageData.js';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({ params }) {
     try {
+        const profileQuery = `*[_type == 'profile'][0]`;
+        const page: PageData = await sanity.fetch(profileQuery);
+        
         const { username } = params;
         const name = username.replace('@', '');
 
@@ -25,12 +30,7 @@ export async function load({ params }) {
         
         const canFetchMoreReviews = (reviewsCount - reviews.length) > 0;
 
-        return {
-            success: true,
-            user: JSON.stringify(user),
-            reviews: JSON.stringify(reviews),
-            canFetchMoreReviews,
-        };
+        return JSON.stringify({ user, reviews, canFetchMoreReviews, page, username: name });
     } catch (err) {
         console.warn('Server error in load function :>> ', err);
     }

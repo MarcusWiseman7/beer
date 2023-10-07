@@ -1,10 +1,12 @@
 <script lang="ts">
     // types
+    import type { ObjectId } from 'mongoose';
     import type { IBeer } from '$lib/ts-interfaces';
-    import type { IPageData } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/types/pageData';
     interface IData extends IPageData {
         beer: IBeer;
         siblingBeers: IBeer[];
+        id: ObjectId;
     }
 
     // helpers
@@ -24,12 +26,11 @@
 
     // icons
     import star_src from '$lib/assets/icons/general/star.svg';
+    import WHead from '$lib/components/WHead.svelte';
 
     // computed
     $: beer = data?.beer;
-    $: pageTitle = data?.page.seo.title.replaceAll('{beer_name}', beer?.beerName) || '';
-    $: pageDescription = data?.page.seo.description.replaceAll('{beer_name}', beer?.beerName) || '';
-    $: hashtags = data?.hashtags || '';
+    $: translationReplacements = [{ key: 'beer_name', value: beer?.beerName || '' }];
 
     // data
     const reviews = [
@@ -113,20 +114,7 @@
     });
 </script>
 
-<svelte:head>
-    <title>{pageTitle}</title>
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:url" content={`https://find-brews.com/beer/${beer?._id}`} />
-
-    {#if pageDescription}
-        <meta name="description" content={pageDescription} />
-        <meta property="og:description" content={pageDescription} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head>
+<WHead seo={data?.page?.seo} canonicalURL={`beer/${data?.id}`} {translationReplacements} />
 
 <div class="page">
     <div class="page-top">

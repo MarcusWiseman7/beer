@@ -34,7 +34,7 @@ export async function load({ params, cookies }) {
         // set session to cookies
         cookies.set('session', loginToken);
 
-        return { success: true, displayName: JSON.stringify(user.displayName) };
+        return JSON.stringify({ displayName: user.displayName });
     } catch (err) {
         return invalid(500, { message: 'Server error, please try again...' });
     }

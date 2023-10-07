@@ -1,10 +1,12 @@
 <script lang="ts">
     // types
+    import type { ObjectId } from 'mongoose';
     import type { IBeer, IBrewery } from '$lib/ts-interfaces';
-    import type { IPageData } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/types/pageData';
     interface IData extends IPageData {
         brewery: IBrewery;
         beers: IBeer[];
+        id: ObjectId;
     }
 
     // props
@@ -12,6 +14,7 @@
     export let data: IData;
 
     // components
+    import WHead from '$lib/components/WHead.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import WCard from '$lib/components/WCard.svelte';
@@ -29,8 +32,7 @@
     // data
     $: brewery = data?.brewery;
     $: beers = data?.beers;
-    $: description = data?.description || '';
-    $: hashtags = data?.hashtags || '';
+    $: translationReplacements = [{ key: 'brewery_name', value: brewery?.name || '' }];
 
     const socialNetworks = [
         { id: 'facebook', icon: facebook_src },
@@ -46,25 +48,11 @@
 
     onMount(() => {
         // just to see what we have to work with...
-        console.log('/breweryid brewery :>> ', brewery);
-        console.log('/breweryid brewery beers :>> ', beers);
+        console.log('data :>> ', data);
     });
 </script>
 
-<svelte:head>
-    <title>Find Brews | {brewery?.name || 'Brewery'}</title>
-    <meta property="og:title" content={`Find Brews | ${brewery?.name || 'Brewery'}`} />
-    <meta property="og:url" content={`https://find-brews.com/brewery/${brewery?._id}`} />
-
-    {#if brewery?.description || description}
-        <meta name="description" content={brewery?.description || description} />
-        <meta property="og:description" content={brewery?.description || description} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head>
+<WHead seo={data?.page?.seo} canonicalURL={`brewery/${data?.id}`} {translationReplacements} />
 
 <div class="page">
     <div class="page-top">

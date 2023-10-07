@@ -1,6 +1,6 @@
 <script lang="ts">
     // types
-    import type { IPageData } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/types/pageData';
     interface IData extends IPageData {}
 
     // props

@@ -60,10 +60,9 @@
     };
 
     // methods
-    onMount(() => {
-        window.addEventListener('scroll', handleScroll);
-    });
 </script>
+
+<svelte:window on:scroll|passive={handleScroll} />
 
 <div class="papa">
     <header class="header layout">
@@ -72,7 +71,7 @@
                 <div class="logo__wrapper">
                     <img src={logo_beer_src} alt="Beer logo" class="icon" />
                 </div>
-                <h1>Find Beers</h1>
+                <h1>Find Brews</h1>
             </div>
             <!-- MOBILE MENU -->
             <nav class="nav-mobile" class:active={isScrolled}>

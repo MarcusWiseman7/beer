@@ -1,10 +1,12 @@
 <script lang="ts">
     // types
-    import type { IPageData, IReview, IUser } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/types/pageData';
+    import type { IReview, IUser } from '$lib/ts-interfaces';
     interface IData extends IPageData {
         user: IUser;
         reviews: IReview[];
         canFetchMoreReviews: boolean;
+        username: string;
     }
 
     // helpers
@@ -13,6 +15,7 @@
     import { setAppMessage } from '$lib/helpers';
 
     // components
+    import WHead from '$lib/components/WHead.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
 
@@ -26,11 +29,10 @@
     const reviews: IReview[] = [];
 
     // computed
-    $: description = data?.description || '';
-    $: hashtags = data?.hashtags || '';
     $: profile = data?.profile;
     $: myProfilePage = !!($myProfile && $myProfile._id === profile?._id);
     $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
+    $: translationReplacements = [];
 
     // methods
     const logout = async (): Promise<void> => {
@@ -113,27 +115,12 @@
     };
 
     onMount(() => {
-        canFetchMoreReviews = !!data?.canFetchMoreReviews;
         // just to see what we have to work with...
-        console.log('/profile :>> ', profile);
+        console.log('data :>> ', data);
     });
 </script>
 
-<svelte:head>
-    <title>Find Brews | @{profile?.username}</title>
-    <meta property="og:title" content={`Find Brews | @${profile?.username}`} />
-    <meta property="og:url" content={`https://find-brews.com/@${profile?.username}`} />
-    <link rel="canonical" href={`https://find-brews.com/@${profile?.username}`} />
-
-    {#if description}
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head>
+<WHead seo={data?.page?.seo} canonicalURL={data?.username} {translationReplacements} />
 
 <div class="page">
     <div class="page-top">

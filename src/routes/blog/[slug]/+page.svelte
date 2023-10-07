@@ -1,19 +1,22 @@
 <script lang="ts">
     // types
-    import type { IPageData, IBlogPost } from '$lib/ts-interfaces';
+    import type { IBlogPost } from '$lib/ts-interfaces';
+    import type { IPageData } from '$lib/types/pageData';
     interface IData extends IPageData {
         post: IBlogPost;
+        slug: string;
     }
 
     // helpers
     import { timeAgo } from '$lib/helpers';
+    import { onMount } from 'svelte';
 
     // components
+    import WHead from '$lib/components/WHead.svelte';
     import SanityImage from '$lib/components/blog/SanityImage.svelte';
     import ContentBlocks from '$lib/components/blog/ContentBlocks.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
-    import { onMount } from 'svelte';
 
     // props
     /** @type {import('./$types').PageData} */
@@ -21,8 +24,7 @@
 
     // data
     $: post = data?.post;
-    $: description = data?.description || '';
-    $: hashtags = data?.hashtags || '';
+    $: translationReplacements = [{ key: 'blog_title', value: post?.title || '' }];
 
     const shareNetworks = [
         { id: 'facebook', icon: facebook_src },
@@ -38,24 +40,11 @@
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
 
     onMount(() => {
-        console.log('post :>> ', post);
+        console.log('data :>> ', data);
     });
 </script>
 
-<svelte:head>
-    <title>Find Brews | {post?.title || 'Blog post'}</title>
-    <meta property="og:title" content={`Find Brews | ${post?.title || 'Blog post'}`} />
-    <meta property="og:url" content={`https://find-brews.com/blog/${post?.slug?.current}`} />
-
-    {#if post?.summary || description}
-        <meta name="description" content={post?.summary || description} />
-        <meta property="og:description" content={post?.summary || description} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head>
+<WHead seo={data?.page?.seo} canonicalURL={`blog/${data?.slug}`} {translationReplacements} />
 
 <div class="page">
     {#if post?._id}

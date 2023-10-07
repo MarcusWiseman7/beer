@@ -3,11 +3,12 @@ import { beerSelect } from '$lib/server/server-helpers';
 import Beer from '$lib/server/models/beer';
 import type { IBrewery, IReview } from '$lib/ts-interfaces';
 import sanity from '$lib/sanity/sanity.js';
+import type { PageData } from '$lib/types/pageData.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
     const beerQuery = `*[_type == 'beer'][0]`;
-    const page = await sanity.fetch(beerQuery);
+    const page: PageData = await sanity.fetch(beerQuery);
 
     const beer = await Beer
         .findOne({ _id: params.id })
@@ -24,7 +25,5 @@ export async function load({ params }) {
         .sort({'averageRating': 'desc'})
         .exec();
 
-    if (beer) {
-        return JSON.stringify({ beer, siblingBeers, page });
-    }
+    return JSON.stringify({ beer, siblingBeers, page, id: params.id });
 }

@@ -31,21 +31,6 @@ export interface IBlogPost extends SanityDocument {
     body: IBlogContentBlock[];
 };
 
-export interface ILocaleString {
-    en: string;
-    sk: string;
-    cs: string;
-    _type?: string;
-}
-
-export interface IPageData extends SanityDocument {
-    seo: {
-        title?: ILocaleString;
-        description?: string;
-        hashtags?: string;
-    };
-}
-
 export interface IMessage {
     message: string;
     timeout: number;

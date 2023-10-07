@@ -1,4 +1,4 @@
 /** @type {import('./$types').PageLoad} */
 export function load({ data }) {
-    return { data };
+    // return { ...JSON.parse(data as string) };
 }

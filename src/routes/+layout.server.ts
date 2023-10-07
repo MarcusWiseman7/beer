@@ -36,9 +36,9 @@ export async function load({ request, cookies }) {
         const user: IUser | null = await User.findOne({ loginToken: session }).select(userSelect).lean();
 
         if (user) {
-            return { user: JSON.stringify(user), locale };
+            return JSON.stringify({ user, locale });
         }
     }
 
-    return { locale };
+    return JSON.stringify({ locale });
 }

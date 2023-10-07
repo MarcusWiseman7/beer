@@ -1,5 +1,7 @@
+import type { Writable } from 'svelte/store';
 import { appMessages } from './stores';
 import type { IMessage } from './ts-interfaces';
+import type { LocaleObject, TranslationReplacements } from './types/locale';
 
 export const setAppMessage = (message: IMessage): void => {
     appMessages.update((a) => [...a, message]);
@@ -28,4 +30,24 @@ export const timeAgo = (date: Date): string => {
 
     if (diff > 72 * 60 * 60 * 1000) return new Date(date).toLocaleDateString();
     else return `${Math.round(diff / (1000 * 60 * 60))}h ago`;
+};
+
+export const getLocaleText = (text: LocaleObject | string | undefined, locale: string,replacements: TranslationReplacements): string => {
+    return (text &&
+        parseTranslation((typeof text === 'string' ? text : text[locale as keyof object]), replacements)
+    ) || '';
+};
+
+export const parseTranslation = (rawText: string, replacements: TranslationReplacements): string => {
+    if (replacements) {
+        let outputText = rawText.slice(0);
+
+        replacements.forEach((replacement) => {
+            outputText = outputText.replaceAll(`{${replacement.key}}`, replacement.value);
+        });
+
+        return outputText;
+    }
+
+    return rawText;
 };
