@@ -24,7 +24,6 @@
     // data
     const shareNetworks = [
         { id: 'facebook', icon: facebook_src },
-        // { id: 'instagram', icon: instagram_src },
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
     ];
