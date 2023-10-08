@@ -26,13 +26,13 @@
     // data
     let moreReviews = true;
     let fetchingReviews = false;
-    const reviews: IReview[] = [];
 
     // computed
-    $: profile = data?.profile;
+    $: profile = data?.user;
+    $: reviews = data?.reviews;
     $: myProfilePage = !!($myProfile && $myProfile._id === profile?._id);
     $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
-    $: translationReplacements = [];
+    $: translationReplacements = [{ key: 'username', value: data?.username }];
 
     // methods
     const logout = async (): Promise<void> => {
@@ -86,8 +86,8 @@
             fetchingReviews = true;
 
             const body = new FormData();
-            body.append('offset', reviews.length.toString());
-            body.append('userId', profile._id);
+            body.append('offset', JSON.stringify(reviews.length));
+            body.append('userId', JSON.stringify(profile._id));
 
             const response = await fetch('?/getUserReviews', {
                 method: 'POST',
@@ -100,9 +100,8 @@
             /** @type {import('@sveltejs/kit').ActionResult} */
             const result = await response.json();
 
-            if (result.type === 'success' && result.data?.reviews) {
-                const dataReviews: IReview[] = JSON.parse(result.data.reviews);
-                reviews.push(...dataReviews);
+            if (result.data?.reviews) {
+                reviews = [...reviews, ...result.data.reviews];
                 moreReviews = result.data.canFetchMoreReviews;
             }
         } catch (err) {
@@ -120,35 +119,37 @@
     });
 </script>
 
-<WHead seo={data?.page?.seo} canonicalURL={data?.username} {translationReplacements} />
+<WHead seo={data?.page?.seo} canonicalURL={`@${data?.username}`} {translationReplacements} />
 
 <div class="page">
     <div class="page-top">
         <WBack />
     </div>
 
-    <div class="page-hero">
-        <div class="page-hero__image">
-            <div class="image">
-                <img src={noAvatarImg} alt={'profile @' + profile.username} />
+    {#if profile}
+        <div class="page-hero">
+            <div class="page-hero__image">
+                <div class="image">
+                    <img src={noAvatarImg} alt={'profile @' + profile.username} />
+                </div>
             </div>
-        </div>
-        <div class="page-hero__content">
-            <h1 class="page-hero__content__title">{profile.displayName}</h1>
-            <h2 class="page-hero__content__subtitle">
-                @{profile.username}
-            </h2>
-            <p class="page-hero__content__description">
-                Welcome to my profile. I plenty beer every day am I can share it with my fellas to your fellas and
-                everybody who loves beer same as me.
-            </p>
-        </div>
-        {#if myProfilePage}
-            <div class="log-out">
-                <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
+            <div class="page-hero__content">
+                <h1 class="page-hero__content__title">{profile.displayName}</h1>
+                <h2 class="page-hero__content__subtitle">
+                    @{profile.username}
+                </h2>
+                <p class="page-hero__content__description">
+                    Welcome to my profile. I plenty beer every day am I can share it with my fellas to your fellas and
+                    everybody who loves beer same as me.
+                </p>
             </div>
-        {/if}
-    </div>
+            {#if myProfilePage}
+                <div class="log-out">
+                    <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
+                </div>
+            {/if}
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
