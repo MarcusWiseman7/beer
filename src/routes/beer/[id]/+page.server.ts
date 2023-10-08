@@ -2,9 +2,9 @@ import _db from '$lib/server/database';
 import { beerSelect } from '$lib/server/server-helpers';
 import Beer from '$lib/server/models/beer';
 import sanity from '$lib/sanity/sanity.js';
-import type { PageData } from '$lib/types/pageData.js';
-import type { TBrewery } from '$lib/types/brewery.js';
-import type { TReview } from '$lib/types/review.js';
+import type { PageData } from '$lib/types/pageData';
+import type { TBrewery } from '$lib/types/brewery';
+import type { TReview } from '$lib/types/review';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {

@@ -4,9 +4,9 @@ import { userSelect } from '$lib/server/server-helpers';
 import { myProfile } from '$lib/stores';
 import Review from '$lib/server/models/review';
 import sanity from '$lib/sanity/sanity.js';
-import type { PageData } from '$lib/types/pageData.js';
-import type { TReview } from '$lib/types/review.js';
-import type { TUser } from '$lib/types/user.js';
+import type { PageData } from '$lib/types/pageData';
+import type { TReview } from '$lib/types/review';
+import type { TUser } from '$lib/types/user';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({ params }) {

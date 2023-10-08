@@ -1,4 +1,4 @@
-import type { TUser } from '$lib/types/user.js';
+import type { TUser } from '$lib/types/user';
 import User from '$lib/server/models/user';
 import { userSelect } from '$lib/server/server-helpers';
 
