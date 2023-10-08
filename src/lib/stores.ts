@@ -1,5 +1,7 @@
 import { derived, writable } from 'svelte/store';
-import type { IUser, IBeer, IMessage } from './ts-interfaces';
+import type { IMessage } from './ts-interfaces';
+import type { TBeer } from './types/beer';
+import type { TUser } from './types/user';
 
 /**
  * ICONS
@@ -18,8 +20,8 @@ export let country = writable<string>('');
 export let loading = writable<boolean>(false);
 export let newPost = writable<boolean>(false);
 
-export let allBeers = writable<IBeer[]>([]);
-export let myProfile = writable<IUser | null>(null);
+export let allBeers = writable<TBeer[]>([]);
+export let myProfile = writable<TUser | null>(null);
 
 /**
  * READABLE EXPORTS

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import type { IBeer } from '$lib/ts-interfaces';
+import type { TBeer } from '$lib/types/beer';
 
-const beerSchema = new Schema<IBeer>(
+const beerSchema = new Schema<TBeer>(
     {
         dateCreated: { type: Date, default: Date.now },
         beerName: { type: String, required: true, trim: true },
@@ -26,6 +26,6 @@ const beerSchema = new Schema<IBeer>(
     }
 );
 
-const Beer = model<IBeer>('Beer', beerSchema);
+const Beer = model<TBeer>('Beer', beerSchema);
 
 export default Beer;

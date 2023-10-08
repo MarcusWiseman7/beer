@@ -1,10 +1,9 @@
-import type { IUser } from '$lib/ts-interfaces';
 import type { HydratedDocument } from 'mongoose';
-
 import _db from '$lib/server/database';
 import User from '$lib/server/models/user';
 import jwt from 'jsonwebtoken';
 import { redirect, invalid } from '@sveltejs/kit';
+import type { TUser } from '$lib/types/user';
 
 const secret = import.meta.env.VITE_LOGIN_SECRET;
 const exp = import.meta.env.VITE_LOGIN_EXP;
@@ -15,7 +14,7 @@ export async function load({ params, cookies }) {
         const { token } = params;
 
         // try to find user in db
-        const user: HydratedDocument<IUser> | null = await User.findOne({ tempEmailToken: token }).select('email tempEmail tempEmailToken loginToken displayName');
+        const user: HydratedDocument<TUser> | null = await User.findOne({ tempEmailToken: token }).select('email tempEmail tempEmailToken loginToken displayName');
         if (!user || !user.tempEmail) throw redirect(303, '/login');
 
         // create a session token

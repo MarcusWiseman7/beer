@@ -1,6 +1,6 @@
 <script lang="ts">
     // types
-    import type { IBeer } from '$lib/ts-interfaces';
+    import type { TBeer } from '$lib/types/beer';
 
     // components
     import WCard from './WCard.svelte';
@@ -15,7 +15,7 @@
 
     // props
     export let arrowsDisabled: boolean = false;
-    export let items: IBeer[];
+    export let items: TBeer[];
 
     // data
     let scroller: HTMLDivElement;

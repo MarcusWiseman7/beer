@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
-import type { IUser } from '$lib/ts-interfaces';
 import bcrypt from 'bcryptjs';
+import type { TUser } from '$lib/types/user';
 
-const UserSchema = new Schema<IUser>(
+const UserSchema = new Schema<TUser>(
     {
         password: { type: String, required: true, trim: true },
         email: { type: String, trim: true, unique: true },
@@ -33,6 +33,6 @@ UserSchema.pre('save', function(next): void {
     }
 });
 
-const User = model<IUser>('User', UserSchema);
+const User = model<TUser>('User', UserSchema);
 
 export default User;

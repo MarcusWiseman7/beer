@@ -1,6 +1,6 @@
 <script lang="ts">
     // types
-    import type { IBeerType, INewBeerType } from '$lib/ts-interfaces';
+    import type { TBeerCategory } from '$lib/types/beer';
 
     // components
     import WButton from '$lib/components/WButton.svelte';
@@ -9,7 +9,7 @@
     // props
     /** @type {import('./$types').PageData} */
     export let data: {
-        types: IBeerType[];
+        types: TBeerCategory[];
     };
 
     // helpers
@@ -19,11 +19,11 @@
     import { isEqual } from 'lodash';
 
     // data
-    let controlList: IBeerType[] = [];
+    let controlList: TBeerCategory[] = [];
     let addBeerTypeForm = false;
     let query = '';
-    let filteredBeerTypesList: IBeerType[] = [];
-    const payload: INewBeerType = {
+    let filteredBeerTypesList: TBeerCategory[] = [];
+    const payload: TBeerCategory = {
         name: '',
         description: '',
         color: '',
@@ -58,7 +58,7 @@
             if (result.type === 'success') {
                 // reset form
                 Object.keys(payload).forEach((p) => {
-                    payload[p as keyof INewBeerType] = '';
+                    payload[p as keyof TBeerCategory] = '';
                 });
 
                 // update list
@@ -95,7 +95,7 @@
         }
     };
 
-    const updateBeerType = async (beerType: IBeerType): Promise<void> => {
+    const updateBeerType = async (beerType: TBeerCategory): Promise<void> => {
         try {
             const y = controlList.find((x) => x._id === beerType._id);
             const changed = !isEqual(y, beerType);
@@ -106,7 +106,7 @@
                 body.append('_id', beerType._id.toString());
 
                 Object.entries(beerType).forEach((b) => {
-                    if (b[1] !== y[b[0] as keyof IBeerType]) {
+                    if (b[1] !== y[b[0] as keyof TBeerCategory]) {
                         body.append(b[0], b[1]);
                     }
                 });

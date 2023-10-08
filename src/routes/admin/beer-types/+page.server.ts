@@ -1,6 +1,6 @@
 // types
-import type { IBeerType, INewBeerType } from '$lib/ts-interfaces';
 import type { HydratedDocument, LeanDocument } from 'mongoose';
+import type { TBeerCategory } from '$lib/types/beer';
 
 // models
 import BeerType from '$lib/server/models/beerType';
@@ -16,7 +16,7 @@ export async function load({ cookies, params }) {
      */
     await adminLevelRouteGuard(cookies, params);
 
-    const types: IBeerType[] = await BeerType.find().select('-__v').lean();
+    const types: TBeerCategory[] = await BeerType.find().select('-__v').lean();
     return JSON.stringify({ types });
 }
 
@@ -25,18 +25,18 @@ export const actions = {
     addBeerType: async ({ request }) => {
         try {
             const data = await request.formData();
-            const typeData: INewBeerType = { name: '', description: '', ibu: '', abv: '' };
+            const typeData: TBeerCategory = { name: '', description: '', ibu: '', abv: '' };
 
             for (const pair of data.entries()) {
-                typeData[pair[0] as keyof INewBeerType] = pair[1];
+                typeData[pair[0] as keyof TBeerCategory] = pair[1];
             }
 
             // check for existing document
-            const alreadyBeerType: LeanDocument<IBeerType> = await BeerType.findOne({ name: typeData.name }).select('_id').lean();
+            const alreadyBeerType: LeanDocument<TBeerCategory> = await BeerType.findOne({ name: typeData.name }).select('_id').lean();
             if (alreadyBeerType) return invalid(403, { message: 'Beer type with that name already exists!' });
 
             // create new document
-            const beerType: HydratedDocument<IBeerType> = await BeerType.create(typeData);
+            const beerType: HydratedDocument<TBeerCategory> = await BeerType.create(typeData);
             await beerType.save(err => {
                 if (err) return invalid(500, { message: 'Mongoose error on save!' });
             });
@@ -59,7 +59,7 @@ export const actions = {
             }
 
             // update in db
-            const beerType: LeanDocument<IBeerType> = await BeerType
+            const beerType: LeanDocument<TBeerCategory> = await BeerType
                 .findOneAndUpdate({ _id }, { $set: typeData }, { new: true })
                 .select('-_v')
                 .lean();

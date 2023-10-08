@@ -1,6 +1,4 @@
-// types
-import type { IUser } from '$lib/ts-interfaces';
-
+import type { TUser } from '$lib/types/user.js';
 import User from '$lib/server/models/user';
 import { userSelect } from '$lib/server/server-helpers';
 
@@ -33,7 +31,7 @@ export async function load({ request, cookies }) {
     // check if logged in
     const session = cookies.get('session');
     if (session) {
-        const user: IUser | null = await User.findOne({ loginToken: session }).select(userSelect).lean();
+        const user: TUser | null = await User.findOne({ loginToken: session }).select(userSelect).lean();
 
         if (user) {
             return JSON.stringify({ user, locale });

@@ -1,10 +1,10 @@
 <script lang="ts">
     // types
-    import type { IReview } from '$lib/ts-interfaces';
+    import type { TReview } from '$lib/types/review';
 
     // props
     export let type: string = 'normal';
-    export let review: IReview;
+    export let review: TReview;
 
     // icons
     import like_src from '$lib/assets/icons/post/like.svg';

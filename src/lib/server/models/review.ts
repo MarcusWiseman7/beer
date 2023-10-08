@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import type { IReview } from '$lib/ts-interfaces';
+import type { TReview } from '$lib/types/review';
 
-const reviewSchema = new Schema<IReview>(
+const reviewSchema = new Schema<TReview>(
     {
         picURL: { type: String, trim: true },
         picPublicId: { type: String, trim: true },
@@ -17,6 +17,6 @@ const reviewSchema = new Schema<IReview>(
     }
 );
 
-const Review = model<IReview>('Review', reviewSchema);
+const Review = model<TReview>('Review', reviewSchema);
 
 export default Review;

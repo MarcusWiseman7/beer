@@ -1,8 +1,8 @@
 import { locale, myProfile } from '$lib/stores';
-import type { IUser } from '$lib/ts-interfaces.js';
+import type { TUser } from '$lib/types/user';
 
 type ParsedData = {
-    user?: IUser;
+    user?: TUser;
     locale?: string;
 };
 

@@ -2,10 +2,11 @@ import User from '$lib/server/models/user';
 import { invalid } from '@sveltejs/kit';
 import { userSelect } from '$lib/server/server-helpers';
 import { myProfile } from '$lib/stores';
-import type { IReview, IUser } from '$lib/ts-interfaces';
 import Review from '$lib/server/models/review';
 import sanity from '$lib/sanity/sanity.js';
 import type { PageData } from '$lib/types/pageData.js';
+import type { TReview } from '$lib/types/review.js';
+import type { TUser } from '$lib/types/user.js';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({ params }) {
@@ -17,14 +18,14 @@ export async function load({ params }) {
         const name = username.replace('@', '');
 
         // find user
-        const user: IUser | null = await User.findOne({ username: name }).select(userSelect).lean();
+        const user: TUser | null = await User.findOne({ username: name }).select(userSelect).lean();
         if (!user) return invalid(404, { message: 'No user with that username...' });
 
         // get reviews count
         const reviewsCount = await Review.where({ reviewer: user._id }).countDocuments();
         
         // get first 30 user reviews
-        const reviews: IReview[] = reviewsCount
+        const reviews: TReview[] = reviewsCount
             ? await Review.find({ reviewer: user._id }).sort('dateCreated').limit(30).populate('beer').lean()
             : [];
         
@@ -65,7 +66,7 @@ export const actions = {
             const reviewsCount = await Review.where({ reviewer: userId }).countDocuments();
             
             // get next 30 user reviews
-            const reviews: IReview[] = await Review
+            const reviews: TReview[] = await Review
                 .find({ reviewer: userId })
                 .sort('dateCreated')
                 .skip(offset)

@@ -1,9 +1,10 @@
 import _db from '$lib/server/database';
 import { beerSelect } from '$lib/server/server-helpers';
 import Beer from '$lib/server/models/beer';
-import type { IBrewery, IReview } from '$lib/ts-interfaces';
 import sanity from '$lib/sanity/sanity.js';
 import type { PageData } from '$lib/types/pageData.js';
+import type { TBrewery } from '$lib/types/brewery.js';
+import type { TReview } from '$lib/types/review.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
@@ -13,15 +14,15 @@ export async function load({ params }) {
     const beer = await Beer
         .findOne({ _id: params.id })
         .select(beerSelect)
-        .populate<{ brewery: IBrewery; }>('brewery')
-        .populate<{ reviews: IReview[] }>('reviews')
+        .populate<{ brewery: TBrewery; }>('brewery')
+        .populate<{ reviews: TReview[] }>('reviews')
         .orFail()
         .exec();
     
     const siblingBeers = await Beer
         .find({ brewery: beer.brewery._id })
         .select(beerSelect)
-        .populate<{ reviews: IReview[] }>('reviews')
+        .populate<{ reviews: TReview[] }>('reviews')
         .sort({'averageRating': 'desc'})
         .exec();
 

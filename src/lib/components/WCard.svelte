@@ -1,6 +1,6 @@
 <script lang="ts">
     // types
-    import type { IBeer } from '$lib/ts-interfaces';
+    import type { TBeer } from '$lib/types/beer';
 
     // icons
     import cz_src from '$lib/assets/icons/flags/czech.svg';
@@ -14,7 +14,7 @@
     import { goto } from '$app/navigation';
 
     // props
-    export let item: IBeer;
+    export let item: TBeer;
     export let size: string = 'normal';
     export let dragging: boolean = false;
 

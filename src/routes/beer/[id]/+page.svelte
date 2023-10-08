@@ -1,11 +1,11 @@
 <script lang="ts">
     // types
+    import type { TBeer } from '$lib/types/beer';
     import type { ObjectId } from 'mongoose';
-    import type { IBeer } from '$lib/ts-interfaces';
     import type { IPageData } from '$lib/types/pageData';
     interface IData extends IPageData {
-        beer: IBeer;
-        siblingBeers: IBeer[];
+        beer: TBeer;
+        siblingBeers: TBeer[];
         id: ObjectId;
     }
 

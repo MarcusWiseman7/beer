@@ -1,10 +1,11 @@
 <script lang="ts">
     // types
     import type { IPageData } from '$lib/types/pageData';
-    import type { IReview, IUser } from '$lib/ts-interfaces';
+    import type { TUser } from '$lib/types/user';
+    import type { TReview } from '$lib/types/review';
     interface IData extends IPageData {
-        user: IUser;
-        reviews: IReview[];
+        user: TUser;
+        reviews: TReview[];
         canFetchMoreReviews: boolean;
         username: string;
     }

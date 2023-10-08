@@ -1,9 +1,10 @@
 <script lang="ts">
     // types
+    import type { TBeer } from '$lib/types/beer';
     import type { IPageData } from '$lib/types/pageData';
-    import type { IBeer, IBlogPost } from '$lib/ts-interfaces';
+    import type { IBlogPost } from '$lib/ts-interfaces';
     interface IData extends IPageData {
-        topBeers?: IBeer[];
+        topBeers?: TBeer[];
         blogPosts?: IBlogPost[];
     }
 

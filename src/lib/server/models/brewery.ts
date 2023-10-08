@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import type { IBrewery } from '$lib/ts-interfaces';
+import type { TBrewery } from '$lib/types/brewery';
 
-const brewerySchema = new Schema<IBrewery>(
+const brewerySchema = new Schema<TBrewery>(
     {
         dateCreated: { type: Date, default: Date.now },
         name: { type: String, required: true, trim: true },
@@ -20,6 +20,6 @@ const brewerySchema = new Schema<IBrewery>(
     }
 );
 
-const Brewery = model<IBrewery>('Brewery', brewerySchema);
+const Brewery = model<TBrewery>('Brewery', brewerySchema);
 
 export default Brewery;
