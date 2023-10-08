@@ -58,13 +58,15 @@
         <h4 class="menu-footer__title">Follow us</h4>
         <ul class="menu-footer__socials">
             <li>
-                <a href=""><img src={instagram_src} height="18" width="18" alt="Instagram" /></a>
+                <a href="https://www.instagram.com/findbrews" target="_blank"
+                    ><img src={instagram_src} height="18" width="18" alt="Instagram" /></a
+                >
             </li>
             <li>
-                <a href=""><img src={twitter_src} width="18" height="18" alt="Twitter" /></a>
+                <a href="" target="_blank"><img src={twitter_src} width="18" height="18" alt="Twitter" /></a>
             </li>
             <li>
-                <a href=""><img src={telegram_src} width="18" height="18" alt="Telegram" /></a>
+                <a href="" target="_blank"><img src={telegram_src} width="18" height="18" alt="Telegram" /></a>
             </li>
         </ul>
         <ul class="menu-footer__list">

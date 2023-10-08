@@ -23,11 +23,14 @@
     let pub = '';
     let imageFile;
     let imageUrl;
+
     let breweryOptions = ['Brewery 1', 'Brewery 2', 'Brewery 3'];
     let beerOptions = ['Beer 1', 'Beer 2', 'Beer 3'];
+
     let emojiValue = 3;
     const emojis = ['🤮', '😟', '😌', '😊', '🤩'];
     const descriptions = ['Blegh', 'Meh', 'Chill', 'Solid', 'Excellent'];
+
     let activeOption = 1;
     const options = [
         { id: 1, label: 'Draft' },
@@ -109,7 +112,7 @@
 {#if $newPost}
     <div class="new-post">
         <div class="new-post-wrapper" transition:fade={{ duration: 500 }}>
-            <div class="post" in:fly={{ y: 300, duration: 500 }} out:fly={{ y: 300, duration: 300 }}>
+            <div class="post" in:fly={{ y: 300, duration: 500 }} out:fly={{ y: 100, duration: 100 }}>
                 <div class="post-header">
                     <div class="post-header__left">
                         <button class="closer" on:click={close}>
@@ -138,43 +141,52 @@
 
                         <form autocomplete="off" on:submit|preventDefault class="post-content-middle">
                             <div class="input-group">
-                                <div class="input">
-                                    <img src={brewery_src} alt="Brewery" />
-                                    <input
-                                        placeholder="Find Brewery"
-                                        autocomplete="off"
-                                        bind:value={brewery}
-                                        on:input={(e) => searchBrewery(e.target.value)}
-                                        on:blur={() =>
-                                            setTimeout(() => {
-                                                isBreweryDropdownVisible = false;
-                                            }, 200)}
-                                    />
+                                <div class="group">
+                                    <div class="input">
+                                        <img src={brewery_src} alt="Brewery" />
+                                        <input
+                                            placeholder="Find Brewery"
+                                            autocomplete="off"
+                                            bind:value={brewery}
+                                            on:input={(e) => searchBrewery(e.target.value)}
+                                            on:blur={() =>
+                                                setTimeout(() => {
+                                                    isBreweryDropdownVisible = false;
+                                                }, 200)}
+                                        />
+                                    </div>
+                                    <button on:click={toggleBreweryDropdown} class="btn {brewery ? 'remove' : 'add'}">
+                                        <span class="plus">+</span>
+                                    </button>
                                 </div>
                                 {#if isBreweryDropdownVisible}
                                     <ul class="dropdown">
+                                        <li>
+                                            <button>or add new</button>
+                                        </li>
                                         {#each breweryOptions as option}
                                             <li>
                                                 <button on:click={() => selectBrewery(option)}>{option}</button>
                                             </li>
                                         {/each}
-                                        <li><button>or add new</button></li>
                                     </ul>
                                 {/if}
-                                <button on:click={toggleBreweryDropdown} class="btn {brewery ? 'remove' : 'add'}">
-                                    <span class="plus">+</span>
-                                </button>
                             </div>
 
                             <div class="input-group">
-                                <div class="input">
-                                    <img src={beer_src} alt="Beer" height="18px" />
-                                    <input
-                                        placeholder="Find Beer"
-                                        autocomplete="off"
-                                        bind:value={beer}
-                                        on:input={(e) => searchBeer(e.target.value)}
-                                    />
+                                <div class="group">
+                                    <div class="input">
+                                        <img src={beer_src} alt="Beer" height="18px" />
+                                        <input
+                                            placeholder="Find Beer"
+                                            autocomplete="off"
+                                            bind:value={beer}
+                                            on:input={(e) => searchBeer(e.target.value)}
+                                        />
+                                    </div>
+                                    <button on:click={toggleBeerDropdown} class="btn {beer ? 'remove' : 'add'}">
+                                        <span class="plus">+</span>
+                                    </button>
                                 </div>
                                 {#if isBeerDropdownVisible}
                                     <ul class="dropdown">
@@ -186,9 +198,6 @@
                                         <li><button>or add new</button></li>
                                     </ul>
                                 {/if}
-                                <button on:click={toggleBeerDropdown} class="btn {beer ? 'remove' : 'add'}">
-                                    <span class="plus">+</span>
-                                </button>
                             </div>
                             <div class="input-group">
                                 <div class="input">
@@ -274,6 +283,10 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.4);
             transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+            @media (min-width: $desktop) {
+                align-items: center;
+            }
         }
 
         .post {
@@ -286,6 +299,13 @@
             position: relative;
             background-color: var(--page);
             border-radius: calc(var(--main-border-radius) * 2) calc(var(--main-border-radius) * 2) 0 0;
+
+            @media (min-width: $desktop) {
+                height: auto;
+                border-radius: calc(var(--main-border-radius) * 2);
+                padding: 4px 20px 20px;
+                overflow-y: visible;
+            }
 
             &::-webkit-scrollbar {
                 display: none;
@@ -381,6 +401,10 @@
                 max-width: 200px;
                 margin: 0 auto;
                 margin-top: auto;
+
+                @media (min-width: $desktop) {
+                    padding-top: 20px;
+                }
             }
         }
 
@@ -389,10 +413,13 @@
         // mini component
         .input-group {
             position: relative;
-            display: flex;
-            flex-flow: row;
             margin-bottom: 12px;
-            gap: 12px;
+
+            .group {
+                display: flex;
+                flex-flow: row;
+                gap: 12px;
+            }
 
             .input {
                 width: 100%;
@@ -421,7 +448,7 @@
                 background-color: #f2f2f2;
 
                 .plus {
-                    font-size: 18px;
+                    font-size: 24px;
                     line-height: 40px;
                     transition: var(--main-transition);
                 }
@@ -446,6 +473,7 @@
                 box-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
                 margin-top: 4px;
                 padding: 4px;
+                border-radius: 0 0 var(--main-border-radius) var(--main-border-radius);
 
                 li {
                     button {
