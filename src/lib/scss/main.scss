@@ -19,6 +19,11 @@ img {
     -webkit-touch-callout: none;
 }
 
+label,
+button {
+    cursor: pointer;
+}
+
 input {
     height: 44px;
     width: 100%;
@@ -40,4 +45,30 @@ input {
     &--sm {
         min-height: 32px;
     }
+}
+
+input[type='range'] {
+    -webkit-appearance: none;
+    height: 7px;
+    background: var(--border);
+    border-radius: var(--main-border-radius);
+    background: var(--border);
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background: var(--main-color);
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 var(--border);
+    transition: background 0.3s ease-in-out;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
 }

@@ -1,9 +1,10 @@
 <script lang="ts">
     export let type: string = 'normal';
     export let hasImage: Boolean = true;
+    export let activeLabel: boolean = false;
 </script>
 
-<div class={`pill pill--${type}`}>
+<div class="pill {`pill--${type}`} {activeLabel ? 'active' : ''}">
     {#if hasImage}
         <div class="pill__image">
             <slot name="image" />
@@ -28,6 +29,14 @@
         background-color: var(--c-pill-bg);
         height: 28px;
         padding: 2px 16px 2px 2px;
+        transition: var(--main-transition);
+
+        &:hover,
+        &.active {
+            border-color: var(--main-color);
+            transition: var(--main-transition);
+            cursor: pointer;
+        }
 
         &__image {
             border-radius: 50%;

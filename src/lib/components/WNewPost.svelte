@@ -13,28 +13,50 @@
 
     // components
     import WButton from './WButton.svelte';
+    import WPill from './WPill.svelte';
 
     // data
-    let step = 0;
-
+    let step = 1;
     let postText = '';
-    let postImage;
     let brewery = '';
     let beer = '';
     let pub = '';
-
+    let imageFile;
+    let imageUrl;
     let breweryOptions = ['Brewery 1', 'Brewery 2', 'Brewery 3'];
     let beerOptions = ['Beer 1', 'Beer 2', 'Beer 3'];
+    let emojiValue = 3;
+    const emojis = ['🤮', '😟', '😌', '😊', '🤩'];
+    const descriptions = ['Blegh', 'Meh', 'Chill', 'Solid', 'Excellent'];
+    let activeOption = 1;
+    const options = [
+        { id: 1, label: 'Draft' },
+        { id: 2, label: 'Bottle' },
+        { id: 3, label: 'Can' },
+    ];
 
     let isBreweryDropdownVisible = false;
     let isBeerDropdownVisible = false;
 
     // computed
-    $: isBtnUploadEnabled = postImage && beer && brewery;
+    $: isBtnUploadEnabled = imageFile && beer && brewery;
+    $: emoji = emojis[emojiValue - 1];
+    $: description = descriptions[emojiValue - 1];
 
     // methods
     const close = (): void => {
         newPost.set(false);
+    };
+
+    const handleFileUpload = (event): void => {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            imageFile = file;
+            imageUrl = URL.createObjectURL(file);
+        } else {
+            imageFile = null;
+            imageUrl = null;
+        }
     };
 
     function searchBrewery(query) {
@@ -68,6 +90,20 @@
         if (beer) beer = '';
         else isBeerDropdownVisible = !isBeerDropdownVisible;
     };
+
+    const addPost = (): void => {
+        // TODO aleardy create a new post
+        step = 2;
+    };
+
+    const addPostRating = (): void => {
+        // TODO not required, user can close it but if he submits store data to the post
+        // TODO show successful status message
+    };
+
+    function selectOption(id) {
+        activeOption = id;
+    }
 </script>
 
 {#if $newPost}
@@ -84,78 +120,135 @@
                     <div class="post-header__right">&nbsp;</div>
                 </div>
                 <div class="post-content">
-                    <div class="post-content-top">
-                        <textarea bind:value={postText} placeholder="Type something here..." />
-                        <label class="image">
-                            <img src={whitePicture_src} alt="picture" />
-                            <small>+ Add</small>
-                            <input
-                                type="file"
-                                on:change={(e) => {
-                                    postImage = e.target.files[0];
-                                }}
-                            />
-                        </label>
-                    </div>
-
-                    <div class="post-content-middle">
-                        <div class="input-group">
-                            <div class="input">
-                                <img src={brewery_src} alt="Brewery" />
-                                <input
-                                    placeholder="Find Brewery"
-                                    bind:value={brewery}
-                                    on:input={(e) => searchBrewery(e.target.value)}
-                                    on:blur={() =>
-                                        setTimeout(() => {
-                                            isBreweryDropdownVisible = false;
-                                        }, 200)}
-                                />
+                    {#if step == 1}
+                        <div class="post-content-top">
+                            <textarea bind:value={postText} placeholder="Type something here..." />
+                            <div class="image">
+                                {#if imageUrl}
+                                    <img src={imageUrl} alt="preview" class="image" />
+                                {:else}
+                                    <label>
+                                        <img class="icon" src={whitePicture_src} alt="picture" />
+                                        <small>+ Add</small>
+                                        <input type="file" accept="image/*" on:change={handleFileUpload} />
+                                    </label>
+                                {/if}
                             </div>
-                            {#if isBreweryDropdownVisible}
-                                <ul class="dropdown">
-                                    {#each breweryOptions as option}
-                                        <li on:click={() => selectBrewery(option)}>{option}</li>
-                                    {/each}
-                                </ul>
-                            {/if}
-                            <button on:click={toggleBreweryDropdown} class="btn {brewery ? 'remove' : 'add'}">
-                                <span class="plus">+</span>
-                            </button>
                         </div>
 
-                        <div class="input-group">
-                            <div class="input">
-                                <img src={beer_src} alt="Beer" height="18px" />
-                                <input
-                                    placeholder="Find Beer"
-                                    bind:value={beer}
-                                    on:input={(e) => searchBeer(e.target.value)}
-                                />
+                        <form autocomplete="off" on:submit|preventDefault class="post-content-middle">
+                            <div class="input-group">
+                                <div class="input">
+                                    <img src={brewery_src} alt="Brewery" />
+                                    <input
+                                        placeholder="Find Brewery"
+                                        autocomplete="off"
+                                        bind:value={brewery}
+                                        on:input={(e) => searchBrewery(e.target.value)}
+                                        on:blur={() =>
+                                            setTimeout(() => {
+                                                isBreweryDropdownVisible = false;
+                                            }, 200)}
+                                    />
+                                </div>
+                                {#if isBreweryDropdownVisible}
+                                    <ul class="dropdown">
+                                        {#each breweryOptions as option}
+                                            <li>
+                                                <button on:click={() => selectBrewery(option)}>{option}</button>
+                                            </li>
+                                        {/each}
+                                        <li><button>or add new</button></li>
+                                    </ul>
+                                {/if}
+                                <button on:click={toggleBreweryDropdown} class="btn {brewery ? 'remove' : 'add'}">
+                                    <span class="plus">+</span>
+                                </button>
                             </div>
-                            {#if isBeerDropdownVisible}
-                                <ul class="dropdown">
-                                    {#each beerOptions as option}
-                                        <li on:click={() => selectBeer(option)}>{option}</li>
-                                    {/each}
-                                </ul>
-                            {/if}
-                            <button on:click={toggleBeerDropdown} class="btn {beer ? 'remove' : 'add'}">
-                                <span class="plus">+</span>
-                            </button>
+
+                            <div class="input-group">
+                                <div class="input">
+                                    <img src={beer_src} alt="Beer" height="18px" />
+                                    <input
+                                        placeholder="Find Beer"
+                                        autocomplete="off"
+                                        bind:value={beer}
+                                        on:input={(e) => searchBeer(e.target.value)}
+                                    />
+                                </div>
+                                {#if isBeerDropdownVisible}
+                                    <ul class="dropdown">
+                                        {#each beerOptions as option}
+                                            <li>
+                                                <button on:click={() => selectBeer(option)}>{option}</button>
+                                            </li>
+                                        {/each}
+                                        <li><button>or add new</button></li>
+                                    </ul>
+                                {/if}
+                                <button on:click={toggleBeerDropdown} class="btn {beer ? 'remove' : 'add'}">
+                                    <span class="plus">+</span>
+                                </button>
+                            </div>
+                            <div class="input-group">
+                                <div class="input">
+                                    <img src={location_src} />
+                                    <input placeholder="Search for pub" bind:value={pub} />
+                                </div>
+                            </div>
+                        </form>
+                    {:else if step == 2}
+                        <div class="emoji-container">
+                            <h3 class="description">Taste emotion: "{description}"</h3>
+                            <div class="emojis">
+                                {#each emojis as e, i}
+                                    <button
+                                        class="emoji {i === emojiValue - 1 ? 'active' : ''}"
+                                        on:click={() => (emojiValue = i + 1)}
+                                    >
+                                        {e}
+                                    </button>
+                                {/each}
+                            </div>
+                            <input type="range" min="1" max="5" bind:value={emojiValue} class="slider" />
                         </div>
-                        <div class="input-group">
-                            <div class="input">
-                                <img src={location_src} />
-                                <input placeholder="Search for pub" bind:value={pub} />
+
+                        <div class="options-container">
+                            <h3 class="description">Serving style</h3>
+                            <div class="options">
+                                <!-- TODO: choose correct icon and pass to activeLabel acti clas -->
+                                {#each options as { id, label }}
+                                    <WPill
+                                        type="rating"
+                                        activeLabel={activeOption === id}
+                                        on:click={() => selectOption(id)}
+                                    >
+                                        <svelte:fragment slot="image">
+                                            <img src={beer_src} alt="Beer" />
+                                        </svelte:fragment>
+                                        <svelte:fragment slot="title">{label}</svelte:fragment>
+                                    </WPill>
+                                {/each}
                             </div>
                         </div>
-                    </div>
+                    {:else}
+                        <div class="success">thx</div>
+                    {/if}
                 </div>
                 <div class="post-footer">
-                    <WButton disabled={!isBtnUploadEnabled} modifiers={['primary', 'md', 'w100']}>
-                        <span class="text">Post</span>
-                    </WButton>
+                    {#if step == 1}
+                        <WButton
+                            disabled={!isBtnUploadEnabled}
+                            on:click={addPost}
+                            modifiers={['primary', 'md', 'w100']}
+                        >
+                            <span class="text">Post</span>
+                        </WButton>
+                    {:else}
+                        <WButton on:click={addPostRating} modifiers={['primary', 'md', 'w100']}>
+                            <span class="text">Add Rating</span>
+                        </WButton>
+                    {/if}
                 </div>
             </div>
         </div>
@@ -249,13 +342,24 @@
                         height: 80px;
                         background: var(--placeholder);
                         border-radius: var(--main-border-radius);
-                        padding: 8px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-between;
 
-                        img {
+                        label {
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            padding: 8px;
+                        }
+
+                        .icon {
                             max-width: 22px;
+                        }
+
+                        .image {
+                            width: 100%;
+                            height: 100%;
+                            -o-object-fit: cover;
+                            object-fit: cover;
                         }
 
                         small {
@@ -297,8 +401,7 @@
                 border: 1px solid var(--border);
                 border-radius: var(--main-border-radius);
                 img {
-                    padding: 6px;
-                    padding-left: 10px;
+                    padding: 6px 12px 6px 12px;
                 }
                 input {
                     height: 40px;
@@ -342,9 +445,87 @@
                 z-index: 50;
                 box-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
                 margin-top: 4px;
+                padding: 4px;
 
                 li {
-                    padding: 8px;
+                    button {
+                        border-radius: calc(var(--main-border-radius) / 2);
+                        overflow: hidden;
+                        width: 100%;
+                        padding: 8px;
+                        transition: var(--main-transition);
+                        text-align: left;
+
+                        &:hover,
+                        &:focus {
+                            background-color: var(--hover);
+                            transition: var(--main-transition);
+                        }
+                    }
+                }
+            }
+        }
+
+        .emoji-container {
+            text-align: center;
+            padding: 30px 0 40px 0;
+            .description {
+                font-size: 16px;
+                margin-bottom: 10px;
+                font-weight: 500;
+                margin-bottom: 20px;
+            }
+            .emojis {
+                display: flex;
+                justify-content: space-around;
+                max-width: 300px;
+                margin: 20px auto 10px auto;
+
+                .emoji {
+                    font-size: 30px;
+                    transition: var(--main-transition);
+                    opacity: 0.4;
+                    &.active {
+                        transition: var(--main-transition);
+                        transform: scale(1.2);
+                        opacity: 1;
+                    }
+                }
+            }
+            .slider {
+                margin: 40px auto 0 auto;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        .options-container {
+            padding-top: 30px;
+            padding-bottom: 40px;
+            border-top: 1px solid var(--border);
+            .description {
+                font-size: 16px;
+                font-weight: 500;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .options {
+                display: flex;
+                gap: 12px;
+                flex-flow: row wrap;
+                justify-content: center;
+
+                .option {
+                    padding: 10px 20px;
+                    border: 1px solid #ddd;
+                    cursor: pointer;
+                    user-select: none;
+                    transition: var(--main-transition);
+
+                    &.active {
+                        border-color: var(--main-color);
+                        transition: var(--main-transition);
+                    }
                 }
             }
         }
