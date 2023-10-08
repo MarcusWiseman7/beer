@@ -57,11 +57,13 @@
             return networks[key].replace(':?', ':&');
         }
 
-        return networks[key];
+        return networks[key as keyof object];
     };
 
     const getShareLink = (): string => {
         let link = rawLink;
+
+        if (!link) return '';
 
         /**
          * Twitter sharing shouldn't include empty parameter
