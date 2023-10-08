@@ -1,7 +1,7 @@
 import { derived, writable } from 'svelte/store';
-import type { IMessage } from './ts-interfaces';
 import type { TBeer } from './types/beer';
 import type { TUser } from './types/user';
+import type { Message } from './types/message';
 
 /**
  * ICONS
@@ -14,7 +14,7 @@ import Profile__SvelteComponent_
 /**
  * WRITABLE EXPORTS
  */
-export let appMessages = writable<IMessage[]>([]);
+export let appMessages = writable<Message[]>([]);
 export let locale = writable<string>('en');
 export let country = writable<string>('');
 export let loading = writable<boolean>(false);

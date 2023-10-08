@@ -15,26 +15,10 @@
     // components
     import WBack from '$lib/components/WBack.svelte';
     import WSignup from '$lib/components/WSignup.svelte';
-
-    // computed
-    $: description = data?.description || '';
-    $: hashtags = data?.hashtags || '';
+    import WHead from '$lib/components/WHead.svelte';
 </script>
 
-<svelte:head>
-    <title>Find Brews | Login</title>
-    <meta property="og:title" content="Find Brews | Login" />
-    <meta property="og:url" content="https://find-brews.com/login/'" />
-
-    {#if description}
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head>
+<WHead seo={data?.page?.seo} canonicalURL="login" />
 
 <div class="page-top">
     <WBack />

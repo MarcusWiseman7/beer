@@ -1,9 +1,9 @@
 <script lang="ts">
     // types
-    import type { IBlogPost } from '$lib/ts-interfaces';
+    import type { BlogPost } from '$lib/types/blog';
     import type { IPageData } from '$lib/types/pageData';
     interface IData extends IPageData {
-        post: IBlogPost;
+        post: BlogPost;
         slug: string;
     }
 

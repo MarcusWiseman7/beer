@@ -58,8 +58,10 @@ export const actions = {
     getUserReviews: async ({ request }) => {
         try {
             const data = await request.formData();
-            const offset: number = parseInt(data.get('offset') || '0');
-            const limit: number = parseInt(data.get('limit') || '30');
+            const possibleOffset = data.get('offset') as string;
+            const possibleLimit = data.get('limit') as string;
+            const offset: number = possibleOffset ? parseInt(possibleOffset) : 0;
+            const limit: number = possibleLimit ? parseInt(possibleLimit) : 30;
             const userId = data.get('userId');
 
             // get count

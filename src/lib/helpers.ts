@@ -1,9 +1,8 @@
-import type { Writable } from 'svelte/store';
 import { appMessages } from './stores';
-import type { IMessage } from './ts-interfaces';
 import type { LocaleObject, TranslationReplacements } from './types/locale';
+import type { Message } from './types/message';
 
-export const setAppMessage = (message: IMessage): void => {
+export const setAppMessage = (message: Message): void => {
     appMessages.update((a) => [...a, message]);
 };
 

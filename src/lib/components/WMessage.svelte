@@ -1,12 +1,12 @@
 <script lang="ts">
-    export let messageObj: IMessage;
-
     import { appMessages } from '$lib/stores';
     import { fly } from 'svelte/transition';
-    import type { IMessage } from '../ts-interfaces';
+    import type { Message } from '$lib/types/message';
+
+    export let messageObj: Message;
 
     setTimeout(() => {
-        appMessages.update((a) => a.filter((m: IMessage) => m.id !== messageObj.id));
+        appMessages.update((a) => a.filter((m: Message) => m.id !== messageObj.id));
     }, messageObj.timeout);
 </script>
 

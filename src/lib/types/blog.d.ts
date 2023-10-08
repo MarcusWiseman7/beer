@@ -1,7 +1,6 @@
-import type { ObjectId } from 'mongoose';
 import type { SanityDocument, SanityImageAssetDocument } from '@sanity/client';
 
-export interface IBlogContentBlock {
+export type BlogContentBlock = {
     _type: string;
     _key: string;
     style: string;
@@ -9,7 +8,7 @@ export interface IBlogContentBlock {
     markDefs?: { _key: string; _type: string; href?: string; }[],
 }
 
-export interface IBlogPost extends SanityDocument {
+export interface BlogPost extends SanityDocument {
     title: string;
     slug: {
         current: string;
@@ -28,31 +27,5 @@ export interface IBlogPost extends SanityDocument {
     ];
     publishedAt: Date;
     summary: string;
-    body: IBlogContentBlock[];
+    body: BlogContentBlock[];
 };
-
-export interface IMessage {
-    message: string;
-    timeout: number;
-    type: string;
-    id: number;
-};
-
-export interface ISocialNetwork {
-    id: string;
-    icon: string;
-};
-
-export interface ICard { };
-
-export interface ILogin {
-    email: string;
-    password: string;
-}
-
-export interface ISignup {
-    displayName: string;
-    username: string;
-    password: string;
-    tempEmail: string;
-}

@@ -24,4 +24,5 @@ export async function load({ params }) {
 
     
     return JSON.stringify({ brewery, beers, page, id: params.id });
-}
+};
+

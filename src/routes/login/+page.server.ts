@@ -1,5 +1,5 @@
-import type { ISignup, ILogin } from '$lib/ts-interfaces';
 import type { HydratedDocument, LeanDocument } from 'mongoose';
+import type { Login, Signup } from '$lib/types/auth';
 import type { TUser } from '$lib/types/user';
 import _db from '$lib/server/database';
 import User from '$lib/server/models/user';
@@ -8,6 +8,8 @@ import jwt from 'jsonwebtoken';
 import { invalid } from '@sveltejs/kit';
 import { randomBytes } from 'crypto';
 import nodemailer from 'nodemailer';
+import type { PageData } from '$lib/types/pageData';
+import sanity from '$lib/sanity/sanity';
 
 const transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',
@@ -27,10 +29,10 @@ export const actions = {
     login: async ({ cookies, request }) => {
         try {
             const data = await request.formData();
-            const userData: ILogin = { email: '', password: '' };
+            const userData: Login = { email: '', password: '' };
             
             for (const pair of data.entries()) {
-                userData[pair[0] as keyof ILogin] = pair[1];
+                if (typeof pair[1] === 'string') userData[pair[0] as keyof Login] = pair[1];
             }
 
             // try to find user in db
@@ -86,10 +88,10 @@ export const actions = {
     signup: async ({ request }) => {
         try {
             const data = await request.formData();
-            const userData: ISignup = { displayName: '', username: '', tempEmail: '', password: '' };
+            const userData: Signup = { displayName: '', username: '', tempEmail: '', password: '' };
             
             for (const pair of data.entries()) {
-                userData[pair[0] as keyof ISignup] = pair[1];
+                if (typeof pair[1] === 'string') userData[pair[0] as keyof Signup] = pair[1];
             }
 
             // try to find user with email/username in db
@@ -124,3 +126,12 @@ export const actions = {
         }
     },
 };
+
+/** @type {import('./$types').PageServerLoad} */
+export async function load({ }) {
+    const pageQuery = `*[_type == 'login'][0]`;
+    const page: PageData = await sanity.fetch(pageQuery);
+
+    return JSON.stringify({ page });
+};
+

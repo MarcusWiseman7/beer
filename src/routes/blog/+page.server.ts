@@ -1,6 +1,6 @@
-import type { IBlogPost } from '$lib/ts-interfaces';
-import sanity from '$lib/sanity/sanity.js';
+import sanity from '$lib/sanity/sanity';
 import type { PageData } from '$lib/types/pageData';
+import type { BlogPost } from '$lib/types/blog';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
@@ -12,7 +12,7 @@ export async function load() {
         ...,
         "author": author->
     }`;
-    const blogPosts: IBlogPost[] = await sanity.fetch(blogsQuery);
+    const blogPosts: BlogPost[] = await sanity.fetch(blogsQuery);
     
     return JSON.stringify({ blogPosts, page });
 }

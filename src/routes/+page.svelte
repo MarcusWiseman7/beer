@@ -2,10 +2,10 @@
     // types
     import type { TBeer } from '$lib/types/beer';
     import type { IPageData } from '$lib/types/pageData';
-    import type { IBlogPost } from '$lib/ts-interfaces';
+    import type { BlogPost } from '$lib/types/blog';
     interface IData extends IPageData {
         topBeers?: TBeer[];
-        blogPosts?: IBlogPost[];
+        blogPosts?: BlogPost[];
     }
 
     // helpers

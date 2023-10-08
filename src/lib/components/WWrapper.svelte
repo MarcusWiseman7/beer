@@ -1,9 +1,11 @@
 <script lang="ts">
-    import type { ICard } from '$lib/ts-interfaces';
+    import type { TBeer } from '$lib/types/beer';
+    import { goto } from '$app/navigation';
+    import { myProfile } from '$lib/stores';
     import WButton from './WButton.svelte';
     import WCard from './WCard.svelte';
 
-    export let items: ICard[];
+    export let items: TBeer[];
     export let which: string = '';
     export let size: string = 'normal';
 
@@ -14,8 +16,11 @@
     };
 
     const checkIfLoggedIn = (): void => {
-        // if logged in push to /addbeer
-        // else push to /login
+        if (myProfile) {
+            // if logged in push to /addbeer
+        } else {
+            goto('/login');
+        }
     };
 </script>
 

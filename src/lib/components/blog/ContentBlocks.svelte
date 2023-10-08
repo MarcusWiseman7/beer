@@ -1,9 +1,9 @@
 <script lang="ts">
     // types
-    import type { IBlogContentBlock } from '$lib/ts-interfaces';
+    import type { BlogContentBlock } from '$lib/types/blog';
 
     // props
-    export let contentBlocks: IBlogContentBlock[];
+    export let contentBlocks: BlogContentBlock[];
     export let modifiers: string[] = [];
 </script>
 

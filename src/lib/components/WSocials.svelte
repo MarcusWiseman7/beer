@@ -1,9 +1,9 @@
 <script lang="ts">
     // types
-    import type { ISocialNetwork } from '$lib/ts-interfaces';
+    import type { SocialNetwork } from '$lib/types/social';
 
     // props
-    export let socialNetworks: ISocialNetwork[] = [];
+    export let socialNetworks: SocialNetwork[] = [];
     export let addMore: boolean = false;
 
     // components

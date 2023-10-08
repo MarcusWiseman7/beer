@@ -1,6 +1,6 @@
 <script lang="ts">
     // types
-    import type { IBlogPost } from '$lib/ts-interfaces';
+    import type { BlogPost } from '$lib/types/blog';
 
     // components
     import SanityImage from './SanityImage.svelte';
@@ -11,12 +11,12 @@
 
     // props
     export let type: string = 'normal';
-    export let post: IBlogPost;
+    export let post: BlogPost;
 
     // icons
-    import like_src from '$lib/assets/icons/post/like.svg';
-    import comment_src from '$lib/assets/icons/post/comment.svg';
-    import share_src from '$lib/assets/icons/post/share.svg';
+    // import like_src from '$lib/assets/icons/post/like.svg';
+    // import comment_src from '$lib/assets/icons/post/comment.svg';
+    // import share_src from '$lib/assets/icons/post/share.svg';
 
     onMount(() => {
         console.log('post :>> ', post);
