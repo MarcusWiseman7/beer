@@ -21,7 +21,7 @@
     import AProfile from '$lib/components/asides/AProfile.svelte';
     import ADiscover from '$lib/components/asides/ADiscover.svelte';
     import WAvatar from '$lib/components/WAvatar.svelte';
-    import WNewPost from '$lib/components/WNewPost.svelte';
+    import WNewReview from '$lib/components/WNewReview.svelte';
 
     // icons
     import menu_src from '$lib/assets/icons/nav/menu.svg';
@@ -140,7 +140,7 @@
 {/if}
 
 <!-- NEW POS or reveiw -->
-<WNewPost />
+<WNewReview />
 
 <style lang="scss">
     @import '../lib/scss/vars.scss';

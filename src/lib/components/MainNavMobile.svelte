@@ -1,7 +1,7 @@
 <script lang="ts">
     // helpers
     import { createEventDispatcher } from 'svelte';
-    import { derivedNav, myProfile, newPost } from '$lib/stores';
+    import { derivedNav, myProfile, newReview } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { fly } from 'svelte/transition';
@@ -26,7 +26,7 @@
         if (!$myProfile) goto('/login');
         else {
             close();
-            newPost.set(true);
+            newReview.set(true);
         }
     };
 </script>

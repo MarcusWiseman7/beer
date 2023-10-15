@@ -1,6 +1,6 @@
 <script lang="ts">
     // helpers
-    import { newPost } from '$lib/stores';
+    import { newReview } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
 
@@ -10,6 +10,7 @@
     import beer_src from '$lib/assets/icons/post/beer.svg';
     import location_src from '$lib/assets/icons/post/location.svg';
     import whitePicture_src from '$lib/assets/icons/post/white-picture.svg';
+    import PlusIcon from '$lib/components/icons/plus.svelte';
 
     // components
     import WButton from './WButton.svelte';
@@ -48,7 +49,7 @@
 
     // methods
     const close = (): void => {
-        newPost.set(false);
+        newReview.set(false);
     };
 
     const handleFileUpload = (event): void => {
@@ -109,14 +110,14 @@
     }
 </script>
 
-{#if $newPost}
+{#if $newReview}
     <div class="new-post">
         <div class="new-post-wrapper" transition:fade={{ duration: 500 }}>
             <div class="post" in:fly={{ y: 300, duration: 500 }} out:fly={{ y: 100, duration: 100 }}>
                 <div class="post-header">
                     <div class="post-header__left">
                         <button class="closer" on:click={close}>
-                            <img src={close_src} alt="Close" />
+                            <img src={close_src} alt="Close" tabindex="-1" />
                         </button>
                     </div>
                     <div class="post-header__center">Upload Post</div>
@@ -128,7 +129,7 @@
                             <textarea bind:value={postText} placeholder="Type something here..." />
                             <div class="image">
                                 {#if imageUrl}
-                                    <img src={imageUrl} alt="preview" class="image" />
+                                    <img src={imageUrl} alt="preview" class="image" tabindex="-1" />
                                 {:else}
                                     <label>
                                         <img class="icon" src={whitePicture_src} alt="picture" />
@@ -143,7 +144,7 @@
                             <div class="input-group">
                                 <div class="group">
                                     <div class="input">
-                                        <img src={brewery_src} alt="Brewery" />
+                                        <img src={brewery_src} alt="Brewery" tabindex="-1" />
                                         <input
                                             placeholder="Find Brewery"
                                             autocomplete="off"
@@ -156,7 +157,9 @@
                                         />
                                     </div>
                                     <button on:click={toggleBreweryDropdown} class="btn {brewery ? 'remove' : 'add'}">
-                                        <span class="plus">+</span>
+                                        <span class="plus">
+                                            <PlusIcon stroke={brewery ? 'var(--main-light)' : 'var(--text-2)'} />
+                                        </span>
                                     </button>
                                 </div>
                                 {#if isBreweryDropdownVisible}
@@ -176,7 +179,7 @@
                             <div class="input-group">
                                 <div class="group">
                                     <div class="input">
-                                        <img src={beer_src} alt="Beer" height="18px" />
+                                        <img src={beer_src} alt="Beer" height="18px" tabindex="-1" />
                                         <input
                                             placeholder="Find Beer"
                                             autocomplete="off"
@@ -185,7 +188,9 @@
                                         />
                                     </div>
                                     <button on:click={toggleBeerDropdown} class="btn {beer ? 'remove' : 'add'}">
-                                        <span class="plus">+</span>
+                                        <span class="plus">
+                                            <PlusIcon stroke={beer ? 'var(--main-light)' : 'var(--text-2)'} />
+                                        </span>
                                     </button>
                                 </div>
                                 {#if isBeerDropdownVisible}
@@ -201,7 +206,7 @@
                             </div>
                             <div class="input-group">
                                 <div class="input">
-                                    <img src={location_src} />
+                                    <img src={location_src} alt="Location" tabindex="-1" />
                                     <input placeholder="Search for pub" bind:value={pub} />
                                 </div>
                             </div>
@@ -233,7 +238,7 @@
                                         on:click={() => selectOption(id)}
                                     >
                                         <svelte:fragment slot="image">
-                                            <img src={beer_src} alt="Beer" />
+                                            <img src={beer_src} alt="Beer" tabindex="-1" />
                                         </svelte:fragment>
                                         <svelte:fragment slot="title">{label}</svelte:fragment>
                                     </WPill>
@@ -458,7 +463,6 @@
                     .plus {
                         transform: rotate(-45deg);
                         transition: var(--main-transition);
-                        color: var(--main-light);
                     }
                 }
             }
