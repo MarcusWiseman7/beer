@@ -10,7 +10,9 @@
     import beer_src from '$lib/assets/icons/post/beer.svg';
     import location_src from '$lib/assets/icons/post/location.svg';
     import whitePicture_src from '$lib/assets/icons/post/white-picture.svg';
-    import PlusIcon from '$lib/components/icons/plus.svelte';
+    import PlusIcon from '$lib/components/icons/review/plus.svelte';
+    import ArrowIcon from '$lib/components/icons/review/arrow.svelte';
+    import CloseIcon from '$lib/components/icons/review/close.svelte';
 
     // components
     import WButton from './WButton.svelte';
@@ -30,7 +32,7 @@
 
     let emojiValue = 3;
     const emojis = ['🤮', '😟', '😌', '😊', '🤩'];
-    const descriptions = ['Blegh', 'Meh', 'Chill', 'Solid', 'Excellent'];
+    const descriptions = ['Blegh', 'Meh', 'Chill', 'Great', 'Excellent'];
 
     let activeOption = 1;
     const options = [
@@ -50,6 +52,10 @@
     // methods
     const close = (): void => {
         newReview.set(false);
+    };
+
+    const navigate = (): void => {
+        step = 1;
     };
 
     const handleFileUpload = (event): void => {
@@ -116,12 +122,18 @@
             <div class="post" in:fly={{ y: 300, duration: 500 }} out:fly={{ y: 100, duration: 100 }}>
                 <div class="post-header">
                     <div class="post-header__left">
-                        <button class="closer" on:click={close}>
-                            <img src={close_src} alt="Close" tabindex="-1" />
-                        </button>
+                        {#if step == 2}
+                            <button on:click={navigate}>
+                                <ArrowIcon />
+                            </button>
+                        {/if}
                     </div>
                     <div class="post-header__center">Upload Post</div>
-                    <div class="post-header__right">&nbsp;</div>
+                    <div class="post-header__right">
+                        <button class="closer" on:click={close}>
+                            <CloseIcon />
+                        </button>
+                    </div>
                 </div>
                 <div class="post-content">
                     {#if step == 1}
@@ -308,7 +320,7 @@
             @media (min-width: $desktop) {
                 height: auto;
                 border-radius: calc(var(--main-border-radius) * 2);
-                padding: 4px 20px 20px;
+                padding: 4px 20px;
                 overflow-y: visible;
             }
 
@@ -325,9 +337,6 @@
 
                 &__left {
                     flex: 1 1 15%;
-                    .closer {
-                        padding: 20px;
-                    }
                 }
                 &__center {
                     text-align: center;
@@ -339,6 +348,8 @@
                 }
                 &__right {
                     flex: 1 1 15%;
+                    display: flex;
+                    justify-content: flex-end;
                 }
             }
 
@@ -363,8 +374,8 @@
                     }
 
                     .image {
-                        width: 70px;
-                        height: 80px;
+                        width: 80px;
+                        height: 100px;
                         background: var(--placeholder);
                         border-radius: var(--main-border-radius);
 
@@ -408,7 +419,7 @@
                 margin-top: auto;
 
                 @media (min-width: $desktop) {
-                    padding-top: 20px;
+                    padding: 30px 0 20px 0;
                 }
             }
         }
