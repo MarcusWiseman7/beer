@@ -1,9 +1,9 @@
 import sanityClient from '@sanity/client';
 
 const sanity = sanityClient({
-    projectId: 'v29s4pb7',
+    projectId: import.meta.env.VITE_SANITY_PROJECTID,
     dataset: 'production',
-    apiVersion: '2021-10-21',
+    apiVersion: import.meta.env.VITE_SANITY_VERSION,
     useCdn: true,
 });
 

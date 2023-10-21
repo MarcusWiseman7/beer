@@ -7,7 +7,7 @@ export const setAppMessage = (message: Message): void => {
 };
 
 export const cloudinaryPicURL = (src: string): string => {
-    return 'https://res.cloudinary.com/dukumou2e/image/upload/f_auto' + src;
+    return `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUDNAME}/image/upload/f_auto${src}`;
 };
 
 export const getPointFromEvent = ($event): { x: number, y: number } => {
