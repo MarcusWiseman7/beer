@@ -12,7 +12,7 @@ export type TReview = {
     finish?: number;
     notes?: string;
     date?: Date;
-    dateCreated?: Date;
+    dateCreated: Date;
     beer: TBeer;
     reviewer: TUser;
 }

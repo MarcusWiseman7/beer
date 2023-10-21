@@ -44,7 +44,8 @@
 
     // methods
     const descriptionClick = ($event: Event): void => {
-        $event?.target?.classList.remove('line-clamp');
+        const target = $event.target;
+        if (target instanceof Element) target.classList.remove('line-clamp');
     };
 
     onMount(() => {

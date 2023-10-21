@@ -27,7 +27,7 @@
             <div class="info">
                 <ul class="list d-flex-row-wrap">
                     <li>{review.reviewer?.displayName}</li>
-                    <li>{review.date}</li>
+                    <li>{new Date(review.dateCreated).toLocaleDateString()}</li>
                 </ul>
                 <p class="bio">
                     {review.notes}
