@@ -5,15 +5,14 @@ const reviewSchema = new Schema<TReview>(
     {
         picURL: { type: String, trim: true },
         picPublicId: { type: String, trim: true },
-        location: { type: String, trim: true },
+        location: { type: Object },
         rating: { type: Number, required: true },
-        bitter: { type: Number },
-        finish: { type: Number },
         notes: { type: String, trim: true },
         date: { type: Date },
         dateCreated: { type: Date, default: Date.now },
-        beer: { type: Schema.Types.ObjectId, required: true, ref: 'Beer' },
+        beer: { type: Schema.Types.ObjectId, ref: 'Beer' },
         reviewer: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+        tempBeer: { type: Object },
     }
 );
 

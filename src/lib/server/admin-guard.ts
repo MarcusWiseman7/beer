@@ -1,8 +1,8 @@
-import { redirect } from '@sveltejs/kit';
+import { redirect, type Cookies } from '@sveltejs/kit';
 import User from './models/user';
 import type { TUser } from '$lib/types/user';
 
-export const adminLevelRouteGuard = async (cookies, params): Promise<boolean> => {
+export const adminLevelRouteGuard = async (cookies: Cookies, params): Promise<boolean> => {
     let level;
     const session = cookies.get('session');
 

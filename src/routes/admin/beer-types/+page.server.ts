@@ -6,7 +6,7 @@ import type { TBeerCategory } from '$lib/types/beer';
 import BeerType from '$lib/server/models/beerType';
 
 // helpers
-import { invalid } from '@sveltejs/kit';
+import { invalid, type Cookies } from '@sveltejs/kit';
 import { adminLevelRouteGuard } from '$lib/server/admin-guard';
 
 /** @type {import('./$types').PageServerLoad} */

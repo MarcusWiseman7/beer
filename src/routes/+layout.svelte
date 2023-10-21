@@ -3,8 +3,7 @@
     import '../app.scss';
 
     // helpers
-    import { onMount } from 'svelte';
-    import { appMessages, loading } from '$lib/stores';
+    import { appMessages, loading, newReview } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 
@@ -140,7 +139,9 @@
 {/if}
 
 <!-- NEW POS or reveiw -->
-<WNewReview />
+{#if $newReview}
+    <WNewReview />
+{/if}
 
 <style lang="scss">
     @import '../lib/scss/vars.scss';
