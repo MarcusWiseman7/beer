@@ -49,7 +49,7 @@
             </li>
         {/each}
         <li class="list-item--button">
-            <WButton on:click={addBeer} modifiers={['primary', 'md', 'w100']}>
+            <WButton on:click={addBeer} modifiers={['primary', 'lg', 'w100']}>
                 <img src={add_beer_src} width="17" height="18" alt="Beer mug" />
                 <span class="text">Add beer</span>
             </WButton>

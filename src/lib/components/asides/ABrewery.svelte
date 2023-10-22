@@ -57,56 +57,54 @@
 </script>
 
 <AsideBlock title="About">
-    <div class="info-aside">
-        <div class="info-aside__map">
-            <iframe
-                title="Brewery location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.316803761752!2d14.4237389!3d50.0803552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94f29cc73709%3A0xaf4593a6a3f88096!2zVm9kacSNa292YSwgTm92w6kgTcSbc3RvLCBQcmFoYSwgQ3plY2hpYQ!5e0!3m2!1sen!2ssk!4v1665940065754!5m2!1sen!2ssk"
-                width="240"
-                height="170"
-                style="border:0;"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-            />
-        </div>
-        <!-- TODO: add option to like brewery -->
-        <p class="info-aside__text">90 people like this, 25 last week</p>
-        <ul class="info-aside__users">
-            <!-- TODO: add max 6 user, no click to profile -->
-            {#each users.slice(0, 6) as item}
-                <li>
-                    <WAvatar mediaCDN={cloudinaryPicURL(item.image)} size={33} />
-                </li>
-            {/each}
-        </ul>
-        <ul class="info-aside__list">
-            <li>
-                <img class="icon" src={location_src} alt="menu" height="24" width="24" />
-                <span>U Radnice 115, 267 42 Broumy, Czechia</span>
-            </li>
-            <li>
-                <img class="icon" src={link_src} alt="menu" height="24" width="24" />
-                <a href="#" rel="nofollow">www.pivovarmatuska.cz</a>
-            </li>
-            <li>
-                <img class="icon" src={phone_src} alt="menu" height="24" width="24" />
-                <a href="tel:" rel="nofollow">012 345 6789</a>
-            </li>
-            <li>
-                <img class="icon" src={email_src} alt="menu" height="24" width="24" />
-                <a href="mailto:email@website.com" rel="nofollow">email@website.com</a>
-            </li>
-            <li>
-                <img class="icon" src={bw_tag_src} alt="menu" height="24" width="24" />
-                <span>Micro Brewery</span>
-            </li>
-        </ul>
-        <button class="btn btn-add-socials btn--default">
-            <img class="icon" src={plus_src} alt="menu" height="18" width="18" />
-            <span>add more</span>
-        </button>
+    <div class="aside-info__map">
+        <iframe
+            title="Brewery location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.316803761752!2d14.4237389!3d50.0803552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94f29cc73709%3A0xaf4593a6a3f88096!2zVm9kacSNa292YSwgTm92w6kgTcSbc3RvLCBQcmFoYSwgQ3plY2hpYQ!5e0!3m2!1sen!2ssk!4v1665940065754!5m2!1sen!2ssk"
+            width="240"
+            height="170"
+            style="border:0;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+        />
     </div>
+    <!-- TODO: add option to like brewery -->
+    <p class="aside-info__text">90 people like this, 25 last week</p>
+    <ul class="aside-info__users">
+        <!-- TODO: add max 6 user, no click to profile -->
+        {#each users.slice(0, 6) as item}
+            <li>
+                <WAvatar mediaCDN={cloudinaryPicURL(item.image)} size={33} />
+            </li>
+        {/each}
+    </ul>
+    <ul class="aside-info__list">
+        <li>
+            <img class="icon" src={location_src} alt="menu" height="24" width="24" />
+            <span>U Radnice 115, 267 42 Broumy, Czechia</span>
+        </li>
+        <li>
+            <img class="icon" src={link_src} alt="menu" height="24" width="24" />
+            <a href="#" rel="nofollow">www.pivovarmatuska.cz</a>
+        </li>
+        <li>
+            <img class="icon" src={phone_src} alt="menu" height="24" width="24" />
+            <a href="tel:" rel="nofollow">012 345 6789</a>
+        </li>
+        <li>
+            <img class="icon" src={email_src} alt="menu" height="24" width="24" />
+            <a href="mailto:email@website.com" rel="nofollow">email@website.com</a>
+        </li>
+        <li>
+            <img class="icon" src={bw_tag_src} alt="menu" height="24" width="24" />
+            <span>Micro Brewery</span>
+        </li>
+    </ul>
+    <button class="btn btn-add-socials btn--default">
+        <img class="icon" src={plus_src} alt="menu" height="18" width="18" />
+        <span>add more</span>
+    </button>
 </AsideBlock>
 
 <AsideBlock title="Pub's socials">
@@ -114,13 +112,7 @@
 </AsideBlock>
 
 <style lang="scss">
-    .info-aside {
-        background-color: var(--page);
-        border-radius: var(--main-border-radius);
-        box-shadow: var(--box-border-shadow);
-        padding: 8px 12px 20px;
-        overflow: hidden;
-
+    .aside-info {
         &__text {
             margin-top: 16px;
             font-size: 14px;

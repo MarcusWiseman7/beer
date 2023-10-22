@@ -2,6 +2,11 @@
     // components
     import AsideBlock from '$lib/components/AsideBlock.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
+    import WButton from '$lib/components/WButton.svelte';
+
+    // helpers
+    import { myProfile, newReview } from '$lib/stores';
+    import { goto } from '$app/navigation';
 
     // icons
     // import facebook_src from '$lib/assets/icons/social/facebook-dark.svg';
@@ -17,8 +22,42 @@
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
     ];
+
+    // methods
+    const addDetails = (): void => {
+        if (!$myProfile) goto('/login');
+        else alert('Add modal to PUT details');
+    };
 </script>
+
+<AsideBlock title="Details">
+    <!-- TODO: add a beer data -->
+    <ul class="detail-list">
+        <li><strong>From:</strong> 🇨🇿 Krivoklatsko, Czech Republic</li>
+        <li><strong>Style:</strong> 🍺 Lager</li>
+        <li><strong>ABV:</strong> 6%</li>
+        <li><strong>Aroma:</strong> 🌿 Herbal</li>
+        <li><strong>Appearance:</strong> Medium Gold</li>
+        <li><strong>Mouthfeel:</strong> creamy texture</li>
+    </ul>
+    <WButton on:click={addDetails} modifiers={['third', 'sm', 'w100']}>
+        <span class="text">+ Add details</span>
+    </WButton>
+</AsideBlock>
 
 <AsideBlock title="Share on socials">
     <WSocials socialNetworks={shareNetworks} />
 </AsideBlock>
+
+<style lang="scss">
+    .detail-list {
+        margin-bottom: 20px;
+        li {
+            margin-bottom: 8px;
+
+            strong {
+                margin-right: 2px;
+            }
+        }
+    }
+</style>
