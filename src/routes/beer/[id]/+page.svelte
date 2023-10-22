@@ -117,7 +117,7 @@
         <h2 class="beer-posts-title">Last user's reviews</h2>
         <div class="reviews">
             {#each beer.reviews as review}
-                <div class="posts-holder">
+                <div class="review-holder">
                     <WReview {review} />
                 </div>
             {/each}
@@ -132,9 +132,22 @@
         border-top: 1px solid var(--border);
     }
     .beer-posts-title {
-        margin: 50px 0 22px 0;
+        margin: 50px 0 24px 0;
         font-weight: 600;
         font-size: 21px;
         line-height: 26px;
+    }
+
+    .reviews {
+        margin: 0 -28px;
+        .review-holder {
+            padding: 0 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--border);
+
+            &:last-child {
+                border: none;
+            }
+        }
     }
 </style>
