@@ -54,7 +54,6 @@
     $: canSubmit =
         (step === 1 && (review.beer || (review.tempBeer && review.tempBrewery))) ||
         (step === 2 && review?.reviewer && review.rating && (review.beer || (review.tempBeer && review.tempBrewery)));
-    // $: emoji = emojis[emojiValue - 1];
     $: description = descriptions[review.rating - 1];
 
     // methods
@@ -125,6 +124,8 @@
         review.brewery = brewery._id;
         review.tempBrewery = brewery.name;
         isBreweryDropdownVisible = false;
+
+        // TODO Marcus auto fetch beers from selected brewery to prefill the beers dropdown
     };
 
     const selectBeer = (beer: TBeer): void => {
@@ -145,7 +146,9 @@
         else isBeerDropdownVisible = !isBeerDropdownVisible;
     };
 
-    const uploadImage = async (): Promise<string> => {};
+    const uploadImage = async (): Promise<string> => {
+        // TODO Marcus write this
+    };
 
     const submitReview = async (): Promise<void> => {
         if (!canSubmit || (step === 1 && (step = 2))) return;
@@ -201,11 +204,6 @@
         }
 
         step = 2;
-    };
-
-    const addPostRating = (): void => {
-        // TODO not required, user can close it but if he submits store data to the post
-        // TODO show successful status message
     };
 
     const selectOption = (id: number): void => {
