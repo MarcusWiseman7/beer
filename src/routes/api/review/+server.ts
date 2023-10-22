@@ -5,7 +5,7 @@ import type { HydratedDocument } from 'mongoose';
 
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request }): Promise<Response> => {
-	try {
+    try {
         const data = await request.formData();
         const reviewData: {[key: string]: any} = {};
 
@@ -13,6 +13,8 @@ export const POST = async ({ request }): Promise<Response> => {
             if (pair[0] as string === 'rating') reviewData.rating = parseInt(pair[1] as string);
             else reviewData[pair[0]] = pair[1] as string;
         }
+
+        // TODO Marcus validate that beer matches brewery
 
         // check if beer in DB
         if (reviewData.beer && await Beer.findOne({ _id: reviewData.beer }).lean()) {
@@ -28,6 +30,8 @@ export const POST = async ({ request }): Promise<Response> => {
             delete reviewData.tempBrewery;
             delete reviewData.beer;
         }
+
+        // TODO Marcus admin page for validating temp beers/breweries
         
         const review: HydratedDocument<TReview> = await Review.create(reviewData);
         // await review.save(err => {
