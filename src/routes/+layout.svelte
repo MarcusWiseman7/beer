@@ -3,7 +3,7 @@
     import '../app.scss';
 
     // helpers
-    import { appMessages, loading, newReview } from '$lib/stores';
+    import { appMessages, loading, newReviewModal } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 
@@ -139,7 +139,7 @@
 {/if}
 
 <!-- NEW POS or reveiw -->
-{#if $newReview}
+{#if $newReviewModal}
     <WNewReview />
 {/if}
 

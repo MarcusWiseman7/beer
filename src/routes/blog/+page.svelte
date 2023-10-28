@@ -20,7 +20,7 @@
     $: translationReplacements = [];
 
     onMount(() => {
-        console.log('data :>> ', data);
+        console.log('main blog page data :>> ', data);
     });
 </script>
 

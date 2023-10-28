@@ -20,6 +20,7 @@
 
     // helpers
     import { cloudinaryPicURL } from '$lib/helpers';
+    import { page } from '$app/stores';
 
     // data
     const shareNetworks = [
@@ -27,6 +28,9 @@
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
     ];
+    const pageData = $page.data;
+
+    console.log('brewery page data in aside :>> ', pageData);
 
     const users = [
         {

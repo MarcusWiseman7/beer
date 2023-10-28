@@ -27,7 +27,7 @@
     // data
 
     onMount(() => {
-        console.log('data :>> ', data);
+        console.log('home page data :>> ', data);
     });
 </script>
 

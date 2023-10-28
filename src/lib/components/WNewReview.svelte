@@ -5,7 +5,7 @@
     import type { TNewReview } from '$lib/types/review';
 
     // helpers
-    import { myProfile, newReview } from '$lib/stores';
+    import { myProfile, newReviewModal } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
     import { debounce } from 'lodash';
@@ -58,7 +58,7 @@
 
     // methods
     const close = (): void => {
-        newReview.set(false);
+        newReviewModal.set(false);
     };
 
     const navigate = (): void => {

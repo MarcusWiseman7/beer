@@ -50,7 +50,7 @@
 
     onMount(() => {
         // just to see what we have to work with...
-        console.log('data :>> ', data);
+        console.log('brewery page data :>> ', data);
     });
 </script>
 

@@ -35,7 +35,7 @@
 
     // methods
     onMount(() => {
-        console.log('data :>> ', data);
+        console.log('beer page data :>> ', data);
     });
 </script>
 

@@ -10,6 +10,7 @@
     // import instagram_src from '$lib/assets/icons/social/instagram.svg';
     import twitter_src from '$lib/assets/icons/social/twitter.svg';
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
+    import { page } from '$app/stores';
 
     // data
     const shareNetworks = [
@@ -17,6 +18,9 @@
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
     ];
+    const pageData = $page.data;
+
+    console.log('beer page data in aside :>> ', pageData);
 </script>
 
 <AsideBlock title="Share on socials">

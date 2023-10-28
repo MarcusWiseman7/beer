@@ -7,8 +7,12 @@
 
     // helpers
     import { cloudinaryPicURL } from '$lib/helpers';
+    import { page } from '$app/stores';
 
     // data
+    const pageData = $page.data;
+
+    console.log('home page data in aside :>> ', pageData);
     const staticTags = [
         {
             title: '🔥 Discover with us',

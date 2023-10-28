@@ -39,7 +39,7 @@
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
 
     onMount(() => {
-        console.log('data :>> ', data);
+        console.log('[slug] blog page data :>> ', data);
     });
 </script>
 

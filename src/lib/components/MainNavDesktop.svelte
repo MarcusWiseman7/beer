@@ -1,6 +1,6 @@
 <script lang="ts">
     // helpers
-    import { derivedNav, myProfile, newReview } from '$lib/stores';
+    import { derivedNav, myProfile, newReviewModal } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 
@@ -26,7 +26,7 @@
     // methods
     const addBeer = (): void => {
         if (!$myProfile) goto('/login');
-        else newReview.set(true);
+        else newReviewModal.set(true);
     };
 </script>
 

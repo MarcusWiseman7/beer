@@ -18,7 +18,7 @@ export let appMessages = writable<Message[]>([]);
 export let locale = writable<string>('en');
 export let country = writable<string>('');
 export let loading = writable<boolean>(false);
-export let newReview = writable<boolean>(false);
+export let newReviewModal = writable<boolean>(false);
 
 export let allBeers = writable<TBeer[]>([]);
 export let myProfile = writable<TUser | null>(null);

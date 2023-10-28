@@ -116,7 +116,7 @@
 
     onMount(() => {
         // just to see what we have to work with...
-        console.log('data :>> ', data);
+        console.log('profile page data :>> ', data);
     });
 </script>
 
