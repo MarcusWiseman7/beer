@@ -1,19 +1,12 @@
 <script lang="ts">
-    // types
     import type { TReview } from '$lib/types/review';
+    import noAvatarImg from '$lib/assets/images/no-avatar.png';
+    import WAvatar from '$lib/components/WAvatar.svelte';
+    import { cloudinaryPicURL } from '$lib/helpers';
 
     // props
     export let type: string = 'normal';
     export let review: TReview;
-
-    // icons
-    import noAvatarImg from '$lib/assets/images/no-avatar.png';
-
-    // components
-    import WAvatar from '$lib/components/WAvatar.svelte';
-
-    // helpers
-    import { cloudinaryPicURL } from '$lib/helpers';
 </script>
 
 {#if review}

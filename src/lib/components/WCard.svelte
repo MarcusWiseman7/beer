@@ -1,15 +1,8 @@
 <script lang="ts">
-    // types
     import type { TBeer } from '$lib/types/beer';
-
-    // icons
     import cz_src from '$lib/assets/icons/flags/czech.svg';
     import star_src from '$lib/assets/icons/general/star.svg';
-
-    // components
     import WPill from './WPill.svelte';
-
-    // helpers
     import { cloudinaryPicURL } from '$lib/helpers';
     import { goto } from '$app/navigation';
 
@@ -32,11 +25,9 @@
     const stockPic = () => {
         return stockPhotos[Math.floor(Math.random() * stockPhotos.length)];
     };
-
     const cardClick = (): void => {
         if (item?._id && !dragging) goto('/beer/' + item._id);
     };
-
     const breweryClick = (): void => {
         const id = item.brewery?._id;
         if (id) goto('/brewery/' + id);

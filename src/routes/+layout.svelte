@@ -1,13 +1,9 @@
 <script lang="ts">
-    // global scss
-    import '../app.scss';
-
-    // helpers
-    import { appMessages, loading, newReviewModal } from '$lib/stores';
+    import '../app.scss'; // global scss
+    import type { TLayoutData } from '$lib/types/pageData';
+    import { appMessages, loading, myProfile, locale, newReviewModal } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
-
-    // components
     import WFooter from '$lib/components/WFooter.svelte';
     import MainNavMobile from '$lib/components/MainNavMobile.svelte';
     import MainNavDesktop from '$lib/components/MainNavDesktop.svelte';
@@ -21,11 +17,16 @@
     import ADiscover from '$lib/components/asides/ADiscover.svelte';
     import WAvatar from '$lib/components/WAvatar.svelte';
     import WNewReview from '$lib/components/WNewReview.svelte';
-
-    // icons
     import menu_src from '$lib/assets/icons/nav/menu.svg';
     import foam_src from '$lib/assets/icons/layout/foam.svg';
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
+
+    // props
+    /** @type {import('./$types').LayoutData} */
+    export let data: TLayoutData;
+
+    $: myProfile.set(data.user || null);
+    $: locale.set(data.locale);
 
     // data
     const asideComponents = {
@@ -57,8 +58,6 @@
         const threshold = 100;
         isScrolled = scrollPosition > threshold;
     };
-
-    // methods
 </script>
 
 <svelte:window on:scroll|passive={handleScroll} />

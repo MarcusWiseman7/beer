@@ -1,16 +1,11 @@
 <script lang="ts">
-    // types
     import type { SocialNetwork } from '$lib/types/social';
+    import ShareNetwork from './ShareNetwork.svelte';
+    import plus_src from '$lib/assets/icons/general/plus.svg';
 
     // props
     export let socialNetworks: SocialNetwork[] = [];
     export let addMore: boolean = false;
-
-    // components
-    import ShareNetwork from './ShareNetwork.svelte';
-
-    // icons
-    import plus_src from '$lib/assets/icons/general/plus.svg';
 </script>
 
 <div class="socials">

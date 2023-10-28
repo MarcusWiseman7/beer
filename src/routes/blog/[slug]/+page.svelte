@@ -1,26 +1,19 @@
 <script lang="ts">
-    // types
-    import type { BlogPost } from '$lib/types/blog';
-    import type { IPageData } from '$lib/types/pageData';
-    interface IData extends IPageData {
-        post: BlogPost;
-        slug: string;
-    }
-
-    // helpers
     import { timeAgo } from '$lib/helpers';
     import { onMount } from 'svelte';
-
-    // components
     import WHead from '$lib/components/WHead.svelte';
     import SanityImage from '$lib/components/blog/SanityImage.svelte';
     import ContentBlocks from '$lib/components/blog/ContentBlocks.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
+    import facebook_src from '$lib/assets/icons/social/facebook.svg';
+    import twitter_src from '$lib/assets/icons/social/twitter.svg';
+    import telegram_src from '$lib/assets/icons/social/telegram.svg';
+    import type { BlogpostPageData } from '$lib/types/pageData';
 
     // props
     /** @type {import('./$types').PageData} */
-    export let data: IData;
+    export let data: BlogpostPageData;
 
     // data
     $: post = data?.post;
@@ -31,12 +24,6 @@
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
     ];
-
-    // icons
-    import facebook_src from '$lib/assets/icons/social/facebook.svg';
-    // import instagram_src from '$lib/assets/icons/social/instagram.svg';
-    import twitter_src from '$lib/assets/icons/social/twitter.svg';
-    import telegram_src from '$lib/assets/icons/social/telegram.svg';
 
     onMount(() => {
         console.log('[slug] blog page data :>> ', data);

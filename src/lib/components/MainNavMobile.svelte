@@ -1,32 +1,38 @@
 <script lang="ts">
-    // helpers
     import { createEventDispatcher } from 'svelte';
-    import { derivedNav, myProfile, newReviewModal } from '$lib/stores';
+    import { nav, newReviewModal, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { fly } from 'svelte/transition';
     import { linear } from 'svelte/easing';
-
-    // icons
     import close_src from '$lib/assets/icons/general/closer.svg';
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
-
-    // components
+    import type { TNav } from '$lib/types/pageData';
 
     // computed
     $: activeRoute = $page.url.pathname;
+    $: isActive = (nav: TNav) =>
+        nav.href === activeRoute || (activeRoute.startsWith('/@') && !nav.href && nav.name === 'profile' && $myProfile);
 
     // methods
     const dispatch = createEventDispatcher();
     const close = (): void => {
         dispatch('close');
     };
-
     const addBeer = (): void => {
-        if (!$myProfile) goto('/login');
-        else {
+        if (!$myProfile) {
+            goto('/login');
+        } else {
             close();
             newReviewModal.set(true);
+        }
+    };
+    const route = (link: TNav): void => {
+        if (link.href) {
+            goto(link.href);
+        } else if (link.name === 'profile') {
+            if ($myProfile) goto(`/@${$myProfile.username}`);
+            else goto('/login');
         }
     };
 </script>
@@ -44,13 +50,8 @@
 
         <!-- nav -->
         <ul>
-            {#each $derivedNav as link}
-                <li
-                    on:click={() => {
-                        goto(link.href);
-                    }}
-                    class={link.href == activeRoute ? 'list-item active' : 'list-item'}
-                >
+            {#each $nav as link}
+                <li on:click={() => route(link)} class={isActive(link) ? 'list-item active' : 'list-item'}>
                     <svelte:component this={link.icon} />
                     <span>{link.name}</span>
                 </li>

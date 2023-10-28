@@ -1,47 +1,38 @@
 <script lang="ts">
-    // helpers
-    import { derivedNav, myProfile, newReviewModal } from '$lib/stores';
+    import { nav, newReviewModal, myProfile } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
-
-    // components
     import WButton from './WButton.svelte';
-
-    // icons
     import add_beer_src from '$lib/assets/icons/nav/add_beer.svg';
     import twitter_src from '$lib/assets/icons/nav/twitter.svg';
     import instagram_src from '$lib/assets/icons/nav/instagram.svg';
     import telegram_src from '$lib/assets/icons/nav/telegram.svg';
-
-    // data
-    const shareNetworks = [
-        { id: 'instagram', icon: instagram_src },
-        { id: 'twitter', icon: twitter_src },
-        { id: 'telegram', icon: telegram_src },
-    ];
+    import type { TNav } from '$lib/types/pageData';
 
     // computed
     $: activeRoute = $page.url.pathname;
-    $: isActive = (href) =>
-        href === activeRoute ||
-        (activeRoute && !$derivedNav.some((link) => link.href === activeRoute) && href === '/discover');
+    $: isActive = (nav: TNav) =>
+        nav.href === activeRoute || (activeRoute.startsWith('/@') && !nav.href && nav.name === 'profile' && $myProfile);
 
     // methods
     const addBeer = (): void => {
         if (!$myProfile) goto('/login');
         else newReviewModal.set(true);
     };
+    const route = (link: TNav): void => {
+        if (link.href) {
+            goto(link.href);
+        } else if (link.name === 'profile') {
+            if ($myProfile) goto(`/@${$myProfile.username}`);
+            else goto('/login');
+        }
+    };
 </script>
 
 <nav>
     <ul>
-        {#each $derivedNav as link}
-            <li
-                on:click={() => {
-                    goto(link.href);
-                }}
-                class={`list-item ${isActive(link.href) ? 'active' : ''}`}
-            >
+        {#each $nav as link}
+            <li on:click={() => route(link)} class={`list-item ${isActive(link) ? 'active' : ''}`}>
                 <div class="list-item__icon">
                     <svelte:component this={link.icon} />
                 </div>

@@ -1,33 +1,18 @@
 <script lang="ts">
-    // types
-    import type { TBeer } from '$lib/types/beer';
-    import type { ObjectId } from 'mongoose';
-    import type { IPageData } from '$lib/types/pageData';
-    interface IData extends IPageData {
-        beer: TBeer;
-        siblingBeers: TBeer[];
-        similarBeers: TBeer[];
-        id: ObjectId;
-    }
-
-    // helpers
+    import type { BeerPageData } from '$lib/types/pageData';
     import { onMount } from 'svelte';
     import { cloudinaryPicURL } from '$lib/helpers';
-
-    // props
-    /** @type {import('./$types').PageData} */
-    export let data: IData;
-
-    // components
     import WBack from '$lib/components/WBack.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import WBreweryBox from '$lib/components/WBreweryBox.svelte';
     import WHead from '$lib/components/WHead.svelte';
     import WReview from '$lib/components/WReview.svelte';
-
-    // icons
     import star_src from '$lib/assets/icons/general/star.svg';
+
+    // props
+    /** @type {import('./$types').PageData} */
+    export let data: BeerPageData;
 
     // computed
     $: beer = data?.beer;

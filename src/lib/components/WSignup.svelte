@@ -1,14 +1,9 @@
 <script lang="ts">
-    // icons
     import EmailIcon from '$lib/components/icons/login/email.svelte';
     import UserIcon from '$lib/components/icons/login/user.svelte';
     import LockIcon from '$lib/components/icons/login/lock.svelte';
-
-    // coomponents
     import WButton from './WButton.svelte';
     import WInput from '$lib/components/WInput.svelte';
-
-    // helpers
     import { loading, myProfile } from '$lib/stores';
     import { invalidateAll, goto } from '$app/navigation';
     import { applyAction } from '$app/forms';

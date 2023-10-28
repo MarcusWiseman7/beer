@@ -1,18 +1,13 @@
 <script lang="ts">
-    // types
     import type { TBrewery } from '$lib/types/brewery';
     import type { TBeer } from '$lib/types/beer';
     import type { TNewReview } from '$lib/types/review';
-
-    // helpers
-    import { myProfile, newReviewModal } from '$lib/stores';
+    import { newReviewModal, myProfile } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
     import { debounce } from 'lodash';
     import { onDestroy } from 'svelte';
     import { setAppMessage } from '$lib/helpers';
-
-    // icons
     import brewery_src from '$lib/assets/icons/post/brewery.svg';
     import beer_src from '$lib/assets/icons/post/beer.svg';
     import location_src from '$lib/assets/icons/post/location.svg';
@@ -20,8 +15,6 @@
     import PlusIcon from '$lib/components/icons/review/plus.svelte';
     import ArrowIcon from '$lib/components/icons/review/arrow.svelte';
     import CloseIcon from '$lib/components/icons/review/close.svelte';
-
-    // components
     import WButton from './WButton.svelte';
     import WPill from './WPill.svelte';
 

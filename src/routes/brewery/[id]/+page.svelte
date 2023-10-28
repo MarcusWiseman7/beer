@@ -1,34 +1,19 @@
 <script lang="ts">
-    // types
-    import type { TBeer } from '$lib/types/beer';
-    import type { TBrewery } from '$lib/types/brewery';
-    import type { ObjectId } from 'mongoose';
-    import type { IPageData } from '$lib/types/pageData';
-    interface IData extends IPageData {
-        brewery: TBrewery;
-        beers: TBeer[];
-        id: ObjectId;
-    }
-
-    // props
-    /** @type {import('./$types').PageData} */
-    export let data: IData;
-
-    // components
     import WHead from '$lib/components/WHead.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import WCard from '$lib/components/WCard.svelte';
     import cz_src from '$lib/assets/icons/flags/czech.svg';
     import star_src from '$lib/assets/icons/general/star.svg';
-    // import facebook_src from '$lib/assets/icons/social/facebook-dark.svg';
-    // import instagram_src from '$lib/assets/icons/social/instagram-dark.svg';
     import facebook_src from '$lib/assets/icons/social/facebook.svg';
     import instagram_src from '$lib/assets/icons/social/instagram.svg';
     import noBreweryImg from '$lib/assets/images/no-brewery.png';
-
-    // helpers
     import { onMount } from 'svelte';
+    import type { BreweryPageData } from '$lib/types/pageData';
+
+    // props
+    /** @type {import('./$types').PageData} */
+    export let data: BreweryPageData;
 
     // data
     $: brewery = data?.brewery;

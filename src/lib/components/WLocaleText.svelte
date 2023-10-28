@@ -7,7 +7,7 @@
     export let text: LocaleObject | string | undefined = undefined;
 
     // computed
-    $: localeText = getLocaleText(text, locale);
+    $: localeText = getLocaleText(text, $locale);
 </script>
 
 <span>{localeText}</span>

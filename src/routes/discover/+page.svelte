@@ -1,36 +1,11 @@
 <script lang="ts">
-    // types
     import type { IPageData } from '$lib/types/pageData';
-    interface IData extends IPageData {}
+    import WBack from '$lib/components/WBack.svelte';
 
     // props
     /** @type {import('./$types').PageData} */
-    export let data: IData;
-
-    // components
-    import WBack from '$lib/components/WBack.svelte';
-
-    // data
-    $: description = data?.description || '';
-    $: hashtags = data?.hashtags || '';
-
-    // methods
+    export let data: IPageData;
 </script>
-
-<svelte:head>
-    <title>Find Brews | Discover</title>
-    <meta property="og:title" content="Find Brews | Discover" />
-    <meta property="og:url" content="https://find-brews.com/discover/'" />
-
-    {#if description}
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-    {/if}
-    {#if hashtags}
-        <meta name="hashtags" content={hashtags} />
-        <meta property="og:hashtags" content={hashtags} />
-    {/if}
-</svelte:head>
 
 <div class="page">
     <div class="page-top">

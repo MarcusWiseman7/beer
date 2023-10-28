@@ -1,6 +1,5 @@
 <script lang="ts">
     import back_src from '$lib/assets/icons/nav/arrow_back.svg';
-
     import { goto, afterNavigate } from '$app/navigation';
 
     let fromURL: string | null = null;

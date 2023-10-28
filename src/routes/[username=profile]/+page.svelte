@@ -1,28 +1,15 @@
 <script lang="ts">
-    // types
-    import type { IPageData } from '$lib/types/pageData';
-    import type { TUser } from '$lib/types/user';
-    import type { TReview } from '$lib/types/review';
-    interface IData extends IPageData {
-        user: TUser;
-        reviews: TReview[];
-        canFetchMoreReviews: boolean;
-        username: string;
-    }
-
-    // helpers
+    import type { UserPageData } from '$lib/types/pageData';
     import { loading, myProfile } from '$lib/stores';
     import { onMount } from 'svelte';
     import { setAppMessage } from '$lib/helpers';
-
-    // components
     import WHead from '$lib/components/WHead.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
 
     // props
     /** @type {import('./$types').PageData} */
-    export let data: IData;
+    export let data: UserPageData;
 
     // data
     let moreReviews = true;
@@ -52,6 +39,7 @@
             const result = await response.json();
 
             if (result.type === 'success') {
+                await myProfile.set(null);
                 window.location.reload();
 
                 setAppMessage({

@@ -1,7 +1,6 @@
 import User from '$lib/server/models/user';
 import { invalid } from '@sveltejs/kit';
 import { userSelect } from '$lib/server/server-helpers';
-import { myProfile } from '$lib/stores';
 import Review from '$lib/server/models/review';
 import sanity from '$lib/sanity/sanity.js';
 import type { PageData } from '$lib/types/pageData';
@@ -46,7 +45,6 @@ export const actions = {
             if (session) {
                 // remove token from user in db
                 await User.findOneAndUpdate({ loginToken: session }, { $set: { loginToken: Date.now().toString() } }).select('_id').lean();
-                myProfile.set(null);
                 cookies.delete('session');
             }
 

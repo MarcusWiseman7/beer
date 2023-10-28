@@ -1,23 +1,25 @@
 <script lang="ts">
     import type { TBeer } from '$lib/types/beer';
     import { goto } from '$app/navigation';
-    import { myProfile } from '$lib/stores';
     import WButton from './WButton.svelte';
     import WCard from './WCard.svelte';
+    import { newReviewModal, myProfile } from '$lib/stores';
 
+    // props
     export let items: TBeer[];
     export let which: string = '';
     export let size: string = 'normal';
 
+    // computed
     $: maxResults = 6;
 
+    // methods
     const increaseMax = (): void => {
         maxResults += 6;
     };
-
     const checkIfLoggedIn = (): void => {
-        if (myProfile) {
-            // if logged in push to /addbeer
+        if ($myProfile) {
+            newReviewModal.set(true);
         } else {
             goto('/login');
         }

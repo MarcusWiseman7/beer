@@ -1,5 +1,3 @@
-import type { LocaleObject } from '$lib/types/locale';
-
 // mongoose helpers
 export const userSelect = ['_id', 'avatarURL', 'avatarPublicId', 'dateCreated', 'level', 'displayName', 'username'];
 export const beerSelect =

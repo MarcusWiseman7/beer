@@ -1,22 +1,15 @@
 <script lang="ts">
-    // types
-    import type { BlogPost } from '$lib/types/blog';
-    import type { IPageData } from '$lib/types/pageData';
-    interface IData extends IPageData {
-        blogs: BlogPost[];
-    }
-
-    // helpers
     import { onMount } from 'svelte';
     import BlogPreview from '$lib/components/blog/BlogPreview.svelte';
     import WHead from '$lib/components/WHead.svelte';
+    import type { BlogPageData } from '$lib/types/pageData';
 
     // props
     /** @type {import('./$types').PageData} */
-    export let data: IData;
+    export let data: BlogPageData;
 
     // data
-    $: blogPosts = data?.blogPosts || [];
+    $: blogPosts = data?.blogs || [];
     $: translationReplacements = [];
 
     onMount(() => {

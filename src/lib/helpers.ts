@@ -31,7 +31,7 @@ export const timeAgo = (date: Date): string => {
     else return `${Math.round(diff / (1000 * 60 * 60))}h ago`;
 };
 
-export const getLocaleText = (text: LocaleObject | string | undefined, locale: string,replacements: TranslationReplacements): string => {
+export const getLocaleText = (text: LocaleObject | string | undefined, locale: string, replacements: TranslationReplacements = []): string => {
     return (text &&
         parseTranslation((typeof text === 'string' ? text : text[locale as keyof object]), replacements)
     ) || '';

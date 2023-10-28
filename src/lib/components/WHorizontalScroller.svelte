@@ -1,15 +1,8 @@
 <script lang="ts">
-    // types
     import type { TBeer } from '$lib/types/beer';
-
-    // components
     import WCard from './WCard.svelte';
-
-    // icons
     import leftarrow_src from '$lib/assets/icons/scroller/left.svg';
     import rightarrow_src from '$lib/assets/icons/scroller/right.svg';
-
-    // helpers
     import { getPointFromEvent } from '$lib/helpers';
     import { onMount } from 'svelte';
 

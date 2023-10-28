@@ -1,21 +1,15 @@
 <script lang="ts">
-    // icons
     import stone1_src from '$lib/assets/icons/login/signup1.svg';
     import stone2_src from '$lib/assets/icons/login/signup2.svg';
     import people_src from '$lib/assets/icons/login/people.svg';
-
-    // types
-    import type { IPageData } from '$lib/types/pageData';
-    interface IData extends IPageData {}
-
-    // props
-    /** @type {import('./$types').PageData} */
-    export let data: IData;
-
-    // components
     import WBack from '$lib/components/WBack.svelte';
     import WSignup from '$lib/components/WSignup.svelte';
     import WHead from '$lib/components/WHead.svelte';
+    import type { IPageData } from '$lib/types/pageData';
+
+    // props
+    /** @type {import('./$types').PageData} */
+    export let data: IPageData;
 </script>
 
 <WHead seo={data?.page?.seo} canonicalURL="login" />

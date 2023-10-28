@@ -1,30 +1,17 @@
 <script lang="ts">
-    // types
-    import type { TBeer } from '$lib/types/beer';
-    import type { IPageData } from '$lib/types/pageData';
-    import type { BlogPost } from '$lib/types/blog';
-    interface IData extends IPageData {
-        topBeers?: TBeer[];
-        blogPosts?: BlogPost[];
-    }
-
-    // helpers
     import { onMount } from 'svelte';
-
-    // props
-    /** @type {import('./$types').PageData} */
-    export let data: IData;
-
-    // computed
-    $: translationReplacements = [];
-
-    // components
     import WHead from '$lib/components/WHead.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import WWrapper from '$lib/components/WWrapper.svelte';
     import BlogPreview from '$lib/components/blog/BlogPreview.svelte';
+    import type { HomePageData } from '$lib/types/pageData';
 
-    // data
+    // props
+    /** @type {import('./$types').PageData} */
+    export let data: HomePageData;
+
+    // computed
+    $: translationReplacements = [];
 
     onMount(() => {
         console.log('home page data :>> ', data);
