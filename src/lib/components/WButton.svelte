@@ -40,8 +40,13 @@
         }
 
         &--third {
+            border: 1px solid var(--border);
+            border-radius: var(--main-border-radius);
             transition: var(--main-transition);
             color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+
             &:hover {
                 background: var(--hover);
                 transition: var(--main-transition);
@@ -51,13 +56,19 @@
         &--w100 {
             width: 100%;
         }
-        &--lg {
+        &--xl {
             min-height: 60px;
         }
+        &--lg {
+            min-height: 46px;
+        }
         &--md {
-            min-height: 48px;
+            min-height: 42px;
         }
         &--sm {
+            min-height: 36px;
+        }
+        &--xs {
             min-height: 32px;
         }
     }

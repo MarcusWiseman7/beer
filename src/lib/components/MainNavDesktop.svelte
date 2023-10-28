@@ -22,6 +22,9 @@
 
     // computed
     $: activeRoute = $page.url.pathname;
+    $: isActive = (href) =>
+        href === activeRoute ||
+        (activeRoute && !$derivedNav.some((link) => link.href === activeRoute) && href === '/discover');
 
     // methods
     const addBeer = (): void => {
@@ -37,7 +40,7 @@
                 on:click={() => {
                     goto(link.href);
                 }}
-                class={link.href == activeRoute ? 'list-item active' : 'list-item'}
+                class={`list-item ${isActive(link.href) ? 'active' : ''}`}
             >
                 <div class="list-item__icon">
                     <svelte:component this={link.icon} />
@@ -46,7 +49,7 @@
             </li>
         {/each}
         <li class="list-item--button">
-            <WButton on:click={addBeer} modifiers={['primary', 'md', 'w100']}>
+            <WButton on:click={addBeer} modifiers={['primary', 'lg', 'w100']}>
                 <img src={add_beer_src} width="17" height="18" alt="Beer mug" />
                 <span class="text">Add beer</span>
             </WButton>
