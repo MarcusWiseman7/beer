@@ -9,7 +9,7 @@
     export let name: string = '';
 </script>
 
-<a href={'/brewery/' + id} class={`breweryBox breweryBox--${type}`}>
+<a href={'/discover/brewery/' + id} class={`breweryBox breweryBox--${type}`}>
     <div class="breweryBox__image">
         <img src={logoUrl} alt="brewery" />
     </div>

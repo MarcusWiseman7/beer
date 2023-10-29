@@ -26,11 +26,11 @@
         return stockPhotos[Math.floor(Math.random() * stockPhotos.length)];
     };
     const cardClick = (): void => {
-        if (item?._id && !dragging) goto('/beer/' + item._id);
+        if (item?._id && !dragging) goto('/discover/beer/' + item._id);
     };
     const breweryClick = (): void => {
         const id = item.brewery?._id;
-        if (id) goto('/brewery/' + id);
+        if (id) goto('/discover/brewery/' + id);
     };
 </script>
 
