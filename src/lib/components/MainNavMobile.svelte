@@ -12,7 +12,9 @@
     // computed
     $: activeRoute = $page.url.pathname;
     $: isActive = (nav: TNav) =>
-        nav.href === activeRoute || (activeRoute.startsWith('/@') && !nav.href && nav.name === 'profile' && $myProfile);
+        nav.href === activeRoute ||
+        (activeRoute.startsWith('/discover') && nav.name === 'discover') ||
+        (activeRoute.startsWith('/@') && nav.name === 'profile' && $myProfile);
 
     // methods
     const dispatch = createEventDispatcher();
