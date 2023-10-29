@@ -1,22 +1,16 @@
 <script lang="ts">
-    // types
     import type { BlogPost } from '$lib/types/blog';
-
-    // components
     import SanityImage from './SanityImage.svelte';
     import { onMount } from 'svelte';
-
-    // helpers
     import { timeAgo } from '$lib/helpers';
+    import WLocaleText from '../WLocaleText.svelte';
+    // import like_src from '$lib/assets/icons/post/like.svg';
+    // import comment_src from '$lib/assets/icons/post/comment.svg';
+    // import share_src from '$lib/assets/icons/post/share.svg';
 
     // props
     export let type: string = 'normal';
     export let post: BlogPost;
-
-    // icons
-    // import like_src from '$lib/assets/icons/post/like.svg';
-    // import comment_src from '$lib/assets/icons/post/comment.svg';
-    // import share_src from '$lib/assets/icons/post/share.svg';
 
     onMount(() => {
         console.log('post :>> ', post);
@@ -47,8 +41,9 @@
                 {#if post.tags}
                     <ul class="categories">
                         {#each post.tags as tag}
-                            <!-- TODO: Marcus, make locale text composable -->
-                            <li>{tag.title.en}</li>
+                            <li>
+                                <WLocaleText text={tag.title} />
+                            </li>
                         {/each}
                     </ul>
                 {/if}

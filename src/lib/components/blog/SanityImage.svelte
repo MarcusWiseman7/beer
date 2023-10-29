@@ -1,12 +1,9 @@
 <script lang="ts">
-    // types
-    import type { SanityAssetDocument } from '@sanity/client';
-
-    // helpers
+    import type { SanityImageAssetDocument } from '@sanity/client';
     import getImageProps from '$lib/sanity/image-url';
 
     // props
-    export let image: SanityAssetDocument;
+    export let image: SanityImageAssetDocument;
     export let height: number = 0;
     export let width: number = 0;
     export let addClass: string = '';
