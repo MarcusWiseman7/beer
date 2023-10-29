@@ -7,6 +7,7 @@ type GoogleMapsLocation = {};
 
 export type TNewReview = {
     picURL?: string;
+    picPublicId?: string;
     beer?: ObjectId;
     brewery?: ObjectId;
     tempBeer?: string;

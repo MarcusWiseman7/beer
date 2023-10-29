@@ -139,8 +139,29 @@
         else isBeerDropdownVisible = !isBeerDropdownVisible;
     };
 
-    const uploadImage = async (): Promise<string> => {
-        // TODO Marcus write this
+    const uploadImage = async (): Promise<{ public_id: string; secure_url: string } | null> => {
+        if (!imageFile) return null;
+
+        try {
+            const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUDNAME}/upload`;
+            const formData = new FormData();
+            formData.append('file', imageFile);
+            formData.append('upload_preset', 'review');
+
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                return await response.json();
+            }
+
+            return null;
+        } catch (err) {
+            console.error('Error uploading image to cloudinary :>> ', err);
+            return null;
+        }
     };
 
     const submitReview = async (): Promise<void> => {
@@ -148,11 +169,14 @@
 
         try {
             if (imageFile) {
-                review.picURL = await uploadImage();
+                const upload = await uploadImage();
+                if (upload) {
+                    review.picURL = upload.secure_url;
+                    review.picPublicId = upload.public_id;
+                }
             }
 
             const formData = new FormData();
-
             Object.entries(review).forEach((r) => {
                 formData.append(r[0], r[1] as string);
             });
@@ -165,12 +189,8 @@
                 },
             });
 
-            /** @type {import('@sveltejs/kit').ActionResult} */
-            const result = await response.json();
-
-            console.log('result :>> ', result);
-
             if (response.ok) {
+                removeImage();
                 close();
                 setAppMessage({
                     timeout: 3000,
@@ -195,8 +215,6 @@
                 id: Date.now(),
             });
         }
-
-        step = 2;
     };
 
     const selectOption = (id: number): void => {
