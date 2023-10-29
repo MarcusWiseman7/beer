@@ -16,8 +16,7 @@
         { id: 'telegram', icon: telegram_src },
     ];
     const pageData = $page.data;
-
-    console.log('beer page data in aside :>> ', pageData);
+    const beerData = pageData.beer;
 
     // methods
     const addDetails = (): void => {
@@ -26,19 +25,32 @@
     };
 </script>
 
-<AsideBlock title="Details">
+<AsideBlock title="Beer Details">
     <!-- TODO: add a beer data -->
     <ul class="detail-list">
-        <li><strong>From:</strong> 🇨🇿 Krivoklatsko, Czech Republic</li>
-        <li><strong>Style:</strong> 🍺 Lager</li>
-        <li><strong>ABV:</strong> 6%</li>
-        <li><strong>Aroma:</strong> 🌿 Herbal</li>
+        {#if beerData.brewery && beerData.brewery.location}
+            <li><strong>From:</strong>🇨🇿 {beerData.brewery.location}</li>
+        {/if}
+        {#if beerData.style}
+            <li><strong>Style:</strong>🍷 {beerData.style}</li>
+        {/if}
+        {#if beerData.brewery && beerData.brewery.name}
+            <li><strong>Brewery:</strong>🍺 {beerData.brewery.name}</li>
+        {/if}
+        {#if beerData.degrees}
+            <li><strong>Gradation:</strong> {beerData.degrees} degrees (°)</li>
+        {/if}
+        {#if beerData.reviews && beerData.reviews.length}
+            <li><strong>Reviews:</strong>📝 {beerData.reviews.length}x</li>
+        {/if}
+        <!-- <li><strong>Aroma:</strong> 🌿 Herbal</li>
         <li><strong>Appearance:</strong> Medium Gold</li>
-        <li><strong>Mouthfeel:</strong> creamy texture</li>
+        <li><strong>Mouthfeel:</strong> creamy texture</li> -->
     </ul>
-    <WButton on:click={addDetails} modifiers={['third', 'sm', 'w100']}>
+    <!-- TODO: should show modal with beer/brewery details -->
+    <!-- <WButton on:click={addDetails} modifiers={['third', 'sm', 'w100']}>
         <span class="text">+ Add details</span>
-    </WButton>
+    </WButton> -->
 </AsideBlock>
 
 <AsideBlock title="Share on socials">
@@ -47,12 +59,13 @@
 
 <style lang="scss">
     .detail-list {
-        margin-bottom: 20px;
         li {
-            margin-bottom: 8px;
+            &:not(&:last-child) {
+                margin-bottom: 8px;
+            }
 
             strong {
-                margin-right: 2px;
+                margin-right: 4px;
             }
         }
     }
