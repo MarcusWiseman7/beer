@@ -9,6 +9,7 @@
     import WHead from '$lib/components/WHead.svelte';
     import WReview from '$lib/components/WReview.svelte';
     import star_src from '$lib/assets/icons/general/star.svg';
+    import { CldImage } from 'svelte-cloudinary';
 
     // props
     /** @type {import('./$types').PageData} */
@@ -36,6 +37,8 @@
             <div class="page-hero__image">
                 <!-- TODO: to add beer image -->
                 <div class="image">
+                    <!-- TODO Marcus add cloudinary FE package -->
+                    <CldImage height="600" width="600" src="beers/volt_eliasuv_ohen_fu5iqo" alt="Beer logo" />
                     <img src={cloudinaryPicURL('/stock/b6_k7y5gk')} class="img-object-fit-cover" alt="logo" />
                 </div>
             </div>
