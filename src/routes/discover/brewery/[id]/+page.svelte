@@ -10,12 +10,13 @@
     import noBreweryImg from '$lib/assets/images/no-brewery.png';
     import { onMount } from 'svelte';
     import type { BreweryPageData } from '$lib/types/pageData';
+    import { CldImage, CldOgImage } from 'svelte-cloudinary';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: BreweryPageData;
 
     // data
+    $: seo = data?.page?.seo;
     $: brewery = data?.brewery;
     $: beers = data?.beers;
     $: translationReplacements = [{ key: 'brewery_name', value: brewery?.name || '' }];
@@ -39,7 +40,26 @@
     });
 </script>
 
-<WHead seo={data?.page?.seo} canonicalURL={`brewery/${data?.id}`} {translationReplacements} />
+<WHead {seo} canonicalURL={`brewery/${brewery?._id}`} {translationReplacements} />
+{#if brewery.logo}
+    <CldOgImage
+        src={brewery.logo}
+        alt={brewery.description}
+        height="627"
+        width="1200"
+        overlays={[
+            {
+                text: {
+                    color: 'white',
+                    fontFamily: 'Source Sans Pro',
+                    fontSize: 200,
+                    fontWeight: 'bold',
+                    text: 'FindBrews',
+                },
+            },
+        ]}
+    />
+{/if}
 
 <div class="page">
     <div class="page-top">
@@ -52,7 +72,7 @@
                 <div class="image">
                     {#if brewery.logo}
                         <div class="logo">
-                            <img src={brewery.logo} class="" alt="logo" />
+                            <CldImage src={brewery.logo} alt="Brewery logo" loading="eager" height="140" width="140" />
                         </div>
                     {:else}
                         <div class="icon">

@@ -5,12 +5,12 @@ import Brewery from '$lib/server/models/brewery';
 import { beerSelect } from '$lib/server/server-helpers';
 import type { TBeer } from '$lib/types/beer';
 import type { TBrewery } from '$lib/types/brewery';
-import type { PageData } from '$lib/types/pageData';
+import type { SanityPageData } from '$lib/types/pageData';
+import type { PageServerLoad } from './$types';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ params }) {
+export const load: PageServerLoad = async ({ params }) => {
     const breweryQuery = `*[_type == 'brewery'][0]`;
-    const page: PageData = await sanity.fetch(breweryQuery);
+    const page: SanityPageData = await sanity.fetch(breweryQuery);
 
     const brewery: TBrewery | null = await Brewery
         .findOne({ _id: params.id })
@@ -23,6 +23,6 @@ export async function load({ params }) {
         .exec();
 
     
-    return JSON.stringify({ brewery, beers, page, id: params.id });
+    return { data: JSON.stringify({ brewery, beers, page, id: params.id }) };
 };
 

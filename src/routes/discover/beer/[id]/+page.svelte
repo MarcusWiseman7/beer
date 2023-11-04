@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { BeerPageData } from '$lib/types/pageData';
     import { onMount } from 'svelte';
-    import { cloudinaryPicURL } from '$lib/helpers';
     import WBack from '$lib/components/WBack.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
@@ -12,11 +11,11 @@
     import { CldImage } from 'svelte-cloudinary';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: BeerPageData;
 
     // computed
     $: beer = data?.beer;
+    $: seo = data?.page?.seo;
     $: translationReplacements = [{ key: 'beer_name', value: beer?.beerName || '' }];
 
     // methods
@@ -25,7 +24,7 @@
     });
 </script>
 
-<WHead seo={data?.page?.seo} canonicalURL={`beer/${data?.id}`} {translationReplacements} />
+<WHead {seo} canonicalURL={`beer/${beer?._id}`} {translationReplacements} />
 
 <div class="page">
     <div class="page-top">
@@ -37,9 +36,14 @@
             <div class="page-hero__image">
                 <!-- TODO: to add beer image -->
                 <div class="image">
-                    <!-- TODO Marcus add cloudinary FE package -->
-                    <CldImage height="600" width="600" src="beers/volt_eliasuv_ohen_fu5iqo" alt="Beer logo" />
-                    <img src={cloudinaryPicURL('/stock/b6_k7y5gk')} class="img-object-fit-cover" alt="logo" />
+                    <!-- test image -->
+                    <CldImage
+                        src="beers/volt_eliasuv_ohen_fu5iqo"
+                        alt="Beer logo"
+                        loading="eager"
+                        height="140"
+                        width="140"
+                    />
                 </div>
             </div>
 

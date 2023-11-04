@@ -7,18 +7,19 @@ import type { TBrewery } from './brewery';
 import type { BlogPost } from './blog';
 import type { ComponentType } from 'svelte';
 import type { ObjectId } from 'mongoose';
+import type { LayoutData, PageData } from '../../routes/$types';
 
 export type SEO = {
     title?: LocaleObject;
     description?: LocaleObject;
 }
 
-export type PageData = {
+export interface SanityPageData extends PageData {
     seo: SEO;
 }
 
 export interface IPageData extends SanityDocument {
-    page: PageData;
+    page: SanityPageData;
 }
 
 export interface HomePageData extends IPageData {
@@ -55,7 +56,7 @@ export interface BlogpostPageData extends IPageData {
     slug: string;
 }
 
-export type TLayoutData = {
+export interface TLayoutData extends LayoutData {
     locale: string;
     user?: TUser;
 }

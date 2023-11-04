@@ -8,11 +8,12 @@
     import type { IPageData } from '$lib/types/pageData';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: IPageData;
+
+    $: seo = data?.page?.seo;
 </script>
 
-<WHead seo={data?.page?.seo} canonicalURL="login" />
+<WHead {seo} canonicalURL="login" />
 
 <div class="page-top">
     <WBack />

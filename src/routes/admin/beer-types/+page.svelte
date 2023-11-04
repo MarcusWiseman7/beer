@@ -7,7 +7,6 @@
     import WInput from '$lib/components/WInput.svelte';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: {
         types: TBeerCategory[];
     };

@@ -1,12 +1,14 @@
 <script lang="ts">
+    import { CldImage } from 'svelte-cloudinary';
+
     export let modifiers: [] = [];
-    export let mediaCDN: string = '';
+    export let publicId: string;
     export let size: number = 40;
 </script>
 
 <div class={`avatar ${modifiers.map((m) => 'avatar--' + m)}`} style={`--size: ${size}px`}>
     <div class="avatar-holder">
-        <img class="avatar__img" src={mediaCDN} alt="avatar" />
+        <CldImage class="avatar__img" src={publicId} alt="Avatar" height="size" width="size" />
     </div>
 </div>
 

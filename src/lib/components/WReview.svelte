@@ -2,7 +2,7 @@
     import type { TReview } from '$lib/types/review';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
     import WAvatar from '$lib/components/WAvatar.svelte';
-    import { cloudinaryPicURL } from '$lib/helpers';
+    import { CldImage } from 'svelte-cloudinary';
 
     // props
     export let type: string = 'normal';
@@ -12,8 +12,8 @@
 {#if review}
     <div class={`review review--${type}`}>
         <div class="avatar">
-            {#if review.reviewer?.avatarURL}
-                <WAvatar mediaCDN={cloudinaryPicURL(review.reviewer.avatarURL)} size={48} />
+            {#if review.reviewer?.avatarPublicId}
+                <WAvatar publicId={review.reviewer.avatarPublicId} size={48} />
             {:else}
                 <img src={noAvatarImg} alt="noavatar" />
             {/if}
@@ -27,9 +27,9 @@
                 {review.notes}
             </p>
             <div class="photos">
-                {#if review.picURL}
+                {#if review.picPublicId}
                     <div class="image">
-                        <img src={cloudinaryPicURL(review.picURL)} class="img-object-fit-cover" alt="logo" />
+                        <CldImage src={review.picPublicId} alt="Review captured image" height="" width="" />
                     </div>
                 {/if}
             </div>

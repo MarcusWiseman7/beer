@@ -1,10 +1,7 @@
 <script lang="ts">
-    // components
     import AsideBlock from '$lib/components/AsideBlock.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
-    import WAvatar from '../WAvatar.svelte';
-
-    // icons
+    import WAvatar from '$lib/components/WAvatar.svelte';
     import location_src from '$lib/assets/icons/general/location.svg';
     import link_src from '$lib/assets/icons/general/link.svg';
     import phone_src from '$lib/assets/icons/general/phone.svg';
@@ -17,9 +14,6 @@
     import twitter_src from '$lib/assets/icons/social/twitter.svg';
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
     import plus_src from '$lib/assets/icons/general/plus.svg';
-
-    // helpers
-    import { cloudinaryPicURL } from '$lib/helpers';
     import { page } from '$app/stores';
 
     // data
@@ -79,7 +73,7 @@
         <!-- TODO: add max 6 user, no click to profile -->
         {#each users.slice(0, 6) as item}
             <li>
-                <WAvatar mediaCDN={cloudinaryPicURL(item.image)} size={33} />
+                <WAvatar publicId={item.image} size={33} />
             </li>
         {/each}
     </ul>

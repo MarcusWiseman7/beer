@@ -22,7 +22,6 @@
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
 
     // props
-    /** @type {import('./$types').LayoutData} */
     export let data: TLayoutData;
 
     $: myProfile.set(data.user || null);

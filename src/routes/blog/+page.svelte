@@ -5,10 +5,10 @@
     import type { BlogPageData } from '$lib/types/pageData';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: BlogPageData;
 
     // data
+    $: seo = data?.page?.seo;
     $: blogPosts = data?.blogs || [];
     $: translationReplacements = [];
 
@@ -17,7 +17,7 @@
     });
 </script>
 
-<WHead seo={data?.page?.seo} canonicalURL="blog" {translationReplacements} />
+<WHead {seo} canonicalURL="blog" {translationReplacements} />
 
 <div class="page">
     <h1>Blog articles</h1>

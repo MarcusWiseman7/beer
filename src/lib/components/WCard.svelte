@@ -3,13 +3,18 @@
     import cz_src from '$lib/assets/icons/flags/czech.svg';
     import star_src from '$lib/assets/icons/general/star.svg';
     import WPill from './WPill.svelte';
-    import { cloudinaryPicURL } from '$lib/helpers';
     import { goto } from '$app/navigation';
+    import { CldImage } from 'svelte-cloudinary';
 
     // props
     export let item: TBeer;
     export let size: string = 'normal';
     export let dragging: boolean = false;
+
+    $: imageDims = {
+        height: size === 'big' ? 160 : 112,
+        width: size === 'big' ? 248 : 186,
+    };
 
     // data
     const stockPhotos = [
@@ -38,7 +43,7 @@
     <div class={`card card--${size}`} on:click={cardClick}>
         <!-- image -->
         <div class="card__image">
-            <img src={cloudinaryPicURL(stockPic())} alt="stock pic" />
+            <CldImage src={stockPic()} alt="stock pic" height={imageDims.height} width={imageDims.width} />
         </div>
 
         <!-- content -->
@@ -60,11 +65,12 @@
                         <WPill>
                             <svelte:fragment slot="image">
                                 {#if item.brewery.logo}
-                                    <img
-                                        src={cloudinaryPicURL(
-                                            '/breweries/' + item.brewery.logo.slice(item.brewery.logo.lastIndexOf('/'))
-                                        )}
-                                        alt="logo"
+                                    <CldImage
+                                        src={item.brewery.logo}
+                                        alt="Brewery logo"
+                                        crop="thumb"
+                                        height="28"
+                                        width="28"
                                     />
                                 {/if}
                             </svelte:fragment>

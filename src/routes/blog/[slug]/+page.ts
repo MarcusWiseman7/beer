@@ -1,4 +1,5 @@
-/** @type {import('./$types').PageLoad} */
-export function load({ data }) {
-    return { ...JSON.parse(data as string) };
-};
+import type { PageLoad } from './$types';
+
+export const load: PageLoad = ({ data }) => {
+    return { ...JSON.parse(data.data as string) };
+}

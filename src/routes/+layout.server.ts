@@ -1,9 +1,9 @@
 import type { TUser } from '$lib/types/user';
 import User from '$lib/server/models/user';
 import { userSelect } from '$lib/server/server-helpers';
+import type { LayoutServerLoad } from './$types';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ request, cookies }) {
+export const load: LayoutServerLoad = async ({ request, cookies }) => {
     // get ip address for geolocation
     // const ip = getClientAddress();
 
@@ -34,9 +34,9 @@ export async function load({ request, cookies }) {
         const user: TUser | null = await User.findOne({ loginToken: session }).select(userSelect).lean();
 
         if (user) {
-            return JSON.stringify({ user, locale });
+            return { data: JSON.stringify({ user, locale }) };
         }
     }
 
-    return JSON.stringify({ locale });
+    return { data: JSON.stringify({ locale }) };
 }

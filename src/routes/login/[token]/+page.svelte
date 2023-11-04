@@ -4,7 +4,6 @@
     import { onMount } from 'svelte';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: {
         displayName: string;
     };

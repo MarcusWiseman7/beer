@@ -1,84 +1,69 @@
 import User from '$lib/server/models/user';
-import { invalid } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import { userSelect } from '$lib/server/server-helpers';
 import Review from '$lib/server/models/review';
 import sanity from '$lib/sanity/sanity.js';
-import type { PageData } from '$lib/types/pageData';
+import type { SanityPageData } from '$lib/types/pageData';
 import type { TReview } from '$lib/types/review';
 import type { TUser } from '$lib/types/user';
+import type { Actions, PageServerLoad } from './$types.js';
 
-/** @type {import('./$types').LayoutServerLoad} */
-export async function load({ params }) {
-    try {
-        const profileQuery = `*[_type == 'profile'][0]`;
-        const page: PageData = await sanity.fetch(profileQuery);
-        
-        const { username } = params;
-        const name = username.replace('@', '');
+export const load: PageServerLoad = async ({ params }) => {
+    const profileQuery = `*[_type == 'profile'][0]`;
+    const page: SanityPageData = await sanity.fetch(profileQuery);
+    
+    const { username } = params;
+    const name = username.replace('@', '');
 
-        // find user
-        const user: TUser | null = await User.findOne({ username: name }).select(userSelect).lean();
-        if (!user) return invalid(404, { message: 'No user with that username...' });
+    // find user
+    const user: TUser | null = await User.findOne({ username: name }).select(userSelect).lean();
+    if (!user) throw error(404, { message: 'No user with that username...' });
 
-        // get reviews count
-        const reviewsCount = await Review.where({ reviewer: user._id }).countDocuments();
-        
-        // get first 30 user reviews
-        const reviews: TReview[] = reviewsCount
-            ? await Review.find({ reviewer: user._id }).sort('dateCreated').limit(30).populate('beer').lean()
-            : [];
-        
-        const canFetchMoreReviews = (reviewsCount - reviews.length) > 0;
+    // get reviews count
+    const reviewsCount = await Review.where({ reviewer: user._id }).countDocuments();
+    
+    // get first 30 user reviews
+    const reviews: TReview[] = reviewsCount
+        ? await Review.find({ reviewer: user._id }).sort('dateCreated').limit(30).populate('beer').lean()
+        : [];
+    const canFetchMoreReviews = (reviewsCount - reviews.length) > 0;
 
-        return JSON.stringify({ user, reviews, canFetchMoreReviews, page, username: name });
-    } catch (err) {
-        console.warn('Server error in load function :>> ', err);
-    }
+    return { data: JSON.stringify({ user, reviews, canFetchMoreReviews, page, username: name }) };
 }
 
-/** @type {import('./$types').Actions} */
-export const actions = {
+export const actions: Actions = {
     logout: async ({ cookies }) => {
-        try {
-            const session = cookies.get('session');
-        
-            if (session) {
-                // remove token from user in db
-                await User.findOneAndUpdate({ loginToken: session }, { $set: { loginToken: Date.now().toString() } }).select('_id').lean();
-                cookies.delete('session');
-            }
-
-            return { success: true };
-        } catch (err) {
-            return invalid(500, { message: 'Server error, please try again...' });
+        const session = cookies.get('session');
+    
+        if (session) {
+            // remove token from user in db
+            await User.findOneAndUpdate({ loginToken: session }, { $set: { loginToken: Date.now().toString() } }).select('_id').lean();
+            cookies.delete('session');
         }
+
+        return { success: true };
     },
     getUserReviews: async ({ request }) => {
-        try {
-            const data = await request.formData();
-            const possibleOffset = data.get('offset') as string;
-            const possibleLimit = data.get('limit') as string;
-            const offset: number = possibleOffset ? parseInt(possibleOffset) : 0;
-            const limit: number = possibleLimit ? parseInt(possibleLimit) : 30;
-            const userId = data.get('userId');
+        const data = await request.formData();
+        const possibleOffset = data.get('offset') as string;
+        const possibleLimit = data.get('limit') as string;
+        const offset: number = possibleOffset ? parseInt(possibleOffset) : 0;
+        const limit: number = possibleLimit ? parseInt(possibleLimit) : 30;
+        const userId = data.get('userId');
 
-            // get count
-            const reviewsCount = await Review.where({ reviewer: userId }).countDocuments();
-            
-            // get next 30 user reviews
-            const reviews: TReview[] = await Review
-                .find({ reviewer: userId })
-                .sort('dateCreated')
-                .skip(offset)
-                .limit(limit)
-                .populate('beer')
-                .lean();
-            
-            const canFetchMoreReviews = (reviewsCount - (offset + reviews.length)) > 0;
-            
-            return { reviews: JSON.stringify(reviews), canFetchMoreReviews };
-        } catch (err) {
-            return invalid(500, { message: 'Server error, please try again...' });
-        }
+        // get count
+        const reviewsCount = await Review.where({ reviewer: userId }).countDocuments();
+        
+        // get next 30 user reviews
+        const reviews: TReview[] = await Review
+            .find({ reviewer: userId })
+            .sort('dateCreated')
+            .skip(offset)
+            .limit(limit)
+            .populate('beer')
+            .lean();
+        const canFetchMoreReviews = (reviewsCount - (offset + reviews.length)) > 0;
+        
+        return JSON.stringify({ reviews, canFetchMoreReviews });
     },
 };

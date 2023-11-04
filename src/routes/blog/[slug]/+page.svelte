@@ -12,10 +12,11 @@
     import type { BlogpostPageData } from '$lib/types/pageData';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: BlogpostPageData;
 
     // data
+    $: seo = data?.page?.seo;
+    $: slug = data?.slug;
     $: post = data?.post;
     $: translationReplacements = [{ key: 'blog_title', value: post?.title || '' }];
 
@@ -30,7 +31,7 @@
     });
 </script>
 
-<WHead seo={data?.page?.seo} canonicalURL={`blog/${data?.slug}`} {translationReplacements} />
+<WHead {seo} canonicalURL={`blog/${slug}`} {translationReplacements} />
 
 <div class="page">
     {#if post?._id}

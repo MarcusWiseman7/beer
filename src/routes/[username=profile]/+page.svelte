@@ -8,7 +8,6 @@
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: UserPageData;
 
     // data
@@ -16,6 +15,7 @@
     let fetchingReviews = false;
 
     // computed
+    $: seo = data?.page?.seo;
     $: profile = data?.user;
     $: reviews = data?.reviews;
     $: myProfilePage = !!($myProfile && $myProfile._id === profile?._id);
@@ -108,7 +108,7 @@
     });
 </script>
 
-<WHead seo={data?.page?.seo} canonicalURL={`@${data?.username}`} {translationReplacements} />
+<WHead {seo} canonicalURL={`@${profile?.username}`} {translationReplacements} />
 
 <div class="page">
     <div class="page-top">

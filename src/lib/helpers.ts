@@ -6,10 +6,6 @@ export const setAppMessage = (message: Message): void => {
     appMessages.update((a) => [...a, message]);
 };
 
-export const cloudinaryPicURL = (src: string): string => {
-    return `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUDNAME}/image/upload/f_auto${src}`;
-};
-
 export const getPointFromEvent = ($event): { x: number, y: number } => {
     let point;
     if ($event.targetTouches && $event.targetTouches[0]) {

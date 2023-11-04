@@ -1,11 +1,11 @@
 import sanity from '$lib/sanity/sanity';
-import type { PageData } from '$lib/types/pageData';
+import type { SanityPageData } from '$lib/types/pageData';
 import type { BlogPost } from '$lib/types/blog';
+import type { PageServerLoad } from './$types';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load() {
+export const load: PageServerLoad = async () => {
     const blogPageQuery = `*[_type == 'blog'][0]`;
-    const page: PageData = await sanity.fetch(blogPageQuery);
+    const page: SanityPageData = await sanity.fetch(blogPageQuery);
 
     // fetch blog posts
     const blogsQuery = `*[_type == 'post'] {
@@ -14,5 +14,5 @@ export async function load() {
     }`;
     const blogPosts: BlogPost[] = await sanity.fetch(blogsQuery);
     
-    return JSON.stringify({ blogPosts, page });
+    return { data: JSON.stringify({ blogPosts, page }) };
 }

@@ -1,13 +1,10 @@
 <script lang="ts">
-    // components
     import AsideBlock from '$lib/components/AsideBlock.svelte';
     import WInput from '$lib/components/WInput.svelte';
     import WPub from '$lib/components/WPub.svelte';
     import WTag from '$lib/components/WTag.svelte';
-
-    // helpers
-    import { cloudinaryPicURL } from '$lib/helpers';
     import { page } from '$app/stores';
+    import { CldImage } from 'svelte-cloudinary';
 
     // data
     const pageData = $page.data;
@@ -79,7 +76,7 @@
             <WPub>
                 <svelte:fragment slot="image">
                     {#if item.image}
-                        <img src={cloudinaryPicURL(item.image)} class="img-object-fit-cover" alt="logo" />
+                        <CldImage src={item.image} alt="Pub" height="53" width="40" />
                     {/if}
                 </svelte:fragment>
                 <svelte:fragment slot="title">{item.title}</svelte:fragment>

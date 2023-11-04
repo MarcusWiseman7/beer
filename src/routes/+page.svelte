@@ -7,10 +7,10 @@
     import type { HomePageData } from '$lib/types/pageData';
 
     // props
-    /** @type {import('./$types').PageData} */
     export let data: HomePageData;
 
     // computed
+    $: seo = data?.page?.seo;
     $: translationReplacements = [];
 
     onMount(() => {
@@ -18,7 +18,7 @@
     });
 </script>
 
-<WHead seo={data?.page?.seo} {translationReplacements} />
+<WHead {seo} {translationReplacements} />
 
 <div class="page">
     {#if data?.topBeers}
