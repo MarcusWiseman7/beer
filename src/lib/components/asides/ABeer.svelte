@@ -15,8 +15,8 @@
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
     ];
-    const pageData = $page.data;
-    const beerData = pageData.beer;
+    $: pageData = $page.data;
+    $: beerData = pageData.beer;
 
     // methods
     const addDetails = (): void => {

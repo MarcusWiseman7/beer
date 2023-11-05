@@ -16,7 +16,7 @@ const brewerySchema = new Schema<TBrewery>(
         sumOfAllBeerRatings: { type: Number, default: 0 },
         totalNumberOfBeerRatings: { type: Number, default: 0 },
         averageBeerRating: { type: Number, default: 0 },
-        usersWhoLike: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+        usersWhoLike: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     }
 );
 

@@ -76,10 +76,7 @@
                     <img src={menu_src} class="icon" alt="menu" height="24" width="24" />
                 </button>
                 <div class="user">
-                    <WAvatar
-                        mediaCDN={'https://cdn.sanity.io/images/brzf1cel/production/e49e81c884e0632a1b5633b4d59fa50ef4c1aa10-1068x1600.jpg'}
-                        size={33}
-                    />
+                    <WAvatar publicId="/stock/b2_koxyps" size={33} />
                 </div>
             </nav>
         </div>

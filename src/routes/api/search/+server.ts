@@ -3,12 +3,11 @@ import Brewery from '$lib/server/models/brewery.js';
 import type { TBeer } from '$lib/types/beer.js';
 import type { TBrewery } from '$lib/types/brewery.js';
 import type { RequestHandler } from './$types';
-import type { HydratedDocument } from 'mongoose';
 
 export const POST: RequestHandler = async ({ request }): Promise<Response> => {
     const data = await request.formData();
     const query = new RegExp(data.get('query') as string, 'i');
-    let queried: HydratedDocument<TBeer | TBrewery>;
+    let queried: (TBeer | TBrewery)[];
     
     switch (data.get('type')) {
         case 'beer':
@@ -23,7 +22,6 @@ export const POST: RequestHandler = async ({ request }): Promise<Response> => {
         default:
             queried = await Brewery.find({ name: { $regex: query } }).select('name').lean();
     }
-    const response = new Response(JSON.stringify(queried));
-
-    return response;
+    
+    return new Response(JSON.stringify(queried));
 };

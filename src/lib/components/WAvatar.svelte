@@ -8,7 +8,7 @@
 
 <div class={`avatar ${modifiers.map((m) => 'avatar--' + m)}`} style={`--size: ${size}px`}>
     <div class="avatar-holder">
-        <CldImage class="avatar__img" src={publicId} alt="Avatar" height="size" width="size" />
+        <CldImage class="avatar__img" src={publicId} alt="Avatar" height={size} width={size} />
     </div>
 </div>
 

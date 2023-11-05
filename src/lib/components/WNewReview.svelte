@@ -47,17 +47,15 @@
     $: canSubmit =
         (step === 1 && (review.beer || (review.tempBeer && review.tempBrewery))) ||
         (step === 2 && review?.reviewer && review.rating && (review.beer || (review.tempBeer && review.tempBrewery)));
-    $: description = descriptions[review.rating - 1];
+    $: description = descriptions[review.rating - 1] || 'Hmmm...';
 
     // methods
     const close = (): void => {
         newReviewModal.set(false);
     };
-
     const navigate = (): void => {
         step = 1;
     };
-
     const removeImage = (): void => {
         imageFile = null;
         if (imageUrl) {
@@ -65,7 +63,6 @@
             imageUrl = null;
         }
     };
-
     const handleFileUpload = ($event: Event): void => {
         const element = $event.target as HTMLInputElement;
         const file = element?.files && element.files[0];
@@ -77,13 +74,18 @@
             removeImage();
         }
     };
-
     const search = debounce(
         async ($event: Event & { currentTarget: EventTarget & HTMLInputElement }, type: string): Promise<void> => {
             try {
                 const element = $event.target as HTMLInputElement;
                 const query = element?.value;
                 if (!query) return;
+
+                // if beers from already selected brewery loaded skip search
+                if (type === 'beer' && review.brewery && searchResultsBeer?.length) {
+                    searchResultsBeer = searchResultsBeer.filter((b) => b.beerName.toLowerCase().includes(query));
+                    return;
+                }
 
                 const formData = new FormData();
                 formData.append('query', query as string);
@@ -98,47 +100,68 @@
                     },
                 });
 
-                /** @type {import('@sveltejs/kit').ActionResult} */
-                const result = await response.json();
+                if (response.ok) {
+                    const result = await response.json();
 
-                if (type === 'beer') {
-                    searchResultsBeer = result;
-                    isBeerDropdownVisible = result.length;
-                } else {
-                    searchResultsBrewery = result;
-                    isBreweryDropdownVisible = result.length;
+                    if (type === 'beer') {
+                        searchResultsBeer = result;
+                        isBeerDropdownVisible = result.length;
+                    } else {
+                        searchResultsBrewery = result;
+                        isBreweryDropdownVisible = result.length;
+                    }
                 }
-            } catch (err) {}
+            } catch (err) {
+                console.error('ERROR searching DB :>> ', err);
+            }
         },
         300
     );
+    const checkForPrefill = (): void => {
+        isBeerDropdownVisible = searchResultsBeer?.length > 0;
+    };
+    const fetchBeersFromBrewery = async (): Promise<void> => {
+        try {
+            const response = await fetch(`/api/beer/byBrewery/${review.brewery}`);
 
+            if (response.ok) {
+                const beers = await response.json();
+                searchResultsBeer = beers;
+            }
+        } catch (err) {
+            console.error('Error fetching brewery :>> ', err);
+        }
+    };
     const selectBrewery = (brewery: TBrewery): void => {
         review.brewery = brewery._id;
         review.tempBrewery = brewery.name;
         isBreweryDropdownVisible = false;
 
-        // TODO Marcus auto fetch beers from selected brewery to prefill the beers dropdown
+        fetchBeersFromBrewery();
     };
-
     const selectBeer = (beer: TBeer): void => {
         review.beer = beer._id;
         review.tempBeer = beer.beerName;
         isBeerDropdownVisible = false;
-
-        if (beer.brewery) selectBrewery(beer.brewery);
     };
-
     const toggleBreweryDropdown = (): void => {
-        if (review.brewery) review.brewery = undefined;
-        else isBreweryDropdownVisible = !isBreweryDropdownVisible;
+        if (review.brewery || review.tempBrewery) {
+            delete review.brewery;
+            delete review.beer;
+            review.tempBrewery = '';
+            review.tempBeer = '';
+        } else {
+            isBreweryDropdownVisible = !isBreweryDropdownVisible;
+        }
     };
-
     const toggleBeerDropdown = (): void => {
-        if (review.beer) review.beer = undefined;
-        else isBeerDropdownVisible = !isBeerDropdownVisible;
+        if (review.beer || review.tempBeer) {
+            delete review.beer;
+            review.tempBeer = '';
+        } else {
+            isBeerDropdownVisible = !isBeerDropdownVisible;
+        }
     };
-
     const uploadImage = async (): Promise<{ public_id: string; secure_url: string } | null> => {
         if (!imageFile) return null;
 
@@ -163,7 +186,6 @@
             return null;
         }
     };
-
     const submitReview = async (): Promise<void> => {
         if (!canSubmit || (step === 1 && (step = 2))) return;
 
@@ -184,12 +206,11 @@
             const response = await fetch('/api/review', {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'x-sveltekit-action': 'true',
-                },
             });
 
             if (response.ok) {
+                const review = await response.json();
+                console.log('review :>> ', review);
                 removeImage();
                 close();
                 setAppMessage({
@@ -216,7 +237,6 @@
             });
         }
     };
-
     const selectOption = (id: number): void => {
         activeOption = id;
     };
@@ -283,10 +303,14 @@
                                 </div>
                                 <button
                                     on:click={toggleBreweryDropdown}
-                                    class="btn {review.brewery ? 'remove' : 'add'}"
+                                    class="btn {review.brewery || review.tempBrewery ? 'remove' : 'add'}"
                                 >
                                     <span class="plus">
-                                        <PlusIcon stroke={review.brewery ? 'var(--main-light)' : 'var(--text-2)'} />
+                                        <PlusIcon
+                                            stroke={review.brewery || review.tempBrewery
+                                                ? 'var(--main-light)'
+                                                : 'var(--text-2)'}
+                                        />
                                     </span>
                                 </button>
                             </div>
@@ -299,7 +323,7 @@
                                         </li>
                                     {/each}
                                     <li>
-                                        <button>or add new</button>
+                                        <button on:click={() => (isBreweryDropdownVisible = false)}>or add new</button>
                                     </li>
                                 </ul>
                             {/if}
@@ -310,15 +334,28 @@
                                 <div class="input">
                                     <img src={beer_src} alt="Beer" height="18px" tabindex="-1" />
                                     <input
+                                        disabled={!review.brewery && !review.tempBrewery}
                                         placeholder="Find Beer"
                                         autocomplete="off"
                                         bind:value={review.tempBeer}
                                         on:input={(event) => search(event, 'beer')}
+                                        on:focus={() => checkForPrefill()}
+                                        on:blur={() =>
+                                            setTimeout(() => {
+                                                isBeerDropdownVisible = false;
+                                            }, 200)}
                                     />
                                 </div>
-                                <button on:click={toggleBeerDropdown} class="btn {review.beer ? 'remove' : 'add'}">
+                                <button
+                                    on:click={toggleBeerDropdown}
+                                    class="btn {review.beer || review.tempBeer ? 'remove' : 'add'}"
+                                >
                                     <span class="plus">
-                                        <PlusIcon stroke={review.beer ? 'var(--main-light)' : 'var(--text-2)'} />
+                                        <PlusIcon
+                                            stroke={review.beer || review.tempBeer
+                                                ? 'var(--main-light)'
+                                                : 'var(--text-2)'}
+                                        />
                                     </span>
                                 </button>
                             </div>
@@ -329,7 +366,9 @@
                                             <button on:click={() => selectBeer(beer)}>{beer.beerName}</button>
                                         </li>
                                     {/each}
-                                    <li><button>or add new</button></li>
+                                    <li>
+                                        <button on:click={() => (isBeerDropdownVisible = false)}>or add new</button>
+                                    </li>
                                 </ul>
                             {/if}
                         </div>
@@ -556,6 +595,11 @@
                     height: 40px;
                     border: none;
                     padding: 0;
+
+                    &:disabled {
+                        cursor: not-allowed;
+                        opacity: 0.5;
+                    }
                 }
             }
 

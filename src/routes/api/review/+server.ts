@@ -13,8 +13,6 @@ export const POST: RequestHandler = async ({ request }): Promise<Response> => {
         else reviewData[pair[0]] = pair[1] as string;
     }
 
-    // TODO Marcus validate that beer matches brewery
-
     // check if beer in DB
     if (reviewData.beer && await Beer.findOne({ _id: reviewData.beer }).lean()) {
         // beer exists so remove temp shit
@@ -35,7 +33,5 @@ export const POST: RequestHandler = async ({ request }): Promise<Response> => {
     const review: HydratedDocument<TReview> = new Review(reviewData);
     // await review.save();
 
-    const response = new Response(JSON.stringify(review));
-
-    return response;
+    return new Response(JSON.stringify(review));
 }
