@@ -29,14 +29,14 @@
         <img src={stone2_src} alt="stone" />
     </div>
 </div>
-<div class="content-wrapper">
-    <span class="content-wrapper__small"> Story begins </span>
-    <h2 class="content-wrapper__title">Raise a Glass and Join the Craft Beer Revolution</h2>
-    <p class="content-wrapper__text">
+<div class="info-wrapper">
+    <span class="info-wrapper__small"> Story begins </span>
+    <h2 class="info-wrapper__title">Raise a Glass and Join the Craft Beer Revolution</h2>
+    <p class="info-wrapper__text">
         Joining "Find-Brews" is a great way to connect with other beer enthusiasts and expand your knowledge of
         different brews.
     </p>
-    <div class="content-wrapper__icon">
+    <div class="info-wrapper__icon">
         <img src={people_src} alt="" style="margin: 0 auto;" />
     </div>
 </div>
@@ -60,35 +60,6 @@
             bottom: -60px;
             left: 0;
             z-index: 0;
-        }
-    }
-    .content-wrapper {
-        background-color: var(--page);
-        text-align: center;
-        border-top: 2px solid var(--border);
-        max-width: 460px;
-        margin: 0 auto;
-        margin-top: 120px;
-        padding-top: 40px;
-
-        &__small {
-            font-size: 16px;
-            font-weight: 400;
-        }
-        &__title {
-            font-size: 26px;
-            line-height: 40px;
-            font-weight: 900;
-            margin-top: 16px;
-        }
-        &__text {
-            margin-top: 24px;
-            font-size: 20px;
-            font-weight: 300;
-            line-height: 34px;
-        }
-        &__icon {
-            padding: 60px 0 50px 0;
         }
     }
 </style>
