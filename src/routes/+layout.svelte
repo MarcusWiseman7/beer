@@ -64,12 +64,12 @@
 <div class="papa">
     <header class="header layout">
         <div class="layout-left logo">
-            <div class="logo-desktop">
+            <a href="/" class="logo-desktop">
                 <div class="logo__wrapper">
                     <img src={logo_beer_src} alt="Beer logo" class="icon" />
                 </div>
                 <h1>Find Brews</h1>
-            </div>
+            </a>
             <!-- MOBILE MENU -->
             <nav class="nav-mobile" class:active={isScrolled}>
                 <button on:click={logoClick} class="menu">
@@ -214,6 +214,7 @@
 
             &-desktop {
                 display: none;
+                text-decoration: none;
                 @media (min-width: $desktop) {
                     display: flex;
                     align-items: center;
