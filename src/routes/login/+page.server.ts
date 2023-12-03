@@ -11,6 +11,8 @@ import nodemailer from 'nodemailer';
 import type { SanityPageData } from '$lib/types/pageData';
 import sanity from '$lib/sanity/sanity';
 import type { Actions, PageServerLoad } from './$types.js';
+import { compileEmailTemplate } from '$lib/helpers'
+
 
 const transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',
@@ -87,15 +89,17 @@ export const actions: Actions = {
         // create user
         const user: HydratedDocument<TUser> = await User.create({ ...userData, tempEmailToken });
 
+        // compile email
+        const emailHtml = await compileEmailTemplate(
+            './src/lib/email/welcome.hbs', 
+            { link: `https://find-brews.com/login/${tempEmailToken}` }
+        );
+
         const email = await transporter.sendMail({
             from: 'Find-Brews.com <no-reply.findbrews@outlook.com>',
             to: userData.tempEmail,
             subject: 'Verify your email',
-            html: `
-                <h2>Verify your email by clicking the link below!</h2>
-                <h4><a href="https://find-brews.com/login/${tempEmailToken}">https://find-brews.com/login/${tempEmailToken}</a></h4>
-                <h4>Find Brews team</h4>
-            `,
+            html: emailHtml,
         });
 
         if (!!user && !!email) return { success: true };

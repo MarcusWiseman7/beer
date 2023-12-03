@@ -1,6 +1,8 @@
 import { appMessages } from './stores';
 import type { LocaleObject, TranslationReplacements } from './types/locale';
 import type { Message } from './types/message';
+import handlebars from 'handlebars';
+import fs from 'fs/promises';
 
 export const setAppMessage = (message: Message): void => {
     appMessages.update((a) => [...a, message]);
@@ -45,4 +47,27 @@ export const parseTranslation = (rawText: string, replacements: TranslationRepla
     }
 
     return rawText;
+};
+
+export const compileEmailTemplate = async (contentTemplatePath: string, data: Record<string, unknown>): Promise<string> => {
+    try {
+        const layoutTemplatePath = './src/lib/email/layout.hbs';
+
+        // layout template
+        const layoutSource = await fs.readFile('./src/lib/email/layout.hbs', 'utf8');
+        const layoutTemplate = handlebars.compile(layoutSource);
+
+        // content template
+        const contentSource = await fs.readFile(contentTemplatePath, 'utf8');
+        const contentTemplate = handlebars.compile(contentSource);
+
+        // Render template with data
+        const contentHtml = contentTemplate(data);
+
+        // Render the final email with layout and content
+        return layoutTemplate({ body: contentHtml });
+    } catch (error) {
+        console.error('Error compiling email template:', error);
+        throw error;
+    }
 };
