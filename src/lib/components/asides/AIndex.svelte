@@ -76,7 +76,7 @@
             <WPub>
                 <svelte:fragment slot="image">
                     {#if item.image}
-                        <CldImage src={item.image} alt="Pub" height="53" width="40" />
+                        <CldImage src={item.image} alt="Pub" height="200" width="200" crop="thumb" />
                     {/if}
                 </svelte:fragment>
                 <svelte:fragment slot="title">{item.title}</svelte:fragment>
