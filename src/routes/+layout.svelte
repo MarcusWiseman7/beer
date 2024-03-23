@@ -9,9 +9,7 @@
     import MainNavDesktop from '$lib/components/MainNavDesktop.svelte';
     import WMessage from '$lib/components/WMessage.svelte';
     import WLoading from '$lib/components/WLoading.svelte';
-    import ABrewery from '$lib/components/asides/ABrewery.svelte';
     import AIndex from '$lib/components/asides/AIndex.svelte';
-    import ABeer from '$lib/components/asides/ABeer.svelte';
     import ABlog from '$lib/components/asides/ABlog.svelte';
     import AProfile from '$lib/components/asides/AProfile.svelte';
     import ADiscover from '$lib/components/asides/ADiscover.svelte';
@@ -29,8 +27,6 @@
 
     // data
     const asideComponents = {
-        beer: ABeer,
-        brewery: ABrewery,
         blog: ABlog,
         profile: AProfile,
         discover: ADiscover,

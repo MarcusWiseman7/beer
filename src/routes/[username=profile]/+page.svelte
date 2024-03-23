@@ -6,6 +6,7 @@
     import WHead from '$lib/components/WHead.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
+    import WReview from '$lib/components/WReview.svelte';
 
     // props
     export let data: UserPageData;
@@ -118,18 +119,16 @@
     {#if profile}
         <div class="page-hero">
             <div class="page-hero__image">
-                <div class="image">
+                <div class="image image--is-rounded">
                     <img src={noAvatarImg} alt={'profile @' + profile.username} />
                 </div>
             </div>
             <div class="page-hero__content">
                 <h1 class="page-hero__content__title">{profile.displayName}</h1>
-                <h2 class="page-hero__content__subtitle">
-                    @{profile.username}
-                </h2>
                 <p class="page-hero__content__description">
-                    Welcome to my profile. I plenty beer every day am I can share it with my fellas to your fellas and
-                    everybody who loves beer same as me.
+                    {profile.displayName} also known as @{profile.username} has -- posts “so fucking lot!”. 🔥 He is quite
+                    famous look at his -- likes 👍 and {reviews?.length} and more reviews 📝. Follow him and follow his journey
+                    of the wounded soldier.
                 </p>
             </div>
             {#if myProfilePage}
@@ -138,44 +137,30 @@
                 </div>
             {/if}
         </div>
+        <section class="section">
+            <h2 class="section__title">
+                @{profile.username} last reviews
+            </h2>
+            {#each reviews as review}
+                <WReview {review} user={profile} />
+            {/each}
+        </section>
     {/if}
 </div>
 
 <style lang="scss">
-    .profile {
-        position: relative;
-        display: flex;
-        gap: 28px;
-
-        &__image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 170px;
-            position: relative;
-            border-radius: 3px;
-            overflow: hidden;
-            background-color: var(--body);
+    .page {
+        &-hero {
+            &__content {
+                padding-bottom: 28px;
+                border-bottom: 1px solid var(--border);
+            }
         }
-
-        // &__title {
-        //     width: 100%;
-        // }
-
-        // &__name {
-        //     font-weight: 600;
-        //     font-size: 26px;
-        //     line-height: 26px;
-        //     margin-bottom: 15px;
-        // }
-
-        // &__description {
-        //     font-weight: 400;
-        //     font-size: 16px;
-        //     line-height: 25px;
-        //     color: var(--text-3);
-        // }
+        &-reviews {
+            margin-top: 50px;
+        }
     }
+
     .log-out {
         position: absolute;
         top: 0;

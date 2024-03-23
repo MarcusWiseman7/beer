@@ -20,4 +20,11 @@ button {
         text-decoration: underline;
         cursor: pointer;
     }
+
+    &--no-decoration {
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }

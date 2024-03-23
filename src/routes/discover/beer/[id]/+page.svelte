@@ -96,24 +96,30 @@
     {/if}
 
     {#if data?.similarBeers?.length}
-        <h2 class="beer-posts-title">Similar beers</h2>
-        <WHorizontalScroller items={data.similarBeers} />
+        <section class="section">
+            <h2 class="section__title">Similar beers</h2>
+            <WHorizontalScroller items={data.similarBeers} />
+        </section>
     {/if}
 
     {#if data?.siblingBeers?.length}
-        <h2 class="beer-posts-title">More beers from {beer.brewery?.name}</h2>
-        <WHorizontalScroller items={data.siblingBeers} />
+        <section class="section">
+            <h2 class="section__title">More beers from {beer.brewery?.name}</h2>
+            <WHorizontalScroller items={data.siblingBeers} />
+        </section>
     {/if}
 
     {#if beer?.reviews}
-        <h2 class="beer-posts-title">Last user's reviews</h2>
-        <div class="reviews">
-            {#each beer.reviews as review}
-                <div class="review-holder">
-                    <WReview {review} />
-                </div>
-            {/each}
-        </div>
+        <section class="section">
+            <h2 class="section__title">Last user's reviews</h2>
+            <div class="section__content">
+                {#each beer.reviews as review}
+                    <div class="review-holder">
+                        <WReview {review} />
+                    </div>
+                {/each}
+            </div>
+        </section>
     {/if}
 </div>
 

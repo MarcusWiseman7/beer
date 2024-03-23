@@ -400,11 +400,7 @@
                         <div class="options">
                             <!-- TODO: choose correct icon and pass to activeLabel acti clas -->
                             {#each options as { id, label }}
-                                <WPill
-                                    type="rating"
-                                    activeLabel={activeOption === id}
-                                    on:click={() => selectOption(id)}
-                                >
+                                <WPill type="" activeLabel={activeOption === id} on:click={() => selectOption(id)}>
                                     <svelte:fragment slot="image">
                                         <img src={beer_src} alt="Beer" tabindex="-1" />
                                     </svelte:fragment>

@@ -1,8 +1,10 @@
 <script lang="ts">
     import type { TReview } from '$lib/types/review';
+    import { myProfile } from '$lib/stores';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
     import WAvatar from '$lib/components/WAvatar.svelte';
     import { CldImage } from 'svelte-cloudinary';
+    import WPill from './WPill.svelte';
 
     // props
     export let type: string = 'normal';
@@ -11,13 +13,15 @@
 
 {#if review}
     <div class={`review review--${type}`}>
-        <div class="avatar">
-            {#if review.reviewer?.avatarPublicId}
-                <WAvatar publicId={review.reviewer.avatarPublicId} size={48} />
-            {:else}
-                <img src={noAvatarImg} alt="noavatar" />
-            {/if}
-        </div>
+        {#if myProfile}
+            <div class="avatar image image--is-rounded">
+                {#if review.reviewer?.avatarPublicId}
+                    <WAvatar publicId={review.reviewer.avatarPublicId} size={48} />
+                {:else}
+                    <img src={noAvatarImg} alt="noavatar" />
+                {/if}
+            </div>
+        {/if}
         <div class="info">
             <ul class="info-list">
                 <li>{review.reviewer?.displayName}</li>
@@ -26,6 +30,20 @@
             <p class="bio">
                 {review.notes}
             </p>
+            <div class="info-pills">
+                {#if review?.rating}
+                    <WPill>
+                        <svelte:fragment slot="image">⭐️</svelte:fragment>
+                        <svelte:fragment slot="title">rated by {review.rating}x stars</svelte:fragment>
+                    </WPill>
+                {/if}
+                {#if review?.location}
+                    <WPill>
+                        <svelte:fragment slot="image">📍</svelte:fragment>
+                        <svelte:fragment slot="title">review's from {review.location}</svelte:fragment>
+                    </WPill>
+                {/if}
+            </div>
             <div class="photos">
                 {#if review.picPublicId}
                     <div class="image">
@@ -41,7 +59,10 @@
     .review {
         display: flex;
         flex-flow: row;
-        gap: 20px;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+        padding: 28px;
+        margin: 0 -28px;
 
         .avatar {
             max-width: 48px;
@@ -68,6 +89,12 @@
                         content: none;
                     }
                 }
+            }
+
+            &-pills {
+                display: flex;
+                gap: 8px;
+                margin-top: 12px;
             }
         }
 

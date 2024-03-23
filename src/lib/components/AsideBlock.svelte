@@ -26,7 +26,7 @@
             background-color: var(--page);
             border-radius: var(--main-border-radius);
             box-shadow: var(--box-border-shadow);
-            padding: 12px 12px 20px;
+            padding: 12px;
             overflow: hidden;
         }
     }

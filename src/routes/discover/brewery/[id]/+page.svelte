@@ -36,7 +36,7 @@
 
     onMount(() => {
         // just to see what we have to work with...
-        console.log('brewery page data :>> ', data);
+        // console.log('brewery page data :>> ', data);
     });
 </script>
 
@@ -128,13 +128,15 @@
             </div>
         </div>
 
-        <h2 class="beer-list-title">Beer list</h2>
-        <!-- <WHorizontalScroller items={beers} /> -->
-        <div class="grid">
-            {#each beers as item}
-                <WCard {item} size="small" />
-            {/each}
-        </div>
+        <section class="section">
+            <h2 class="section__title">Top {brewery.name} Beers</h2>
+            <!-- <WHorizontalScroller items={beers} /> -->
+            <div class="grid">
+                {#each beers as item}
+                    <WCard {item} size="small" />
+                {/each}
+            </div>
+        </section>
     {/if}
 </div>
 
@@ -156,13 +158,6 @@
 
     .line-clamp {
         -webkit-line-clamp: 4;
-    }
-
-    .beer-list-title {
-        margin: 30px 0 18px 0;
-        font-weight: 600;
-        font-size: 21px;
-        line-height: 26px;
     }
 
     .grid {

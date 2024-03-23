@@ -19,6 +19,15 @@
     flex-flow: row wrap;
 }
 
+.image {
+    &--is-rounded {
+        border-radius: 50%;
+        img {
+            border-radius: 50% !important;
+        }
+    }
+}
+
 .reviews {
     &-holder {
         margin-bottom: 24px;
@@ -107,6 +116,20 @@
         }
     }
 }
+
+.section {
+    margin-top: 30px;
+    display: flex;
+    flex-flow: column;
+    gap: 18px;
+
+    &__title {
+        font-weight: 600;
+        font-size: 21px;
+        line-height: 26px;
+    }
+}
+
 
 .info-wrapper {
     background-color: var(--page);
