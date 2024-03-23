@@ -8,6 +8,7 @@
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
     import WReview from '$lib/components/WReview.svelte';
     import WDropdown from '$lib/components/WDropdown.svelte';
+    import WButton from '$lib/components/WButton.svelte';
 
     // props
     export let data: UserPageData;
@@ -15,6 +16,7 @@
     // data
     let moreReviews = true;
     let fetchingReviews = false;
+    let visibleReviewsCount = 3;
     const dropdownOptions = [
         { label: 'Profile', action: 'goToSettings' },
         { label: 'Logout', action: 'logout' },
@@ -121,6 +123,10 @@
         }
     };
 
+    const showReviews = (): void => {
+        visibleReviewsCount = reviews.length;
+    };
+
     onMount(() => {
         // just to see what we have to work with...
         console.log('profile page data :>> ', data);
@@ -153,13 +159,20 @@
                 </p>
             </div>
         </div>
-        <section class="section">
-            <h2 class="section__title">
-                @{profile.username} last reviews
-            </h2>
-            {#each reviews as review}
-                <WReview {review} user={profile} />
-            {/each}
+        <section class="section gap--0">
+            <h2 class="section-title">Last reviews</h2>
+            <div class="section-content">
+                {#each reviews.slice(0, visibleReviewsCount) as review, index}
+                    <WReview {review} user={profile} type={index === visibleReviewsCount - 1 ? 'no-border' : ''} />
+                {/each}
+            </div>
+            {#if visibleReviewsCount < reviews.length}
+                <div class="section-footer row row--center">
+                    <WButton on:click={showReviews} modifiers={['third', 'sm']}>
+                        <span class="text">Show More</span>
+                    </WButton>
+                </div>
+            {/if}
         </section>
     {/if}
 </div>
@@ -169,17 +182,33 @@
         &-hero {
             &__content {
                 padding-bottom: 28px;
-                border-bottom: 1px solid var(--border);
+                // border-bottom: 1px solid var(--border);
             }
-        }
-        &-reviews {
-            margin-top: 50px;
         }
     }
 
-    .log-out {
-        position: absolute;
-        top: 0;
-        right: 20px;
+    .section {
+        &-content,
+        &-footer {
+            margin: 0 -28px;
+        }
+        &-footer {
+            position: relative;
+            margin-top: -28px;
+
+            &:after {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 140px;
+                position: absolute;
+                bottom: 100%;
+                left: 0;
+                right: 0;
+                z-index: 2;
+                background: var(--page);
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0) 20%, var(--page) 80%);
+            }
+        }
     }
 </style>

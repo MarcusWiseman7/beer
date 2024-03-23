@@ -62,7 +62,10 @@
         gap: 12px;
         border-bottom: 1px solid var(--border);
         padding: 28px;
-        margin: 0 -28px;
+
+        &--no-border {
+            border: none;
+        }
 
         .avatar {
             max-width: 48px;

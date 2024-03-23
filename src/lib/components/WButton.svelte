@@ -16,7 +16,7 @@
         padding: 0 42px;
         border-radius: var(--main-border-radius);
         font-size: 14px;
-        background-color: var(--text);
+        background-color: var(--c-btn-default);
 
         &:disabled {
             cursor: not-allowed;
@@ -56,6 +56,10 @@
         // size variants
         &--w100 {
             width: 100%;
+        }
+
+        &--w50 {
+            width: 50%;
         }
         &--xl {
             min-height: 60px;

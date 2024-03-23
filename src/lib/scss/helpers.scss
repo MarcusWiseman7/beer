@@ -121,12 +121,20 @@
     margin-top: 30px;
     display: flex;
     flex-flow: column;
-    gap: 18px;
+    gap: 8px;
 
-    &__title {
+    &-title {
         font-weight: 600;
         font-size: 21px;
         line-height: 26px;
+    }
+
+    &-content {
+
+    }
+
+    &-footer {
+
     }
 }
 
@@ -158,5 +166,103 @@
     }
     &__link {
         margin-top: 28px;
+    }
+}
+
+a {
+    color: var(--link);
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+button {
+    outline: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.link {
+    font-size: 14px;
+    color: var(--text);
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    &--no-decoration {
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.flex,
+.row,
+.column {
+    display: flex;
+    flex-shrink: 1;
+}
+
+.row,
+.column {
+    list-style: none;
+    min-width: 0; 
+
+    // Other
+    &--wrap {
+        flex-wrap: wrap;
+    }
+}
+
+.row {
+    align-items: center;
+
+    // Align
+    &--center {
+        justify-content: center;
+    }
+
+    &--space-evenly {
+        justify-content: space-evenly;
+    }
+
+    @media (min-width: $tablet) {
+        &--t {
+            &--start {
+                justify-content: flex-start;
+            }
+    
+            &--center {
+                justify-content: center;
+            }
+    
+            &--space-evenly {
+                justify-content: space-evenly;
+            }
+        }
+    }
+}
+
+.gap {
+    @include primitivesToProperty(gap);
+
+    &--t {
+        @media (min-width: $tablet) {
+            @include primitivesToProperty(gap);
+        }
+    }
+
+    &--d {
+        @media (min-width: $desktop) {
+            @include primitivesToProperty(gap);
+        }
     }
 }
