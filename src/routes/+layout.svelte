@@ -37,7 +37,10 @@
     $: pathname = $page.url.pathname;
     $: openMenu = false;
     $: isScrolled = false;
-    $: asideComponent = asideComponents[(pathname.split('/')[1] || 'index') as keyof object];
+    $: pathnameSegment = pathname.split('/')[1];
+    $: asideComponent = pathnameSegment.startsWith('@')
+        ? asideComponents['profile']
+        : asideComponents[pathnameSegment || 'index'];
 
     // methods
     const logoClick = (): void => {

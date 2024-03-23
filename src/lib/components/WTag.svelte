@@ -10,6 +10,8 @@
 
 <style lang="scss">
     .tag {
+        display: flex;
+        align-items: center;
         background-color: var(--page);
         color: var(--c-text);
         border: 1px solid var(--border);
@@ -18,11 +20,13 @@
         max-width: 200px;
         padding: 6px 22px;
 
-        &:hover,
-        &:focus {
-            border-color: var(--main-color);
-            transition: var(--main-transition);
-            cursor: pointer;
+        @media (hover: hover) {
+            &:hover,
+            &:focus {
+                border-color: var(--main-color);
+                transition: var(--main-transition);
+                cursor: pointer;
+            }
         }
 
         &__title {
@@ -30,6 +34,7 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             font-size: 14px;
+            color: var(--text-2);
         }
     }
 </style>
