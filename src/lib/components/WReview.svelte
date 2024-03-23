@@ -63,6 +63,10 @@
         border-bottom: 1px solid var(--border);
         padding: 28px;
 
+        &:first-child {
+            padding-top: 16px;
+        }
+
         &--no-border {
             border: none;
         }

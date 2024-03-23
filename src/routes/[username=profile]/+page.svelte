@@ -9,6 +9,7 @@
     import WReview from '$lib/components/WReview.svelte';
     import WDropdown from '$lib/components/WDropdown.svelte';
     import WButton from '$lib/components/WButton.svelte';
+    import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
 
     // props
     export let data: UserPageData;
@@ -27,6 +28,7 @@
     $: seo = data?.page?.seo;
     $: profile = data?.user;
     $: reviews = data?.reviews;
+    $: reviewsBeers = reviews.map((review) => review.beer);
     $: myProfilePage = !!($myProfile && $myProfile._id === profile?._id);
     $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
     $: translationReplacements = [{ key: 'username', value: data?.username }];
@@ -159,6 +161,16 @@
                 </p>
             </div>
         </div>
+    {/if}
+
+    {#if reviews}
+        <section class="section">
+            <h2 class="section-title">Last drinked beers</h2>
+            <WHorizontalScroller items={reviewsBeers} />
+        </section>
+    {/if}
+
+    {#if reviews}
         <section class="section gap--0">
             <h2 class="section-title">Last reviews</h2>
             <div class="section-content">

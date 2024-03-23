@@ -129,7 +129,7 @@
         </div>
 
         <section class="section">
-            <h2 class="section__title">Top {brewery.name} Beers</h2>
+            <h2 class="section-title">Top {brewery.name} Beers</h2>
             <!-- <WHorizontalScroller items={beers} /> -->
             <div class="grid">
                 {#each beers as item}

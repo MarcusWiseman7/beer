@@ -83,6 +83,7 @@
             border: 1px solid #dddddd;
             height: 26px;
             padding: 0 8px;
+            gap: 0;
             .pill__title {
                 font-weight: 700;
                 margin-left: 6px;

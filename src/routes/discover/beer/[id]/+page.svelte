@@ -97,21 +97,21 @@
 
     {#if data?.similarBeers?.length}
         <section class="section">
-            <h2 class="section__title">Similar beers</h2>
+            <h2 class="section-title">Similar beers</h2>
             <WHorizontalScroller items={data.similarBeers} />
         </section>
     {/if}
 
     {#if data?.siblingBeers?.length}
         <section class="section">
-            <h2 class="section__title">More beers from {beer.brewery?.name}</h2>
+            <h2 class="section-title">More beers from {beer.brewery?.name}</h2>
             <WHorizontalScroller items={data.siblingBeers} />
         </section>
     {/if}
 
     {#if beer?.reviews}
         <section class="section">
-            <h2 class="section__title">Last user's reviews</h2>
+            <h2 class="section-title">Last user's reviews</h2>
             <div class="section__content">
                 {#each beer.reviews as review}
                     <div class="review-holder">
