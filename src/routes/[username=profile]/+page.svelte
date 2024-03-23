@@ -7,6 +7,7 @@
     import WBack from '$lib/components/WBack.svelte';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
     import WReview from '$lib/components/WReview.svelte';
+    import WDropdown from '$lib/components/WDropdown.svelte';
 
     // props
     export let data: UserPageData;
@@ -14,6 +15,11 @@
     // data
     let moreReviews = true;
     let fetchingReviews = false;
+    const dropdownOptions = [
+        { label: 'Profile', action: 'goToSettings' },
+        { label: 'Logout', action: 'logout' },
+        { label: 'Share Profile', action: 'share' },
+    ];
 
     // computed
     $: seo = data?.page?.seo;
@@ -103,6 +109,18 @@
         }
     };
 
+    const onDropdownSelect = (event: CustomEvent): void => {
+        const { action } = event.detail;
+        console.log(`Action from dropdown: ${action}`);
+        if (action === 'logout') {
+            console.log('Performing logout...');
+            logout();
+        }
+        if (action === 'share') {
+            console.log('Performing share...');
+        }
+    };
+
     onMount(() => {
         // just to see what we have to work with...
         console.log('profile page data :>> ', data);
@@ -114,6 +132,9 @@
 <div class="page">
     <div class="page-top">
         <WBack />
+        {#if myProfilePage}
+            <WDropdown options={dropdownOptions} on:select={onDropdownSelect} />
+        {/if}
     </div>
 
     {#if profile}
@@ -131,11 +152,6 @@
                     of the wounded soldier.
                 </p>
             </div>
-            {#if myProfilePage}
-                <div class="log-out">
-                    <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
-                </div>
-            {/if}
         </div>
         <section class="section">
             <h2 class="section__title">

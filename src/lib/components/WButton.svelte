@@ -16,6 +16,7 @@
         padding: 0 42px;
         border-radius: var(--main-border-radius);
         font-size: 14px;
+        background-color: var(--text);
 
         &:disabled {
             cursor: not-allowed;
