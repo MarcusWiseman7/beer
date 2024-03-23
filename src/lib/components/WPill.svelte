@@ -30,13 +30,7 @@
         height: 28px;
         padding: 2px 16px 2px 2px;
         transition: var(--main-transition);
-
-        &:hover,
-        &.active {
-            border-color: var(--main-color);
-            transition: var(--main-transition);
-            cursor: pointer;
-        }
+        gap: 8px;
 
         &__image {
             border-radius: 50%;
@@ -65,7 +59,7 @@
             white-space: nowrap;
             // max-width: 100px;
             font-weight: 600;
-            margin-left: 8px;
+            color: var(--text);
         }
 
         &__info {
@@ -111,6 +105,13 @@
         &--tag {
             padding: 2px 16px;
             height: 33px;
+
+            &:hover,
+            &.active {
+                border-color: var(--main-color);
+                transition: var(--main-transition);
+                cursor: pointer;
+            }
 
             .pill__title {
                 margin: 0;
