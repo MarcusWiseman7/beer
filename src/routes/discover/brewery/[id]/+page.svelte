@@ -83,55 +83,17 @@
             </div>
 
             <div class="page-hero__content">
-                <div>
-                    <h1 class="page-hero__content__title">{brewery.name}</h1>
-                    <p class="page-hero__content__description line-clamp" on:click={descriptionClick}>
-                        {brewery.description}
-                    </p>
-                </div>
-                <div>
-                    {#if brewery.location}
-                        <div class="location">
-                            <WPill type="location">
-                                <svelte:fragment slot="image">
-                                    <img src={cz_src} width="28" alt="Star" />
-                                </svelte:fragment>
-                                <svelte:fragment slot="title">{brewery.location}</svelte:fragment>
-                            </WPill>
-                        </div>
-                    {/if}
-
-                    <div class="bottom-pills">
-                        {#if beers?.length}
-                            <div class="pill-wrapper">
-                                <WPill type="">
-                                    <svelte:fragment slot="image">🍺</svelte:fragment>
-                                    <svelte:fragment slot="title">{beers.length} beers</svelte:fragment>
-                                </WPill>
-                            </div>
-                        {/if}
-                        {#if brewery.averageBeerRating}
-                            <div class="pill-wrapper">
-                                <WPill type="rating">
-                                    <svelte:fragment slot="image">
-                                        <img src={star_src} alt="Star" />
-                                    </svelte:fragment>
-                                    <svelte:fragment slot="title">{brewery.averageBeerRating}</svelte:fragment>
-                                    <svelte:fragment slot="info"
-                                        >({brewery.totalNumberOfBeerRatings} reviews)</svelte:fragment
-                                    >
-                                </WPill>
-                            </div>
-                        {/if}
-                    </div>
-                </div>
+                <h1 class="page-hero__content__title">{brewery.name}</h1>
+                <p class="page-hero__content__description line-clamp" on:click={descriptionClick}>
+                    {brewery.description}
+                </p>
             </div>
         </div>
 
         <section class="section">
             <h2 class="section-title">Top {brewery.name} Beers</h2>
             <!-- <WHorizontalScroller items={beers} /> -->
-            <div class="grid">
+            <div class="grid grid--2 grid--t--4 gap--100">
                 {#each beers as item}
                     <WCard {item} size="small" />
                 {/each}
@@ -141,33 +103,7 @@
 </div>
 
 <style lang="scss">
-    .location {
-        margin-top: 24px;
-        display: flex;
-    }
-
-    .bottom-pills {
-        margin-top: 6px;
-        display: flex;
-        gap: 6px;
-    }
-
-    .pill-wrapper {
-        max-width: fit-content;
-    }
-
     .line-clamp {
         -webkit-line-clamp: 4;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        gap: 20px 12px;
-        grid-template-areas:
-            '. . . .'
-            '. . . .'
-            '. . . .';
     }
 </style>

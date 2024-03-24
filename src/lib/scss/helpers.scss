@@ -109,11 +109,6 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        &__pills {
-            margin-top: 24px;
-            display: flex;
-            gap: 6px;
-        }
     }
 }
 
@@ -200,6 +195,27 @@ button {
 
         &:hover {
             text-decoration: none;
+        }
+    }
+}
+
+.grid {
+    display: grid;
+    @include grid-fr;
+
+    @media (min-width: $tablet) {
+        &--t {
+            display: grid;
+
+            @include grid-fr;
+        }
+    }
+
+    @media (min-width: $desktop) {
+        &--d {
+            display: grid;
+
+            @include grid-fr;
         }
     }
 }

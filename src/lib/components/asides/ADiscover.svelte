@@ -29,6 +29,7 @@
     // computed
     $: beer = $page.data.beer;
     $: brewery = $page.data.brewery;
+    $: beers = $page.data.beers;
     $: pagePath = $page.url.pathname.split('/')[2] || 'discover';
 
     // methods
@@ -99,8 +100,25 @@
     </AsideBlock>
 {/if}
 
-{#if pagePath == 'brewery' || pagePath == 'beer'}
+{#if pagePath == 'brewery'}
     <AsideBlock title="About Brewery">
+        <ul class="detail-list">
+            {#if brewery?.location}
+                <li><strong>From: 📍</strong>{brewery.location}</li>
+            {/if}
+            {#if beers?.length}
+                <li><strong>Beers: 🍺</strong>{beers.length} kind</li>
+            {/if}
+            {#if brewery?.averageBeerRating && brewery?.totalNumberOfBeerRatings}
+                <li>
+                    <strong>Rating: ⭐️</strong>{brewery.averageBeerRating}
+                    <small>({brewery.totalNumberOfBeerRatings} reviews) </small>
+                </li>
+            {/if}
+        </ul>
+    </AsideBlock>
+    <!-- TODO: add brewery info -->
+    <!-- <AsideBlock title="About Brewery">
         <div class="aside-info__map">
             <iframe
                 title="Brewery location"
@@ -115,7 +133,6 @@
         </div>
         <p class="aside-info__text">90 people like this, 25 last week</p>
         <ul class="aside-info__users">
-            <!-- TODO: add max 6 user, no click to profile -->
             {#each users.slice(0, 6) as item}
                 <li>
                     <WAvatar publicId={item.image} size={33} />
@@ -150,11 +167,12 @@
             <img class="icon" src={plus_src} alt="menu" height="18" width="18" />
             <span>add more</span>
         </button>
-    </AsideBlock>
+    </AsideBlock> -->
 
-    <AsideBlock title="Share on socials">
+    <!-- TODO: add option to add socials -->
+    <!-- <AsideBlock title="Share on socials">
         <WSocials socialNetworks={shareNetworks} />
-    </AsideBlock>
+    </AsideBlock> -->
 {/if}
 
 <style lang="scss">

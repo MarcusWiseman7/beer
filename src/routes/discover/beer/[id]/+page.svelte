@@ -1,13 +1,14 @@
 <script lang="ts">
+    import WPill from '$lib/components/WPill.svelte';
+    import star_src from '$lib/assets/icons/general/star.svg';
     import type { BeerPageData } from '$lib/types/pageData';
     import { onMount } from 'svelte';
     import WBack from '$lib/components/WBack.svelte';
-    import WPill from '$lib/components/WPill.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import WBreweryBox from '$lib/components/WBreweryBox.svelte';
     import WHead from '$lib/components/WHead.svelte';
     import WReview from '$lib/components/WReview.svelte';
-    import star_src from '$lib/assets/icons/general/star.svg';
+    import WCard from '$lib/components/WCard.svelte';
     import { CldImage } from 'svelte-cloudinary';
 
     // props
@@ -59,27 +60,6 @@
                 <p class="page-hero__content__description line-clamp">
                     {beer.description || 'TODO: beer has no description'}
                 </p>
-                <div class="page-hero__content__pills">
-                    {#if beer.brewery?.location}
-                        <div class="location">
-                            <WPill type="location">
-                                <svelte:fragment slot="title">{beer.brewery?.location}</svelte:fragment>
-                            </WPill>
-                        </div>
-                    {/if}
-
-                    {#if beer.averageRating}
-                        <div class="pill-wrapper">
-                            <WPill type="rating">
-                                <svelte:fragment slot="image">
-                                    <img src={star_src} alt="Star" />
-                                </svelte:fragment>
-                                <svelte:fragment slot="title">{beer.averageRating}</svelte:fragment>
-                                <svelte:fragment slot="info">({beer.totalNumberOfRatings} reviews)</svelte:fragment>
-                            </WPill>
-                        </div>
-                    {/if}
-                </div>
 
                 {#if beer.brewery}
                     <div class="breweryBox-wrapper">
@@ -95,20 +75,6 @@
         </div>
     {/if}
 
-    {#if data?.similarBeers?.length}
-        <section class="section">
-            <h2 class="section-title">Similar beers</h2>
-            <WHorizontalScroller items={data.similarBeers} />
-        </section>
-    {/if}
-
-    {#if data?.siblingBeers?.length}
-        <section class="section">
-            <h2 class="section-title">More beers from {beer.brewery?.name}</h2>
-            <WHorizontalScroller items={data.siblingBeers} />
-        </section>
-    {/if}
-
     {#if beer?.reviews}
         <section class="section">
             <h2 class="section-title">Last user's reviews</h2>
@@ -119,6 +85,24 @@
                     </div>
                 {/each}
             </div>
+        </section>
+    {/if}
+
+    {#if data?.siblingBeers?.length}
+        <section class="section">
+            <h2 class="section-title">More beers from {beer.brewery?.name}</h2>
+            <div class="grid grid--2 grid--t--4 gap--100">
+                {#each data.siblingBeers as item}
+                    <WCard {item} size="small" />
+                {/each}
+            </div>
+        </section>
+    {/if}
+
+    {#if data?.similarBeers?.length}
+        <section class="section">
+            <h2 class="section-title">Similar beers</h2>
+            <WHorizontalScroller items={data.similarBeers} />
         </section>
     {/if}
 </div>

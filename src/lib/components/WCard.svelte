@@ -13,7 +13,7 @@
 
     $: imageDims = {
         height: size === 'big' ? 160 : 112,
-        width: size === 'big' ? 248 : 186,
+        width: size === 'big' ? 248 : 200,
     };
 
     // data
@@ -80,27 +80,6 @@
                         </WPill>
                     </a>
                 {/if}
-
-                <!-- TODO: maybe remove code and make it dry, so same position as on small wCard -->
-                <!-- {#if size === 'big' && item.averageRating}
-                    <WPill type="rating">
-                        <svelte:fragment slot="image">
-                            <img src={star_src} alt="Star" />
-                        </svelte:fragment>
-                        <svelte:fragment slot="title">{item.averageRating}</svelte:fragment>
-                        <svelte:fragment slot="info">3 reviews</svelte:fragment>
-                    </WPill>
-                {/if} -->
-
-                <!-- TODO: filter by location will be on homepagem viz design -->
-                <!-- {#if item?.brewery?.location}
-                    <WPill type="location">
-                        <svelte:fragment slot="image">
-                            <img src={cz_src} width="28" alt="Flag" />
-                        </svelte:fragment>
-                        <svelte:fragment slot="title">{item.brewery.location}</svelte:fragment>
-                    </WPill>
-                {/if} -->
             </div>
         </div>
 
@@ -135,7 +114,6 @@
             position: relative;
             width: 100%;
             height: 112px;
-            min-height: 112px;
 
             &:before {
                 content: '';
@@ -152,12 +130,6 @@
                 top: 0;
                 width: 100%;
                 height: 50%;
-            }
-
-            img {
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
             }
         }
 
