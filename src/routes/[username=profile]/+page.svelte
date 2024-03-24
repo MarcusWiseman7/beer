@@ -164,13 +164,6 @@
     {/if}
 
     {#if reviews}
-        <section class="section">
-            <h2 class="section-title">Last drinked beers</h2>
-            <WHorizontalScroller items={reviewsBeers} />
-        </section>
-    {/if}
-
-    {#if reviews}
         <section class="section gap--0">
             <h2 class="section-title">Last reviews</h2>
             <div class="section-content">
@@ -185,6 +178,13 @@
                     </WButton>
                 </div>
             {/if}
+        </section>
+    {/if}
+
+    {#if reviews}
+        <section class="section">
+            <h2 class="section-title">Last drinked beers</h2>
+            <WHorizontalScroller items={reviewsBeers} />
         </section>
     {/if}
 </div>
