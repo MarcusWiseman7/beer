@@ -1,0 +1,25 @@
+@mixin landscape {
+    @media screen and (orientation: landscape) {
+        @content;
+    }
+}
+
+@mixin primitivesToProperty($properties...) {
+    $sizes: 0, 25, 50, 75, 100, 150, 200, 250, 300, 400, 500, 600, 800, 1000;
+
+    @each $size in $sizes {
+        &--#{$size} {
+            @each $property in $properties {
+                #{$property}: var(--spacing-#{$size});
+            }
+        }
+    }
+}
+
+@mixin grid-fr() {
+    @for $i from 1 through 8 {
+        &--#{$i} {
+            grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
+        }
+    }
+}

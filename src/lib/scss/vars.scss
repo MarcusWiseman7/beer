@@ -1,5 +1,3 @@
-// breakpoints:
-
 // from normal-size phones
 $xs: 350px;
 // until normal-size phones
@@ -12,3 +10,32 @@ $desktop: 1024px;
 $desktop-m: 1280px;
 // fullsize
 $full: 1416px;
+
+
+// Primitives
+:root {
+    --radius-0: 0px;
+    --radius-25: 2px;
+    --radius-50: 4px;
+    --radius-75: 6px;
+    --radius-100: 8px;
+    --radius-150: 12px;
+    --radius-200: 16px;
+    --radius-300: 24px;
+    --radius-1000: 999px;
+
+    --spacing-0: 0px;
+    --spacing-25: 2px;
+    --spacing-50: 4px;
+    --spacing-75: 6px;
+    --spacing-100: 8px;
+    --spacing-150: 12px;
+    --spacing-200: 16px;
+    --spacing-250: 20px;
+    --spacing-300: 24px;
+    --spacing-400: 32px;
+    --spacing-500: 40px;
+    --spacing-600: 48px;
+    --spacing-800: 64px;
+    --spacing-1000: 80px;
+}

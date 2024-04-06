@@ -62,7 +62,7 @@
             <li class="list-item--button">
                 <button on:click={addBeer}>
                     <img src={add_beer_src} alt="Beer mug" width="20" height="20" />
-                    <span>Add beer</span>
+                    <span>Add review</span>
                 </button>
             </li>
         </ul>

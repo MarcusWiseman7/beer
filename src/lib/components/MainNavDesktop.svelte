@@ -14,7 +14,7 @@
     $: isActive = (nav: TNav) =>
         nav.href === activeRoute ||
         (activeRoute.startsWith('/discover') && nav.name === 'discover') ||
-        (activeRoute.startsWith('/@') && nav.name === 'profile' && $myProfile);
+        ((activeRoute.startsWith('/@') || activeRoute === '/login') && nav.name === 'profile');
 
     // methods
     const addBeer = (): void => {
@@ -44,7 +44,7 @@
         <li class="list-item--button">
             <WButton on:click={addBeer} modifiers={['primary', 'lg', 'w100']}>
                 <img src={add_beer_src} width="17" height="18" alt="Beer mug" />
-                <span class="text">Add beer</span>
+                <span class="text">Add review</span>
             </WButton>
         </li>
     </ul>

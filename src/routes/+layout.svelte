@@ -9,9 +9,7 @@
     import MainNavDesktop from '$lib/components/MainNavDesktop.svelte';
     import WMessage from '$lib/components/WMessage.svelte';
     import WLoading from '$lib/components/WLoading.svelte';
-    import ABrewery from '$lib/components/asides/ABrewery.svelte';
     import AIndex from '$lib/components/asides/AIndex.svelte';
-    import ABeer from '$lib/components/asides/ABeer.svelte';
     import ABlog from '$lib/components/asides/ABlog.svelte';
     import AProfile from '$lib/components/asides/AProfile.svelte';
     import ADiscover from '$lib/components/asides/ADiscover.svelte';
@@ -29,8 +27,6 @@
 
     // data
     const asideComponents = {
-        beer: ABeer,
-        brewery: ABrewery,
         blog: ABlog,
         profile: AProfile,
         discover: ADiscover,
@@ -41,7 +37,10 @@
     $: pathname = $page.url.pathname;
     $: openMenu = false;
     $: isScrolled = false;
-    $: asideComponent = asideComponents[(pathname.split('/')[1] || 'index') as keyof object];
+    $: pathnameSegment = pathname.split('/')[1];
+    $: asideComponent = pathnameSegment.startsWith('@')
+        ? asideComponents['profile']
+        : asideComponents[pathnameSegment || 'index'];
 
     // methods
     const logoClick = (): void => {
@@ -64,12 +63,12 @@
 <div class="papa">
     <header class="header layout">
         <div class="layout-left logo">
-            <div class="logo-desktop">
+            <a href="/" class="logo-desktop">
                 <div class="logo__wrapper">
                     <img src={logo_beer_src} alt="Beer logo" class="icon" />
                 </div>
                 <h1>Find Brews</h1>
-            </div>
+            </a>
             <!-- MOBILE MENU -->
             <nav class="nav-mobile" class:active={isScrolled}>
                 <button on:click={logoClick} class="menu">
@@ -214,6 +213,7 @@
 
             &-desktop {
                 display: none;
+                text-decoration: none;
                 @media (min-width: $desktop) {
                     display: flex;
                     align-items: center;

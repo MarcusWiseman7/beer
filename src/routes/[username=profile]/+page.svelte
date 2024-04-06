@@ -6,6 +6,10 @@
     import WHead from '$lib/components/WHead.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
+    import WReview from '$lib/components/WReview.svelte';
+    import WDropdown from '$lib/components/WDropdown.svelte';
+    import WButton from '$lib/components/WButton.svelte';
+    import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
 
     // props
     export let data: UserPageData;
@@ -13,11 +17,18 @@
     // data
     let moreReviews = true;
     let fetchingReviews = false;
+    let visibleReviewsCount = 3;
+    const dropdownOptions = [
+        { label: 'Profile', action: 'goToSettings' },
+        { label: 'Logout', action: 'logout' },
+        { label: 'Share Profile', action: 'share' },
+    ];
 
     // computed
     $: seo = data?.page?.seo;
     $: profile = data?.user;
     $: reviews = data?.reviews;
+    $: reviewsBeers = reviews.map((review) => review.beer);
     $: myProfilePage = !!($myProfile && $myProfile._id === profile?._id);
     $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
     $: translationReplacements = [{ key: 'username', value: data?.username }];
@@ -102,6 +113,22 @@
         }
     };
 
+    const onDropdownSelect = (event: CustomEvent): void => {
+        const { action } = event.detail;
+        console.log(`Action from dropdown: ${action}`);
+        if (action === 'logout') {
+            console.log('Performing logout...');
+            logout();
+        }
+        if (action === 'share') {
+            console.log('Performing share...');
+        }
+    };
+
+    const showReviews = (): void => {
+        visibleReviewsCount = reviews.length;
+    };
+
     onMount(() => {
         // just to see what we have to work with...
         console.log('profile page data :>> ', data);
@@ -113,72 +140,87 @@
 <div class="page">
     <div class="page-top">
         <WBack />
+        {#if myProfilePage}
+            <WDropdown options={dropdownOptions} on:select={onDropdownSelect} />
+        {/if}
     </div>
 
     {#if profile}
         <div class="page-hero">
             <div class="page-hero__image">
-                <div class="image">
+                <div class="image image--is-rounded">
                     <img src={noAvatarImg} alt={'profile @' + profile.username} />
                 </div>
             </div>
             <div class="page-hero__content">
                 <h1 class="page-hero__content__title">{profile.displayName}</h1>
-                <h2 class="page-hero__content__subtitle">
-                    @{profile.username}
-                </h2>
                 <p class="page-hero__content__description">
-                    Welcome to my profile. I plenty beer every day am I can share it with my fellas to your fellas and
-                    everybody who loves beer same as me.
+                    {profile.displayName} also known as @{profile.username} has -- posts “so fucking lot!”. 🔥 He is quite
+                    famous look at his -- likes 👍 and {reviews?.length} and more reviews 📝. Follow him and follow his journey
+                    of the wounded soldier.
                 </p>
             </div>
-            {#if myProfilePage}
-                <div class="log-out">
-                    <button type="submit" class="logout" on:click={() => logout()}>Logout</button>
+        </div>
+    {/if}
+
+    {#if reviews}
+        <section class="section gap--0">
+            <h2 class="section-title">Last reviews</h2>
+            <div class="section-content">
+                {#each reviews.slice(0, visibleReviewsCount) as review, index}
+                    <WReview {review} user={profile} type={index === visibleReviewsCount - 1 ? 'no-border' : ''} />
+                {/each}
+            </div>
+            {#if visibleReviewsCount < reviews.length}
+                <div class="section-footer row row--center">
+                    <WButton on:click={showReviews} modifiers={['third', 'sm']}>
+                        <span class="text">Show More</span>
+                    </WButton>
                 </div>
             {/if}
-        </div>
+        </section>
+    {/if}
+
+    {#if reviews}
+        <section class="section">
+            <h2 class="section-title">Last drinked beers</h2>
+            <WHorizontalScroller items={reviewsBeers} />
+        </section>
     {/if}
 </div>
 
 <style lang="scss">
-    .profile {
-        position: relative;
-        display: flex;
-        gap: 28px;
-
-        &__image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 170px;
-            position: relative;
-            border-radius: 3px;
-            overflow: hidden;
-            background-color: var(--body);
+    .page {
+        &-hero {
+            &__content {
+                padding-bottom: 28px;
+                // border-bottom: 1px solid var(--border);
+            }
         }
-
-        // &__title {
-        //     width: 100%;
-        // }
-
-        // &__name {
-        //     font-weight: 600;
-        //     font-size: 26px;
-        //     line-height: 26px;
-        //     margin-bottom: 15px;
-        // }
-
-        // &__description {
-        //     font-weight: 400;
-        //     font-size: 16px;
-        //     line-height: 25px;
-        //     color: var(--text-3);
-        // }
     }
-    .log-out {
-        position: absolute;
-        top: 0;
-        right: 20px;
+
+    .section {
+        &-content,
+        &-footer {
+            margin: 0 -28px;
+        }
+        &-footer {
+            position: relative;
+            margin-top: -28px;
+
+            &:after {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 140px;
+                position: absolute;
+                bottom: 100%;
+                left: 0;
+                right: 0;
+                z-index: 2;
+                background: var(--page);
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0) 20%, var(--page) 80%);
+            }
+        }
     }
 </style>

@@ -13,7 +13,7 @@
 
     $: imageDims = {
         height: size === 'big' ? 160 : 112,
-        width: size === 'big' ? 248 : 186,
+        width: size === 'big' ? 248 : 200,
     };
 
     // data
@@ -30,27 +30,28 @@
     const stockPic = () => {
         return stockPhotos[Math.floor(Math.random() * stockPhotos.length)];
     };
-    const cardClick = (): void => {
-        if (item?._id && !dragging) goto('/discover/beer/' + item._id);
-    };
-    const breweryClick = (): void => {
-        const id = item.brewery?._id;
-        if (id) goto('/discover/brewery/' + id);
-    };
+
+    let cardUrl = item?._id ? `/discover/beer/${item._id}` : '';
+    let breweryUrl = item?.brewery?._id ? `/discover/brewery/${item.brewery._id}` : '';
 </script>
 
 {#if item}
-    <div class={`card card--${size}`} on:click={cardClick}>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- <a href={'/discover/brewery/' + id} class={`breweryBox breweryBox--${type}`}></a> -->
+    <div class={`card card--${size}`}>
         <!-- image -->
-        <div class="card__image">
+        <a href={cardUrl} class="card__image">
             <CldImage src={stockPic()} alt="stock pic" height={imageDims.height} width={imageDims.width} />
-        </div>
+        </a>
 
         <!-- content -->
         <div class="card__content">
             <!-- name/title -->
             {#if item.beerName}
-                <h3 class="card__content__title">{item.beerName} {item.degrees} °</h3>
+                <a href={cardUrl} class="link">
+                    <h3 class="card__content__title">{item.beerName} {item.degrees} °</h3>
+                </a>
             {/if}
 
             <!-- style -->
@@ -61,7 +62,7 @@
             <!-- info row -->
             <div class="card__content__info">
                 {#if item.brewery?._id}
-                    <div on:click|stopPropagation={breweryClick}>
+                    <a href={breweryUrl} class="link link--no-decoration">
                         <WPill>
                             <svelte:fragment slot="image">
                                 {#if item.brewery.logo}
@@ -77,27 +78,7 @@
 
                             <svelte:fragment slot="title">{item.brewery.name}</svelte:fragment>
                         </WPill>
-                    </div>
-                {/if}
-
-                <!-- TODO: maybe remove code and make it dry, so same position as on small wCard -->
-                <!-- {#if size === 'big' && item.averageRating}
-                    <WPill type="rating">
-                        <svelte:fragment slot="image">
-                            <img src={star_src} alt="Star" />
-                        </svelte:fragment>
-                        <svelte:fragment slot="title">{item.averageRating}</svelte:fragment>
-                        <svelte:fragment slot="info">3 reviews</svelte:fragment>
-                    </WPill>
-                {/if} -->
-
-                {#if item?.brewery?.location}
-                    <WPill type="location">
-                        <svelte:fragment slot="image">
-                            <img src={cz_src} width="28" alt="Flag" />
-                        </svelte:fragment>
-                        <svelte:fragment slot="title">{item.brewery.location}</svelte:fragment>
-                    </WPill>
+                    </a>
                 {/if}
             </div>
         </div>
@@ -127,12 +108,12 @@
         cursor: pointer;
         border: 1px solid var(--c-card-border);
         border-radius: 12px;
+        width: 100%;
 
         &__image {
             position: relative;
             width: 100%;
             height: 112px;
-            min-height: 112px;
 
             &:before {
                 content: '';
@@ -149,12 +130,6 @@
                 top: 0;
                 width: 100%;
                 height: 50%;
-            }
-
-            img {
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
             }
         }
 

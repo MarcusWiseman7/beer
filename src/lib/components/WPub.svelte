@@ -46,6 +46,7 @@
 
         &__image {
             max-width: 50px;
+            flex-shrink: 0;
         }
     }
 </style>
