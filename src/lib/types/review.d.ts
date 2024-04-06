@@ -5,17 +5,9 @@ import type { TUser } from './user';
 // TODO add google maps
 type GoogleMapsLocation = {};
 
-export type TNewReview = {
-    picURL?: string;
-    picPublicId?: string;
-    beer?: ObjectId;
-    brewery?: ObjectId;
-    tempBeer?: string;
-    tempBrewery?: string;
-    reviewer?: ObjectId;
-    rating: number;
-    location?: GoogleMapsLocation;
-    notes?: string;
+export type TServingStyle = {
+    _id: ObjectId;
+    name: string;
 }
 
 export type TReview = {
@@ -25,12 +17,14 @@ export type TReview = {
     location?: GoogleMapsLocation;
     rating: number;
     notes?: string;
+    servingStyle?: TServingStyle | ObjectId;
     date?: Date;
     dateCreated: Date;
-    beer: TBeer;
+    beer: TBeer | ObjectId;
+    brewery?: TBrewery | ObjectId;
     tempBeer?: {
-        beerName: string;
-        breweryName: string;
+        beerName?: string;
+        breweryName?: string;
     };
-    reviewer: TUser;
+    reviewer: TUser | ObjectId;
 }

@@ -4,7 +4,7 @@
     export let activeLabel: boolean = false;
 </script>
 
-<div class="pill {`pill--${type}`} {activeLabel ? 'active' : ''}">
+<div class="pill {`pill--${type}`} {activeLabel ? 'active' : ''}" on:click>
     {#if hasImage}
         <div class="pill__image">
             <slot name="image" />

@@ -12,6 +12,13 @@ export type TBeerCategory = {
     color?: string;
 }
 
+export type TTempBeer = {
+    beerName: string;
+    breweryName: string;
+    review: TReview | ObjectId;
+    brewery?: TBrewery | ObjectId;
+}
+
 export type TBeer = {
     _id: ObjectId;
     dateCreated: Date;
@@ -34,4 +41,5 @@ export type TBeer = {
     averageRating?: number;
     usersWhoLike: TUser[];
     reviews: TReview[];
+    updateAverageRating: (rating: number) => void;
 }

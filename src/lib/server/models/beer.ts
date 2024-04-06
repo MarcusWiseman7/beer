@@ -23,6 +23,15 @@ const beerSchema = new Schema<TBeer>(
         averageRating: { type: Number, default: 0 },
         usersWhoLike: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+    },
+    {
+        methods: {
+            updateAverageRating(newRating) {
+                this.totalNumberOfRatings = (this.totalNumberOfRatings || 0) + 1;
+                this.sumOfAllRatings = (this.sumOfAllRatings || 0) + newRating;
+                this.averageRating = Math.round(((this.sumOfAllRatings || newRating) / this.totalNumberOfRatings) * 10) / 10;
+            }
+        }
     }
 );
 

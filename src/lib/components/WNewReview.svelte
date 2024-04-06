@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { TBrewery } from '$lib/types/brewery';
     import type { TBeer } from '$lib/types/beer';
-    import type { TNewReview } from '$lib/types/review';
+    import type { TReview, TServingStyle } from '$lib/types/review';
     import { newReviewModal, myProfile } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
-    import { debounce } from 'lodash';
-    import { onDestroy } from 'svelte';
+    import { debounce, isObject } from 'lodash';
+    import { onDestroy, onMount } from 'svelte';
     import { setAppMessage } from '$lib/helpers';
     import brewery_src from '$lib/assets/icons/post/brewery.svg';
     import beer_src from '$lib/assets/icons/post/beer.svg';
@@ -17,6 +17,7 @@
     import CloseIcon from '$lib/components/icons/review/close.svelte';
     import WButton from './WButton.svelte';
     import WPill from './WPill.svelte';
+    import type { ObjectId } from 'mongoose';
 
     // data
     let step = 1;
@@ -26,28 +27,24 @@
     let searchResultsBrewery: TBrewery[] = [];
     let isBreweryDropdownVisible = false;
     let isBeerDropdownVisible = false;
-    const review: TNewReview = {
+    let review: Partial<TReview> = {
         rating: 0,
         reviewer: $myProfile?._id,
-        tempBeer: '',
-        tempBrewery: '',
+        tempBeer: {
+            beerName: '',
+            breweryName: '',
+        },
+        servingStyle: undefined,
     };
-
-    const emojis = ['🤮', '😟', '😌', '😊', '🤩'];
-    const descriptions = ['Blegh', 'Meh', 'Chill', 'Great', 'Excellent'];
-
-    let activeOption = 1;
-    const options = [
-        { id: 1, label: 'Draft' },
-        { id: 2, label: 'Bottle' },
-        { id: 3, label: 'Can' },
-    ];
+    let servingStyles: TServingStyle[];
+    const RATING_EMOJIS = ['🤮', '😟', '😌', '😊', '🤩'];
+    const RATING_DESCRIPTIONS = ['Blegh', 'Meh', 'Chill', 'Great', 'Excellent'];
 
     // computed
+    $: hasCompleteBeer = review.beer || (review.tempBeer?.beerName && review.tempBeer.breweryName);
     $: canSubmit =
-        (step === 1 && (review.beer || (review.tempBeer && review.tempBrewery))) ||
-        (step === 2 && review?.reviewer && review.rating && (review.beer || (review.tempBeer && review.tempBrewery)));
-    $: description = descriptions[review.rating - 1] || 'Hmmm...';
+        (step === 1 && hasCompleteBeer) || (step === 2 && review?.reviewer && review.rating && hasCompleteBeer);
+    $: description = (review.rating && RATING_DESCRIPTIONS[review.rating - 1]) || 'Hmmm...';
 
     // methods
     const close = (): void => {
@@ -133,23 +130,37 @@
         }
     };
     const selectBrewery = (brewery: TBrewery): void => {
-        review.brewery = brewery._id;
-        review.tempBrewery = brewery.name;
+        review = {
+            ...review,
+            brewery: brewery._id,
+            tempBeer: {
+                ...review.tempBeer,
+                breweryName: brewery.name,
+            },
+        };
         isBreweryDropdownVisible = false;
 
         fetchBeersFromBrewery();
     };
     const selectBeer = (beer: TBeer): void => {
-        review.beer = beer._id;
-        review.tempBeer = beer.beerName;
+        review = {
+            ...review,
+            beer: beer._id,
+            tempBeer: {
+                ...review.tempBeer,
+                beerName: beer.beerName,
+            },
+        };
         isBeerDropdownVisible = false;
     };
     const toggleBreweryDropdown = (): void => {
-        if (review.brewery || review.tempBrewery) {
+        if (review.brewery || review.tempBeer?.breweryName) {
             delete review.brewery;
             delete review.beer;
-            review.tempBrewery = '';
-            review.tempBeer = '';
+            review.tempBeer = {
+                beerName: '',
+                breweryName: '',
+            };
         } else {
             isBreweryDropdownVisible = !isBreweryDropdownVisible;
         }
@@ -157,7 +168,10 @@
     const toggleBeerDropdown = (): void => {
         if (review.beer || review.tempBeer) {
             delete review.beer;
-            review.tempBeer = '';
+            review.tempBeer = {
+                ...review.tempBeer,
+                beerName: '',
+            };
         } else {
             isBeerDropdownVisible = !isBeerDropdownVisible;
         }
@@ -200,7 +214,11 @@
 
             const formData = new FormData();
             Object.entries(review).forEach((r) => {
-                formData.append(r[0], r[1] as string);
+                if (isObject(r[1])) {
+                    formData.append(r[0], JSON.stringify(r[1]));
+                } else {
+                    formData.append(r[0], r[1]);
+                }
             });
 
             const response = await fetch('/api/review', {
@@ -209,8 +227,10 @@
             });
 
             if (response.ok) {
-                const review = await response.json();
-                console.log('review :>> ', review);
+                // TODO remove this, only for testing...
+                const testReview = await response.json();
+                console.log('Response from POST new review :>> ', testReview);
+
                 removeImage();
                 close();
                 setAppMessage({
@@ -237,10 +257,23 @@
             });
         }
     };
-    const selectOption = (id: number): void => {
-        activeOption = id;
+    const selectServingStyle = (id: ObjectId): void => {
+        review.servingStyle = id;
+    };
+    const fetchServingStyles = async (): Promise<void> => {
+        try {
+            const response = await fetch('/api/servingStyles');
+            if (response.ok) {
+                servingStyles = await response.json();
+            }
+        } catch (err) {
+            console.error('Error fetching serving styles :>> ', err);
+        }
     };
 
+    onMount(() => {
+        fetchServingStyles();
+    });
     onDestroy(() => {
         removeImage();
     });
@@ -277,6 +310,7 @@
                                     <!-- Svelte is focused on accessiblilty -->
                                     <!-- so they mention here that screenreaders already say that an image is an image/picture similar... -->
                                     <!-- they want a more descriptive "alt" -->
+                                    <!-- Also, this can't be good for SEO, right? -->
                                     <img class="icon" src={whitePicture_src} alt="picture" />
                                     <small>+ Add</small>
                                     <input type="file" accept="image/*" on:change={handleFileUpload} />
@@ -293,7 +327,7 @@
                                     <input
                                         placeholder="Find Brewery"
                                         autocomplete="off"
-                                        bind:value={review.tempBrewery}
+                                        bind:value={review.tempBeer.breweryName}
                                         on:input={(event) => search(event, 'brewery')}
                                         on:blur={() =>
                                             setTimeout(() => {
@@ -302,12 +336,12 @@
                                     />
                                 </div>
                                 <button
-                                    on:click={toggleBreweryDropdown}
-                                    class="btn {review.brewery || review.tempBrewery ? 'remove' : 'add'}"
+                                    on:click={() => toggleBreweryDropdown()}
+                                    class="btn {review.brewery || review.tempBeer?.breweryName ? 'remove' : 'add'}"
                                 >
                                     <span class="plus">
                                         <PlusIcon
-                                            stroke={review.brewery || review.tempBrewery
+                                            stroke={review.brewery || review.tempBeer?.breweryName
                                                 ? 'var(--main-light)'
                                                 : 'var(--text-2)'}
                                         />
@@ -334,10 +368,10 @@
                                 <div class="input">
                                     <img src={beer_src} alt="Beer" height="18px" tabindex="-1" />
                                     <input
-                                        disabled={!review.brewery && !review.tempBrewery}
+                                        disabled={!review.brewery && !review.tempBeer?.breweryName}
                                         placeholder="Find Beer"
                                         autocomplete="off"
-                                        bind:value={review.tempBeer}
+                                        bind:value={review.tempBeer.beerName}
                                         on:input={(event) => search(event, 'beer')}
                                         on:focus={() => checkForPrefill()}
                                         on:blur={() =>
@@ -347,12 +381,12 @@
                                     />
                                 </div>
                                 <button
-                                    on:click={toggleBeerDropdown}
-                                    class="btn {review.beer || review.tempBeer ? 'remove' : 'add'}"
+                                    on:click={() => toggleBeerDropdown()}
+                                    class="btn {review.beer || review.tempBeer?.beerName ? 'remove' : 'add'}"
                                 >
                                     <span class="plus">
                                         <PlusIcon
-                                            stroke={review.beer || review.tempBeer
+                                            stroke={review.beer || review.tempBeer?.beerName
                                                 ? 'var(--main-light)'
                                                 : 'var(--text-2)'}
                                         />
@@ -383,9 +417,9 @@
                     <div class="emoji-container">
                         <h3 class="description">Taste emotion: "{description}"</h3>
                         <div class="emojis">
-                            {#each emojis as e, i}
+                            {#each RATING_EMOJIS as e, i}
                                 <button
-                                    class="emoji {i === review.rating - 1 ? 'active' : ''}"
+                                    class="emoji {review.rating && i === review.rating - 1 ? 'active' : ''}"
                                     on:click={() => (review.rating = i + 1)}
                                 >
                                     {e}
@@ -395,24 +429,28 @@
                         <input type="range" min="1" max="5" bind:value={review.rating} class="slider" />
                     </div>
 
-                    <div class="options-container">
-                        <h3 class="description">Serving style</h3>
-                        <div class="options">
-                            <!-- TODO: choose correct icon and pass to activeLabel acti clas -->
-                            {#each options as { id, label }}
-                                <WPill
-                                    type="rating"
-                                    activeLabel={activeOption === id}
-                                    on:click={() => selectOption(id)}
-                                >
-                                    <svelte:fragment slot="image">
-                                        <img src={beer_src} alt="Beer" tabindex="-1" />
-                                    </svelte:fragment>
-                                    <svelte:fragment slot="title">{label}</svelte:fragment>
-                                </WPill>
-                            {/each}
+                    {#if servingStyles}
+                        <div class="options-container">
+                            <h3 class="description">Serving style</h3>
+                            <div class="options">
+                                <!-- TODO patrikkkkkkkkkk: choose correct icon -->
+                                {#each servingStyles as { _id, name }}
+                                    <WPill
+                                        type="rating"
+                                        activeLabel={review.servingStyle === _id}
+                                        on:click={() => selectServingStyle(_id)}
+                                    >
+                                        <svelte:fragment slot="image">
+                                            <img src={beer_src} alt="Beer" tabindex="-1" />
+                                        </svelte:fragment>
+                                        <svelte:fragment slot="title">
+                                            <span class="serving-style">{name}</span>
+                                        </svelte:fragment>
+                                    </WPill>
+                                {/each}
+                            </div>
                         </div>
-                    </div>
+                    {/if}
                 {:else}
                     <div class="success">thx</div>
                 {/if}
@@ -719,6 +757,10 @@
                         border-color: var(--main-color);
                         transition: var(--main-transition);
                     }
+                }
+
+                .serving-style {
+                    text-transform: capitalize;
                 }
             }
         }

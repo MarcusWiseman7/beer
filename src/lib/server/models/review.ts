@@ -8,6 +8,7 @@ const reviewSchema = new Schema<TReview>(
         location: { type: Object },
         rating: { type: Number, required: true },
         notes: { type: String, trim: true },
+        servingStyle: { type: Schema.Types.ObjectId, ref: 'ServingStyle' },
         date: { type: Date },
         dateCreated: { type: Date, default: Date.now },
         beer: { type: Schema.Types.ObjectId, ref: 'Beer' },
