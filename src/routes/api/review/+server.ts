@@ -3,7 +3,7 @@ import Review from '$lib/server/models/review';
 import type { TReview } from '$lib/types/review';
 import type { HydratedDocument } from 'mongoose';
 import type { RequestHandler } from './$types';
-import type { TTempBeer } from '$lib/types/beer';
+import type { TBeer, TTempBeer } from '$lib/types/beer';
 import TempBeer from '$lib/server/models/tempBeer';
 import Brewery from '$lib/server/models/brewery';
 
@@ -20,28 +20,31 @@ export const POST: RequestHandler = async ({ request }): Promise<Response> => {
             reviewData[pair[0]] = pair[1];
         }
     }
+
+    const beer = reviewData.beer && await Beer.findOne({ _id: reviewData.beer });
     
     // check if beer in DB
-    if (reviewData.beer) {
-        const beer = await Beer.findOne({ _id: reviewData.beer });
-        
+    if (beer) {
         if (beer) {
             // beer exists so remove temp shit
             delete reviewData.tempBeer;
             delete reviewData.brewery;
             
-            beer.updateAverageRating(reviewData.rating);
-            await beer.save();
         } else {
             // beer not in DB, remove unknown id
             delete reviewData.beer;
         }
     }
-
+    
     const review: HydratedDocument<TReview> = new Review(reviewData);
     await review.save();
     
-    if (!reviewData.beer) {
+    if (beer) {
+        beer.reviews.push(review._id);
+        beer.updateAverageRating(review.rating);
+        
+        await beer.save();
+    } else {
         const newTempBeerData = {
             ...reviewData.tempBeer,
             review: review._id,

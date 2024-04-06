@@ -76,7 +76,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        z-index: 200;
+        z-index: var(--z-nav-mobile);
     }
 
     nav {

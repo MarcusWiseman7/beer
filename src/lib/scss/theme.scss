@@ -59,6 +59,12 @@
     --main-dark: #000000;
     --main-border-radius: 8px;
     --main-transition: 0.2s linear;
+
+    --z-loader: 99;
+    --z-new-review: 80;
+    --z-app-message: 50;
+    --z-nav-mobile: 40;
+
     @include lightTheme;
     // @media (prefers-color-scheme: light) {
     // }

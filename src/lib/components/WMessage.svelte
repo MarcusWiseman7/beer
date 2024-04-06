@@ -19,7 +19,7 @@
         position: absolute;
         bottom: 40px;
         left: 40px;
-        z-index: 50;
+        z-index: var(--z-app-message);
         padding: 8px 32px;
         font-weight: 600;
         color: #fff;

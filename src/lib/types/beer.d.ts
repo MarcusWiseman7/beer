@@ -40,6 +40,6 @@ export type TBeer = {
     totalNumberOfRatings?: number;
     averageRating?: number;
     usersWhoLike: TUser[];
-    reviews: TReview[];
+    reviews: TReview[] | ObjectId[];
     updateAverageRating: (rating: number) => void;
 }

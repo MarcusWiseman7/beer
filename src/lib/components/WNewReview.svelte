@@ -2,7 +2,7 @@
     import type { TBrewery } from '$lib/types/brewery';
     import type { TBeer } from '$lib/types/beer';
     import type { TReview, TServingStyle } from '$lib/types/review';
-    import { newReviewModal, myProfile } from '$lib/stores';
+    import { newReviewModal, myProfile, loading } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
     import { debounce, isObject } from 'lodash';
@@ -204,6 +204,8 @@
         if (!canSubmit || (step === 1 && (step = 2))) return;
 
         try {
+            loading.set(true);
+
             if (imageFile) {
                 const upload = await uploadImage();
                 if (upload) {
@@ -255,6 +257,8 @@
                 type: 'error',
                 id: Date.now(),
             });
+        } finally {
+            loading.set(false);
         }
     };
     const selectServingStyle = (id: ObjectId): void => {
@@ -433,10 +437,10 @@
                         <div class="options-container">
                             <h3 class="description">Serving style</h3>
                             <div class="options">
-                                <!-- TODO patrikkkkkkkkkk: choose correct icon -->
+                                <!-- TODO patrikkkkkkkkkk: choose correct icon && correct type with "active" class -->
                                 {#each servingStyles as { _id, name }}
                                     <WPill
-                                        type="rating"
+                                        type="tag"
                                         activeLabel={review.servingStyle === _id}
                                         on:click={() => selectServingStyle(_id)}
                                     >
@@ -469,7 +473,7 @@
 
     .new-post {
         position: fixed;
-        z-index: 9999;
+        z-index: var(--z-new-review);
         left: 0;
         top: 0;
         width: 100%;
