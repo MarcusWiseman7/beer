@@ -66,3 +66,9 @@ export type TNav = {
     icon: ComponentType;
     href: string;
 }
+
+export type TRating = {
+    id: Number;
+    emoji: string;
+    value: string;
+}

@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { TReview } from '$lib/types/review';
-    import { myProfile } from '$lib/stores';
+    import type { TRating } from '$lib/types/pageData';
+    import { myProfile, rating } from '$lib/stores';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
     import WAvatar from '$lib/components/WAvatar.svelte';
     import { CldImage } from 'svelte-cloudinary';
@@ -9,12 +10,22 @@
     // props
     export let type: string = 'normal';
     export let review: TReview;
+
+    // methods
+    const getRatingById = (ratingId: number): { emoji: string; value: string } => {
+        let ratingValue: TRating | undefined;
+        const unsubscribe = rating.subscribe((values: TRating[]) => {
+            ratingValue = values.find((r) => r.id === ratingId);
+        });
+        unsubscribe(); // Immediately unsubscribe after finding the value
+        return ratingValue ? { emoji: ratingValue.emoji, value: ratingValue.value } : { emoji: '❓', value: 'Unknown' };
+    };
 </script>
 
 {#if review}
     <div class={`review review--${type}`}>
         {#if myProfile}
-            <div class="avatar image image--is-rounded">
+            <div class="review-avatar image image--is-rounded">
                 {#if review.reviewer?.avatarPublicId}
                     <WAvatar publicId={review.reviewer.avatarPublicId} size={48} />
                 {:else}
@@ -22,19 +33,21 @@
                 {/if}
             </div>
         {/if}
-        <div class="info">
-            <ul class="info-list">
+        <div class="review-content">
+            <ul class="user-list">
                 <li>{review.reviewer?.displayName}</li>
                 <li>{new Date(review.dateCreated).toLocaleDateString()}</li>
             </ul>
             <p class="bio">
                 {review.notes}
             </p>
-            <div class="info-pills">
+            <div class="pills">
                 {#if review?.rating}
                     <WPill>
-                        <svelte:fragment slot="image">⭐️</svelte:fragment>
-                        <svelte:fragment slot="title">rated by {review.rating}x stars</svelte:fragment>
+                        <svelte:fragment slot="image">{getRatingById(review.rating).emoji}</svelte:fragment>
+                        <svelte:fragment slot="title">
+                            Taste: "{getRatingById(review.rating).value}"
+                        </svelte:fragment>
                     </WPill>
                 {/if}
                 {#if review?.location}
@@ -44,7 +57,7 @@
                     </WPill>
                 {/if}
             </div>
-            <div class="photos">
+            <div class="images">
                 {#if review.picPublicId}
                     <div class="image">
                         <CldImage src={review.picPublicId} alt="Review captured image" height="" width="" />
@@ -61,22 +74,21 @@
         flex-flow: row;
         gap: 12px;
         border-bottom: 1px solid var(--border);
-        padding: 28px;
-
-        &:first-child {
-            padding-top: 16px;
-        }
+        padding: 28px 8px;
 
         &--no-border {
             border: none;
         }
 
-        .avatar {
+        &-avatar {
             max-width: 48px;
         }
 
-        .info {
-            &-list {
+        &-content {
+            display: flex;
+            flex-direction: column;
+
+            .user-list {
                 display: flex;
                 align-items: center;
                 flex-flow: row wrap;
@@ -97,16 +109,27 @@
                     }
                 }
             }
-
-            &-pills {
+            .pills {
                 display: flex;
+                flex-flow: row;
                 gap: 8px;
                 margin-top: 12px;
             }
-        }
 
-        .photos {
-            // TODO: add styles
+            .images {
+                margin-top: 12px;
+                display: flex;
+                flex-flow: row;
+                overflow: hidden;
+                max-width: 100%;
+                gap: 4px;
+
+                .image {
+                    max-width: 80px;
+                    border-radius: 4px;
+                    overflow: hidden;
+                }
+            }
         }
     }
 </style>

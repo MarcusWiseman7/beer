@@ -27,10 +27,9 @@
         border-radius: 30px;
         border: 1px solid var(--c-pill-border);
         background-color: var(--c-pill-bg);
-        height: 28px;
-        padding: 2px 16px 2px 2px;
+        height: 32px;
+        padding: 0 16px 0 8px;
         transition: var(--main-transition);
-        gap: 8px;
 
         &__image {
             border-radius: 50%;

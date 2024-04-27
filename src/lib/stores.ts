@@ -2,7 +2,7 @@ import { readable, writable } from 'svelte/store';
 import type { TBeer } from './types/beer';
 import type { TUser } from './types/user';
 import type { Message } from './types/message';
-import type { TNav } from './types/pageData';
+import type { TNav, TRating } from './types/pageData';
 
 /**
  * ICONS
@@ -31,6 +31,14 @@ export const nav = readable<TNav[]>([
     { name: 'home', icon: Home__SvelteComponent_, href: '/' },
     { name: 'discover', icon: Discover__SvelteComponent_, href: '/discover' },
     { name: 'profile', icon: Profile__SvelteComponent_, href: '' },
+]);
+
+export const rating = readable<TRating[]>([
+    { id: 1, emoji: '🤮', value: 'Blegh' },
+    { id: 2, emoji: '😟', value: 'Meh' },
+    { id: 3, emoji: '😌', value: 'Chill' },
+    { id: 4, emoji: '😊', value: 'Great' },
+    { id: 5, emoji: '🤩', value: 'Excellent' },
 ]);
 
 /**
