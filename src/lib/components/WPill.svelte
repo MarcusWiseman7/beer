@@ -95,23 +95,26 @@
 
         &--brewery {
             padding: 0 12px 0 2px;
+            .pill__image {
+                width: 28px;
+            }
         }
 
-        // &--tag {
-        //     padding: 2px 16px;
-        //     height: 33px;
+        &--tag {
+            padding: 2px 16px;
+            height: 33px;
 
-        //     &:hover,
-        //     &.active {
-        //         border-color: var(--main-color);
-        //         transition: var(--main-transition);
-        //         cursor: pointer;
-        //     }
+            &:hover,
+            &.active {
+                border-color: var(--main-color);
+                transition: var(--main-transition);
+                cursor: pointer;
+            }
 
-        //     .pill__title {
-        //         margin: 0;
-        //         font-weight: 400;
-        //     }
-        // }
+            .pill__title {
+                margin: 0;
+                font-weight: 400;
+            }
+        }
     }
 </style>

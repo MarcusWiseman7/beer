@@ -1,11 +1,12 @@
 <script lang="ts">
-    import stone1_src from '$lib/assets/icons/login/signup1.svg';
-    import stone2_src from '$lib/assets/icons/login/signup2.svg';
-    import people_src from '$lib/assets/icons/login/people.svg';
+    import type { IPageData } from '$lib/types/pageData';
     import WBack from '$lib/components/WBack.svelte';
     import WSignup from '$lib/components/WSignup.svelte';
     import WHead from '$lib/components/WHead.svelte';
-    import type { IPageData } from '$lib/types/pageData';
+    import WTitleTextImg from '$lib/components/dummies/WTitleTextImg.svelte';
+    import stone1_src from '$lib/assets/icons/login/signup1.svg';
+    import stone2_src from '$lib/assets/icons/login/signup2.svg';
+    import people_src from '$lib/assets/icons/login/people.svg';
 
     // props
     export let data: IPageData;
@@ -29,17 +30,14 @@
         <img src={stone2_src} alt="stone" />
     </div>
 </div>
-<div class="info-wrapper">
-    <span class="info-wrapper__small"> Story begins </span>
-    <h2 class="info-wrapper__title">Raise a Glass and Join the Craft Beer Revolution</h2>
-    <p class="info-wrapper__text">
-        Joining "Find-Brews" is a great way to connect with other beer enthusiasts and expand your knowledge of
-        different brews.
-    </p>
-    <div class="info-wrapper__icon">
-        <img src={people_src} alt="" style="margin: 0 auto;" />
-    </div>
-</div>
+
+<WTitleTextImg
+    type={'login'}
+    subtitle={'Story begins'}
+    title={'Raise a Glass and Join the Craft Beer Revolution'}
+    text={"Joining 'Find-Brews' is a great way to connect with other beer enthusiasts and expand your knowledge of different brews."}
+    image_src={people_src}
+/>
 
 <style lang="scss">
     .form-wrapper {

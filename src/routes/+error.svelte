@@ -1,6 +1,7 @@
 <script>
     import WButton from '../lib/components/WButton.svelte';
     import { page } from '$app/stores';
+    import WTitleTextImg from '$lib/components/dummies/WTitleTextImg.svelte';
 
     const errorContents = {
         404: {
@@ -35,16 +36,13 @@
     };
 </script>
 
-<div class="info-wrapper">
-    <span class="info-wrapper__small">{$page.error?.message}</span>
-    <h1 class="info-wrapper__title">{content.title}</h1>
-    <p class="info-wrapper__text">{content.message}</p>
-    <div class="info-wrapper__icon">
+<WTitleTextImg type={'error'} subtitle={$page.error?.message} title={content.title} text={content.message}>
+    <svelte:fragment>
         <WButton on:click={mailto('error 500')} modifiers={['primary', 'lg', 'w100']}>
             <span class="text">Report A Bug</span>
         </WButton>
         {#if content.showBackButton}
-            <a href="/" class="button--primary button--lg button--w100">Back to the Home</a>
+            <a href="/" class="button--primary button--lg">Back to the Home</a>
         {/if}
-    </div>
-</div>
+    </svelte:fragment>
+</WTitleTextImg>

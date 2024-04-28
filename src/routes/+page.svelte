@@ -47,7 +47,7 @@
 
 <style lang="scss">
     .popular {
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
 
     .top {

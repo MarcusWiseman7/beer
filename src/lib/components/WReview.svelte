@@ -74,7 +74,7 @@
         flex-flow: row;
         gap: 12px;
         border-bottom: 1px solid var(--border);
-        padding: 28px 8px;
+        padding: 28px;
 
         &--no-border {
             border: none;
