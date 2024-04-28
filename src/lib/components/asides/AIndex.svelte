@@ -5,6 +5,7 @@
     import WTag from '$lib/components/WTag.svelte';
     import { page } from '$app/stores';
     import { CldImage } from 'svelte-cloudinary';
+    import search_src from '$lib/assets/icons/components/search.svg';
 
     // data
     const pageData = $page.data;
@@ -24,7 +25,7 @@
             title: '🇨🇿 Zichov, Czech Republic',
         },
         {
-            title: '#Beers ',
+            title: '#Beers',
         },
         {
             title: '#IPA',
@@ -58,8 +59,13 @@
     ];
 </script>
 
-<AsideBlock>
-    <WInput />
+<div class="aside-block">
+    <div class="search">
+        <div class="search-icon">
+            <img src={search_src} width="17" height="18" alt="Beer mug" />
+        </div>
+        <input type="text" name="query" class="search-input" autocomplete="off" placeholder="Go on G..." />
+    </div>
     <div class="tags">
         {#each staticTags as item}
             <WTag>
@@ -67,7 +73,7 @@
             </WTag>
         {/each}
     </div>
-</AsideBlock>
+</div>
 
 <AsideBlock title="Local places 🇨🇿">
     <div class="pubs">
@@ -97,5 +103,22 @@
         display: flex;
         flex-flow: column;
         gap: 8px;
+    }
+
+    .search {
+        display: flex;
+        align-items: center;
+        background-color: var(--page);
+        border-radius: var(--main-border-radius);
+        margin-top: 12px;
+
+        &-icon {
+            padding: 0 12px;
+        }
+
+        input {
+            border: none;
+            padding: 0;
+        }
     }
 </style>
