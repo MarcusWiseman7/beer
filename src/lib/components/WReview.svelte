@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { TReview } from '$lib/types/review';
     import type { TRating } from '$lib/types/pageData';
-    import { myProfile, rating } from '$lib/stores';
+    import { myProfile, ratingTaste } from '$lib/stores';
     import noAvatarImg from '$lib/assets/images/no-avatar.png';
     import WAvatar from '$lib/components/WAvatar.svelte';
     import { CldImage } from 'svelte-cloudinary';
@@ -14,10 +14,10 @@
     // methods
     const getRatingById = (ratingId: number): { emoji: string; value: string } => {
         let ratingValue: TRating | undefined;
-        const unsubscribe = rating.subscribe((values: TRating[]) => {
+        const unsubscribe = ratingTaste.subscribe((values: TRating[]) => {
             ratingValue = values.find((r) => r.id === ratingId);
         });
-        unsubscribe(); // Immediately unsubscribe after finding the value
+        unsubscribe();
         return ratingValue ? { emoji: ratingValue.emoji, value: ratingValue.value } : { emoji: '❓', value: 'Unknown' };
     };
 </script>

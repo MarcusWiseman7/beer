@@ -33,7 +33,7 @@ export const nav = readable<TNav[]>([
     { name: 'profile', icon: Profile__SvelteComponent_, href: '' },
 ]);
 
-export const rating = readable<TRating[]>([
+export const ratingTaste = readable<TRating[]>([
     { id: 1, emoji: '🤮', value: 'Blegh' },
     { id: 2, emoji: '😟', value: 'Meh' },
     { id: 3, emoji: '😌', value: 'Chill' },

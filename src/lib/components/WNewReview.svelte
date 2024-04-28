@@ -2,7 +2,8 @@
     import type { TBrewery } from '$lib/types/brewery';
     import type { TBeer } from '$lib/types/beer';
     import type { TReview, TServingStyle } from '$lib/types/review';
-    import { newReviewModal, myProfile, loading } from '$lib/stores';
+    import type { TRating } from '$lib/types/pageData';
+    import { newReviewModal, myProfile, loading, ratingTaste } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
     import { debounce, isObject } from 'lodash';
@@ -37,14 +38,15 @@
         servingStyle: undefined,
     };
     let servingStyles: TServingStyle[];
-    const RATING_EMOJIS = ['🤮', '😟', '😌', '😊', '🤩'];
-    const RATING_DESCRIPTIONS = ['Blegh', 'Meh', 'Chill', 'Great', 'Excellent'];
+    // const RATING_EMOJIS = ['🤮', '😟', '😌', '😊', '🤩'];
+    // const RATING_DESCRIPTIONS = ['Blegh', 'Meh', 'Chill', 'Great', 'Excellent'];
 
     // computed
     $: hasCompleteBeer = review.beer || (review.tempBeer?.beerName && review.tempBeer.breweryName);
     $: canSubmit =
         (step === 1 && hasCompleteBeer) || (step === 2 && review?.reviewer && review.rating && hasCompleteBeer);
-    $: description = (review.rating && RATING_DESCRIPTIONS[review.rating - 1]) || 'Hmmm...';
+    // $: description = (review.rating && RATING_DESCRIPTIONS[review.rating - 1]) || 'Hmmm...';
+    $: description = review.rating ? $ratingTaste.find((r) => r.id === review.rating).value : 'Hmmm...';
 
     // methods
     const close = (): void => {
@@ -421,12 +423,12 @@
                     <div class="emoji-container">
                         <h3 class="description">Taste emotion: "{description}"</h3>
                         <div class="emojis">
-                            {#each RATING_EMOJIS as e, i}
+                            {#each $ratingTaste as { id, emoji }}
                                 <button
-                                    class="emoji {review.rating && i === review.rating - 1 ? 'active' : ''}"
-                                    on:click={() => (review.rating = i + 1)}
+                                    class="emoji {review.rating === id ? 'active' : ''}"
+                                    on:click={() => (review.rating = id)}
                                 >
-                                    {e}
+                                    {emoji}
                                 </button>
                             {/each}
                         </div>
