@@ -1,8 +1,11 @@
 <script lang="ts">
+    import type { TRating } from '$lib/types/pageData';
+    import { ratingTaste } from '$lib/stores';
     import AsideBlock from '$lib/components/AsideBlock.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
     import WButton from '$lib/components/WButton.svelte';
     import WAvatar from '$lib/components/WAvatar.svelte';
+    import WInput from '$lib/components/WInput.svelte';
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
     import { myProfile } from '$lib/stores';
@@ -63,9 +66,25 @@
         if (!$myProfile) goto('/login');
         else alert('Add modal to PUT details');
     };
-
-    console.log('discover page data in aside :>> ', $page.data.brewery);
 </script>
+
+{#if pagePath == 'discover'}
+    <AsideBlock title="Filter ✏️">
+        <ul class="detail-list">
+            <li>
+                <strong>By taste:</strong>
+                {#each $ratingTaste as rating}
+                    <WInput type="checkbox">
+                        <label for={rating.value}>
+                            <input type="checkbox" name={rating.value} id={'id-' + rating.id} />
+                            <span>{rating.value} {rating.emoji}</span>
+                        </label>
+                    </WInput>
+                {/each}
+            </li>
+        </ul>
+    </AsideBlock>
+{/if}
 
 {#if pagePath == 'beer'}
     <AsideBlock title="Beer Details">

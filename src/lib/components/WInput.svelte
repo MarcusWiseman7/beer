@@ -3,9 +3,12 @@
     export let label: string = '';
     export let errorMsg: string = '';
     export let activeLabel: boolean = false;
+    export let type: string = '';
 </script>
 
-<div class={`w-input ${activeLabel ? 'w-input--activeLabel' : ''} ${errorMsg ? 'w-input--error' : ''}`}>
+<div
+    class={`w-input w-input--${type} ${activeLabel ? 'w-input--activeLabel' : ''} ${errorMsg ? 'w-input--error' : ''}`}
+>
     {#if label}
         <label for={id} tabindex="-1">
             <slot name="icon" />
@@ -55,6 +58,12 @@
         }
 
         &--error {
+        }
+
+        // types
+        &--checkbox {
+            display: flex;
+            align-items: center;
         }
 
         // sizes

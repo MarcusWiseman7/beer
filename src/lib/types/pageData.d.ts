@@ -47,6 +47,10 @@ export interface BreweryPageData extends IPageData {
     id: ObjectId;
 }
 
+export interface DiscoverPageData extends IPageData {
+    topBeers?: TBeer[];
+}
+
 export interface BlogPageData extends IPageData {
     blogs: BlogPost[];
 }

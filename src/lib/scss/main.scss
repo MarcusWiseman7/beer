@@ -36,6 +36,8 @@ input {
     border-radius: var(--main-border-radius);
     padding: 0 12px;
     outline: none;
+
+    // sizes
     &--lg {
         min-height: 60px;
     }
@@ -45,6 +47,24 @@ input {
     &--sm {
         min-height: 32px;
     }
+
+    // types
+    &[type='checkbox'] {
+        width: 20px;
+        height: 20px;
+        border-radius: var(--main-border-radius);
+        transition: var(--main-transition);
+    
+        @media (hover: hover) {
+            &:hover,
+            &:focus {
+                border-color: var(--main-color);
+                transition: var(--main-transition);
+                cursor: pointer;
+            }
+        }
+    }
+
 }
 
 input[type='range'] {

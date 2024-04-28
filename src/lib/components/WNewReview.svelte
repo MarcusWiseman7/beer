@@ -38,15 +38,12 @@
         servingStyle: undefined,
     };
     let servingStyles: TServingStyle[];
-    // const RATING_EMOJIS = ['🤮', '😟', '😌', '😊', '🤩'];
-    // const RATING_DESCRIPTIONS = ['Blegh', 'Meh', 'Chill', 'Great', 'Excellent'];
 
     // computed
     $: hasCompleteBeer = review.beer || (review.tempBeer?.beerName && review.tempBeer.breweryName);
     $: canSubmit =
         (step === 1 && hasCompleteBeer) || (step === 2 && review?.reviewer && review.rating && hasCompleteBeer);
-    // $: description = (review.rating && RATING_DESCRIPTIONS[review.rating - 1]) || 'Hmmm...';
-    $: description = review.rating ? $ratingTaste.find((r) => r.id === review.rating).value : 'Hmmm...';
+    $: description = review.rating ? $ratingTaste.find((r) => r.id === review.rating)?.value || 'Hmmm...' : 'Hmmm...';
 
     // methods
     const close = (): void => {
