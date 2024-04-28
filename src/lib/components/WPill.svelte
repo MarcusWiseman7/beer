@@ -1,6 +1,7 @@
 <script lang="ts">
     export let type: string = 'normal';
     export let hasImage: Boolean = true;
+    export let hasInfo: Boolean = false;
     export let activeLabel: boolean = false;
 </script>
 
@@ -15,9 +16,11 @@
         <slot name="title" />
     </div>
 
-    <div class="pill__info">
-        <slot name="info" />
-    </div>
+    {#if hasInfo}
+        <div class="pill__info">
+            <slot name="info" />
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -28,8 +31,9 @@
         border: 1px solid var(--c-pill-border);
         background-color: var(--c-pill-bg);
         height: 32px;
-        padding: 0 16px 0 8px;
+        padding: 0 12px;
         transition: var(--main-transition);
+        gap: 8px;
 
         &__image {
             border-radius: 50%;
@@ -38,7 +42,7 @@
             align-items: center;
             overflow: hidden;
             height: 28px;
-            width: 28px;
+            max-width: 28px;
 
             > svg {
                 height: 28px;
@@ -69,23 +73,10 @@
         }
 
         &--rating {
-            .pill__title {
-                // max-width: 100px;
-                margin: 0 16px 0 2px;
-                font-weight: 600;
-            }
-        }
-
-        &--rating-fixed {
-            background: var(--main-light);
-            color: #3c3737;
-            border: 1px solid #dddddd;
-            height: 26px;
             padding: 0 8px;
-            gap: 0;
+            gap: 8px;
             .pill__title {
                 font-weight: 700;
-                margin-left: 6px;
             }
             .pill__image {
                 width: auto;
@@ -102,21 +93,25 @@
             }
         }
 
-        &--tag {
-            padding: 2px 16px;
-            height: 33px;
-
-            &:hover,
-            &.active {
-                border-color: var(--main-color);
-                transition: var(--main-transition);
-                cursor: pointer;
-            }
-
-            .pill__title {
-                margin: 0;
-                font-weight: 400;
-            }
+        &--brewery {
+            padding: 0 12px 0 2px;
         }
+
+        // &--tag {
+        //     padding: 2px 16px;
+        //     height: 33px;
+
+        //     &:hover,
+        //     &.active {
+        //         border-color: var(--main-color);
+        //         transition: var(--main-transition);
+        //         cursor: pointer;
+        //     }
+
+        //     .pill__title {
+        //         margin: 0;
+        //         font-weight: 400;
+        //     }
+        // }
     }
 </style>

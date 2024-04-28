@@ -63,7 +63,7 @@
             <div class="card__content__info">
                 {#if item.brewery?._id}
                     <a href={breweryUrl} class="link link--no-decoration">
-                        <WPill>
+                        <WPill type="brewery">
                             <svelte:fragment slot="image">
                                 {#if item.brewery.logo}
                                     <CldImage
@@ -85,7 +85,7 @@
 
         {#if item.averageRating}
             <div class="rating-pill">
-                <WPill type="rating-fixed">
+                <WPill type="rating">
                     <svelte:fragment slot="image">
                         <img src={star_src} alt="Star" />
                     </svelte:fragment>
