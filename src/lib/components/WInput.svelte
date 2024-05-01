@@ -64,6 +64,11 @@
         &--checkbox {
             display: flex;
             align-items: center;
+
+            label {
+                display: block;
+                width: 100%;
+            }
         }
 
         // sizes

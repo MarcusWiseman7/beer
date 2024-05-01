@@ -5,7 +5,7 @@
     import WSocials from '$lib/components/WSocials.svelte';
     import WButton from '$lib/components/WButton.svelte';
     import WAvatar from '$lib/components/WAvatar.svelte';
-    import WInput from '$lib/components/WInput.svelte';
+    import WCheckbox from '$lib/components/WCheckbox.svelte';
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
     import { myProfile } from '$lib/stores';
@@ -70,19 +70,31 @@
 
 {#if pagePath == 'discover'}
     <AsideBlock title="Filter ✏️">
-        <ul class="detail-list">
-            <li>
-                <strong>By taste:</strong>
-                {#each $ratingTaste as rating}
-                    <WInput type="checkbox">
-                        <label for={rating.value}>
-                            <input type="checkbox" name={rating.value} id={'id-' + rating.id} />
-                            <span>{rating.value} {rating.emoji}</span>
-                        </label>
-                    </WInput>
-                {/each}
-            </li>
-        </ul>
+        <div class="flex column gap--200">
+            <ul class="detail-list">
+                <li>
+                    <h6 class="subtitle">By taste:</h6>
+                    <ul>
+                        {#each $ratingTaste as rating}
+                            <li>
+                                <WCheckbox type="check" value={rating.value}></WCheckbox>
+                            </li>
+                        {/each}
+                    </ul>
+                </li>
+                <!-- .. -->
+                <br />
+                <li>
+                    <h6 class="subtitle">Local:</h6>
+                    <ul>
+                        <li>
+                            <WCheckbox type="check" toggle={true} value="Show only local beers"></WCheckbox>
+                        </li>
+                    </ul>
+                </li>
+                <br />
+            </ul>
+        </div>
     </AsideBlock>
 {/if}
 
@@ -196,6 +208,12 @@
 
 <style lang="scss">
     .detail-list {
+        padding-left: 10px;
+        .subtitle {
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
         li {
             &:not(&:last-child) {
                 margin-bottom: 8px;
