@@ -18,6 +18,15 @@ export const load: PageServerLoad = async ({ }) => {
         .populate<{ brewery: TBrewery; }>('brewery')
         .orFail()
         .exec();
+    
+    const newBeers: TBeer[] = await Beer
+        .find({ tempBeer: false })
+        .sort({ createdAt: -1 })  
+        .limit(6)                 
+        .select(beerSelect)
+        .populate<{ brewery: TBrewery; }>('brewery')
+        .orFail()
+        .exec();
 
     const blogsQuery = `*[_type == 'post'] {
         ...,
@@ -26,5 +35,5 @@ export const load: PageServerLoad = async ({ }) => {
     }`;
     const blogPosts: BlogPost[] = await sanity.fetch(blogsQuery);
 
-    return { data: JSON.stringify({ topBeers, blogPosts, page }) };
+    return { data: JSON.stringify({ topBeers, newBeers, blogPosts, page }) };
 }

@@ -184,7 +184,7 @@
     {#if reviews}
         <section class="section">
             <h2 class="section-title">Last drinked beers</h2>
-            <WHorizontalScroller items={reviewsBeers} />
+            <WHorizontalScroller items={reviewsBeers} showRating={true} />
         </section>
     {/if}
 </div>

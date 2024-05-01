@@ -10,6 +10,7 @@
     export let item: TBeer;
     export let size: string = 'normal';
     export let dragging: boolean = false;
+    export let showRating: boolean = true;
 
     $: imageDims = {
         height: size === 'big' ? 160 : 112,
@@ -83,7 +84,7 @@
             </div>
         </div>
 
-        {#if item.averageRating}
+        {#if item.averageRating && showRating}
             <div class="rating-pill">
                 <WPill type="rating">
                     <svelte:fragment slot="image">

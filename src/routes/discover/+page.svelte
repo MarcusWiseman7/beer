@@ -60,9 +60,9 @@
             {#if data?.newBeers}
                 <div class="row">
                     <h2 class="top">Freshly on tap</h2>
-                    <a href="/" class="link">Show new beers ></a>
+                    <a href="/" class="link">New beers ></a>
                 </div>
-                <WHorizontalScroller items={data.newBeers} />
+                <WHorizontalScroller items={data.newBeers} showRating={true} />
             {/if}
         </div>
 
@@ -70,9 +70,9 @@
             {#if data?.topBeers}
                 <div class="row">
                     <h2 class="top">-🇨🇿- Local Beer</h2>
-                    <a href="/" class="link">Show Czech beers ></a>
+                    <a href="/" class="link">Czech beers ></a>
                 </div>
-                <WHorizontalScroller items={data.topBeers} />
+                <WHorizontalScroller items={data.topBeers} showRating={true} />
             {/if}
         </div>
 
@@ -82,7 +82,7 @@
                     <h2 class="top">Most rated beers</h2>
                     <a href="/" class="link">Show all ></a>
                 </div>
-                <WHorizontalScroller items={data.topBeers} />
+                <WHorizontalScroller items={data.topBeers} showRating={true} />
             {/if}
         </div>
     </div>
@@ -101,7 +101,7 @@
     .wrapper {
         display: flex;
         flex-direction: column;
-        gap: 40px;
+        gap: var(--gap-section-default);
         margin-top: 60px;
     }
 

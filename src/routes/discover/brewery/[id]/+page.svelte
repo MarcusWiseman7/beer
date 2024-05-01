@@ -93,7 +93,7 @@
         <section class="section">
             <h2 class="section-title">Top {brewery.name} Beers</h2>
             <!-- <WHorizontalScroller items={beers} /> -->
-            <div class="grid grid--2 grid--t--4 gap--100">
+            <div class="grid grid--2 grid--t--4 gap--150">
                 {#each beers as item}
                     <WCard {item} size="small" />
                 {/each}

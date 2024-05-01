@@ -8,6 +8,7 @@
 
     // props
     export let arrowsDisabled: boolean = false;
+    export let showRating: boolean = false;
     export let items: TBeer[];
 
     // data
@@ -132,7 +133,7 @@
         >
             {#each items as item}
                 <div class="scroller__item" style={`min-width: ${itemWidth}px`}>
-                    <WCard {item} dragging={drag} />
+                    <WCard {item} dragging={drag} {showRating} />
                 </div>
             {/each}
         </div>

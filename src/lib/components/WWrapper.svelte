@@ -1,4 +1,5 @@
 <script lang="ts">
+    // TODO: we don't need this component probably
     import type { TBeer } from '$lib/types/beer';
     import { goto } from '$app/navigation';
     import WButton from './WButton.svelte';

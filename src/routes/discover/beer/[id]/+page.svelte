@@ -91,7 +91,7 @@
     {#if data?.siblingBeers?.length}
         <section class="section">
             <h2 class="section-title">More beers from {beer.brewery?.name}</h2>
-            <div class="grid grid--2 grid--t--4 gap--100">
+            <div class="grid grid--2 grid--t--4 gap--150">
                 {#each data.siblingBeers as item}
                     <WCard {item} size="small" />
                 {/each}
