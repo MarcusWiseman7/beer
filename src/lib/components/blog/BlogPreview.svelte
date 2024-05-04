@@ -32,16 +32,17 @@
                 <span>{timeAgo(post.publishedAt || post._updatedAt)}</span>
             </h5>
             <p class="perex">
+                <!-- hahaha am sorry, I mean description, I really like this comunication in code  -->
                 <!-- Patrik, what the fuck is "perex"? -->
                 <!-- TODO add perex data -->
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's:
-                bit.ly/2kvf6yj
+                TODO: We need a blog post description, which we will use for meta description too... it will be short sumarization
             </p>
             <a href={`/blog/${post.slug.current}`} class="link">
                 {#if post.tags}
                     <ul class="categories">
                         {#each post.tags as tag}
                             <li>
+                                <!-- TODO: this is not working -->
                                 <WLocaleText text={tag.title} />
                             </li>
                         {/each}

@@ -4,6 +4,7 @@
     import WHead from '$lib/components/WHead.svelte';
     import SanityImage from '$lib/components/blog/SanityImage.svelte';
     import ContentBlocks from '$lib/components/blog/ContentBlocks.svelte';
+    import WBack from '$lib/components/WBack.svelte';
     import WPill from '$lib/components/WPill.svelte';
     import WSocials from '$lib/components/WSocials.svelte';
     import facebook_src from '$lib/assets/icons/social/facebook.svg';
@@ -34,6 +35,10 @@
 <WHead {seo} canonicalURL={`blog/${slug}`} {translationReplacements} />
 
 <div class="page">
+    <div class="page-top">
+        <WBack />
+    </div>
+
     {#if post?._id}
         <article>
             {#if post.mainImage}
@@ -54,13 +59,11 @@
                 </div>
                 <h1 class="page__title">{post.title}</h1>
                 <p class="page__perex">
-                    <!-- TODO add perex data -->
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's:
-                    bit.ly/2kvf6yj
+                    TODO: We need a blog post description, which we will use for meta description too
                 </p>
                 <div class="page__content">
                     <!-- parsed wysiwyg post body -->
-                    <ContentBlocks contentBlocks={post.body} />
+                    <ContentBlocks contentBlocks={post.body.en} />
                 </div>
                 <div class="page__author">
                     <div class="author">
@@ -133,7 +136,6 @@
         }
 
         &__content {
-            padding: 0 16px;
             font-size: 16px;
         }
 

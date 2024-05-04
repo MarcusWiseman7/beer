@@ -14,6 +14,7 @@
     $: isActive = (nav: TNav) =>
         nav.href === activeRoute ||
         (activeRoute.startsWith('/discover') && nav.name === 'discover') ||
+        (activeRoute.startsWith('/blog') && nav.name === 'blog') ||
         ((activeRoute.startsWith('/@') || activeRoute === '/login') && nav.name === 'profile');
 
     // methods

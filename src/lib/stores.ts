@@ -9,8 +9,8 @@ import type { TNav, TRating } from './types/pageData';
  */
 import Home__SvelteComponent_ from './assets/icons/nav/home.svelte';
 import Discover__SvelteComponent_ from './assets/icons/nav/discover.svelte';
-import Profile__SvelteComponent_
-    from './assets/icons/nav/profile.svelte';
+import Profile__SvelteComponent_ from './assets/icons/nav/profile.svelte';
+import Blog__SvelteComponent_ from './assets/icons/nav/blog.svelte';
 
 
 /**
@@ -31,6 +31,7 @@ export const nav = readable<TNav[]>([
     { name: 'home', icon: Home__SvelteComponent_, href: '/' },
     { name: 'discover', icon: Discover__SvelteComponent_, href: '/discover' },
     { name: 'profile', icon: Profile__SvelteComponent_, href: '' },
+    { name: 'blog', icon: Blog__SvelteComponent_, href: '/blog' },
 ]);
 
 export const ratingTaste = readable<TRating[]>([

@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import BlogPreview from '$lib/components/blog/BlogPreview.svelte';
     import WHead from '$lib/components/WHead.svelte';
+    import WBack from '$lib/components/WBack.svelte';
     import type { BlogPageData } from '$lib/types/pageData';
 
     // props
@@ -9,7 +10,7 @@
 
     // data
     $: seo = data?.page?.seo;
-    $: blogPosts = data?.blogs || [];
+    $: blogPosts = data?.blogPosts || [];
     $: translationReplacements = [];
 
     onMount(() => {
@@ -20,9 +21,21 @@
 <WHead {seo} canonicalURL="blog" {translationReplacements} />
 
 <div class="page">
-    <h1>Blog articles</h1>
+    <div class="page-top">
+        <WBack />
+    </div>
 
-    {#each blogPosts as post}
-        <BlogPreview {post} />
-    {/each}
+    {#if blogPosts}
+        <div class="blog-wrapper d-flex-column">
+            {#each blogPosts as post}
+                <BlogPreview {post} />
+            {/each}
+        </div>
+    {/if}
 </div>
+
+<style lang="scss">
+    .blog-wrapper {
+        gap: var(--gap-section-default);
+    }
+</style>

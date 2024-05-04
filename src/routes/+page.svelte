@@ -77,6 +77,6 @@
     .blog-wrapper {
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: var(--gap-section-default);
     }
 </style>
