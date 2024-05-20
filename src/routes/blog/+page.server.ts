@@ -10,9 +10,10 @@ export const load: PageServerLoad = async () => {
     // fetch blog posts
     const blogsQuery = `*[_type == 'post'] {
         ...,
-        "author": author->
+        "author": author->,
+        "tags": tags[]->
     }`;
     const blogPosts: BlogPost[] = await sanity.fetch(blogsQuery);
-    
+
     return { data: JSON.stringify({ blogPosts, page }) };
-}
+};

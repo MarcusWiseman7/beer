@@ -10,9 +10,10 @@ export const load: PageServerLoad = async ({ params }) => {
     const { slug } = params;
     const postQuery = `*[_type == 'post' && slug.current == "${slug}"] {
         ...,
-        "author": author->
+        "author": author->,
+        "tags": tags[]->
     }[0]`;
     const post: BlogPost = await sanity.fetch(postQuery);
 
     return { data: JSON.stringify({ post, slug, page }) };
-}
+};
