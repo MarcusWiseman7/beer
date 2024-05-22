@@ -31,19 +31,22 @@
                 {/if}
                 <span>{timeAgo(post.publishedAt || post._updatedAt)}</span>
             </h5>
-            <p class="perex">
-                <!-- hahaha am sorry, I mean description, I really like this comunication in code  -->
-                <!-- Patrik, what the fuck is "perex"? -->
-                <!-- TODO add perex data -->
-                TODO: We need a blog post description, which we will use for meta description too... it will be short sumarization
+            <p class="description">
+                <!-- TODO: this is ugly -->
+                {#each post.body.en.slice(0, 1) as bodyPart}
+                    {bodyPart.children[0].text
+                        .split(/(?<=[.!?])\s/)
+                        .slice(0, 1)
+                        .join(' ')}
+                {/each}
             </p>
             <a href={`/blog/${post.slug.current}`} class="link">
                 {#if post.tags}
                     <ul class="categories">
-                        {#each post.tags as tag}
+                        {#each post.tags.slice(0, 3) as tag}
                             <li>
-                                <!-- TODO: this is not working -->
-                                <WLocaleText text={tag.title} />
+                                <!-- TODO: Check this, set en -->
+                                <WLocaleText text={tag.title.en} />
                             </li>
                         {/each}
                     </ul>
@@ -105,6 +108,7 @@
         }
 
         &__content {
+            width: 100%;
             .name {
                 font-size: 14px;
                 font-weight: 400;
@@ -112,12 +116,13 @@
                 padding: 0 3px;
             }
 
-            .perex {
+            .description {
                 padding: 0 5px;
                 font-size: 14px;
                 line-height: 1.6;
                 margin-bottom: 12px;
                 color: var(--text);
+                margin-top: 2px;
             }
 
             .link {
@@ -149,7 +154,7 @@
                 .title {
                     position: absolute;
                     z-index: 1;
-                    bottom: 30px;
+                    bottom: 20px;
                     padding: 0 30px;
                     font-size: 32px;
                     font-weight: 700;
