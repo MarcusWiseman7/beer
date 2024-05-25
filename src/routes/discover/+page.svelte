@@ -1,7 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import type { DiscoverPageData } from '$lib/types/pageData';
-    import { ratingTaste } from '$lib/stores';
+    import { ratingTaste, asideQuery } from '$lib/stores';
+    import { page } from '$app/stores';
     import WBack from '$lib/components/WBack.svelte';
     import WHead from '$lib/components/WHead.svelte';
     import WTitleTextImg from '$lib/components/dummies/WTitleTextImg.svelte';
@@ -12,6 +13,7 @@
 
     // data
     let query = '';
+    let inputElement: HTMLInputElement;
     let beerResults: any[] = [];
 
     // props
@@ -20,6 +22,12 @@
     $: seo = data?.page?.seo;
     $: translationReplacements = [];
     $: capitalizeQuery = query ? query.charAt(0).toUpperCase() + query.slice(1) : '';
+
+    onMount(async () => {
+        $asideQuery = '';
+        query = $page.url.searchParams.get('q') || '';
+        await search();
+    });
 
     const search = async (): Promise<void> => {
         if (query) {
@@ -37,6 +45,7 @@
                 if (response.ok) {
                     const result = await response.json();
                     beerResults = result;
+                    inputElement.focus();
                     console.log('result :>> ', result);
                 }
             } catch (err) {
@@ -82,6 +91,7 @@
                 autocomplete="off"
                 on:input={handleInput}
                 bind:value={query}
+                bind:this={inputElement}
             />
         </div>
         <div class="search-queries">

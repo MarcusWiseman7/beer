@@ -2,9 +2,10 @@
     import { onMount } from 'svelte';
     import '../app.scss'; // global scss
     import type { TLayoutData } from '$lib/types/pageData';
-    import { appMessages, loading, myProfile, locale, newReviewModal } from '$lib/stores';
+    import { appMessages, loading, myProfile, locale, newReviewModal, asideQuery } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
+    import { debounce } from 'lodash';
     import AsideBlock from '$lib/components/AsideBlock.svelte';
     import WButton from '$lib/components/WButton.svelte';
     import WFooter from '$lib/components/WFooter.svelte';
@@ -22,6 +23,9 @@
     import foam_src from '$lib/assets/icons/layout/foam.svg';
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
     import search_src from '$lib/assets/icons/components/search.svg';
+
+    // data
+    let query = '';
 
     // props
     export let data: TLayoutData;
@@ -61,6 +65,10 @@
         isScrolled = scrollPosition > threshold;
     };
 
+    const handleInput = (event: Event) => {
+        $asideQuery = (event.target as HTMLInputElement)?.value;
+        debounce(() => goto(`/discover?q=${encodeURIComponent($asideQuery)}`), 500)();
+    };
     onMount(() => {
         console.log('myProfile :>> ', $myProfile);
     });
@@ -121,6 +129,8 @@
                             class="search-input"
                             autocomplete="off"
                             placeholder="Go on G..."
+                            on:input={handleInput}
+                            bind:value={$asideQuery}
                         />
                         <div class="search-icon">
                             <img src={search_src} width="29" height="30" alt="Beer mug" />

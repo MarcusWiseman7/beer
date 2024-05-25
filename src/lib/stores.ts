@@ -23,6 +23,7 @@ export let loading = writable<boolean>(false);
 export let newReviewModal = writable<boolean>(false);
 export let allBeers = writable<TBeer[]>([]);
 export let myProfile = writable<TUser | null>(null);
+export let asideQuery = writable<string>('');
 
 /**
  * READABLE EXPORTS
