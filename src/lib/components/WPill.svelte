@@ -30,7 +30,7 @@
         border-radius: 30px;
         border: 1px solid var(--c-pill-border);
         background-color: var(--c-pill-bg);
-        height: 32px;
+        height: 28px;
         padding: 0 12px;
         transition: var(--main-transition);
         gap: 8px;

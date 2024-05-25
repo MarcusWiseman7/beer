@@ -15,7 +15,8 @@
         background-color: var(--page);
         color: var(--c-text);
         border: 1px solid var(--border);
-        border-radius: var(--main-border-radius);
+        // border-radius: var(--main-border-radius);
+        border-radius: 30px;
         transition: var(--main-transition);
         max-width: 200px;
         padding: 6px 22px;

@@ -1,14 +1,22 @@
 <script lang="ts">
     export let modifiers: string[] = [];
     export let disabled = false;
+    export let href: string = '';
+    export let text: string = '';
 </script>
 
-<button class={modifiers.map((m) => 'button--' + m).join(' ')} on:click {disabled}>
-    <slot />
-</button>
+{#if href}
+    <a {href} class={modifiers.map((m) => 'button button--' + m).join(' ')} on:click {disabled}>
+        <span>{text}</span>
+    </a>
+{:else}
+    <button class={modifiers.map((m) => 'button button--' + m).join(' ')} on:click {disabled}>
+        <slot />
+    </button>
+{/if}
 
 <style lang="scss">
-    button {
+    .button {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -21,6 +29,10 @@
         &:disabled {
             cursor: not-allowed;
             opacity: 0.4;
+        }
+
+        &.a {
+            text-decoration: none;
         }
     }
 

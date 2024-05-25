@@ -163,7 +163,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                min-width: 280px;
+                min-width: 260px;
             }
         }
         &-middle {
@@ -187,11 +187,12 @@
             display: none;
             padding: 0 20px;
             height: 100%;
-            width: 300px;
+            width: 320px;
             flex-shrink: 0;
             @media (min-width: $desktop-m) {
                 display: flex;
                 flex-flow: column;
+                gap: 20px;
             }
         }
     }

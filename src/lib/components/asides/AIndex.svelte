@@ -1,8 +1,6 @@
 <script lang="ts">
     import AsideBlock from '$lib/components/AsideBlock.svelte';
-    import WInput from '$lib/components/WInput.svelte';
-    import WPub from '$lib/components/WPub.svelte';
-    import WTag from '$lib/components/WTag.svelte';
+    import WButton from '$lib/components/WButton.svelte';
     import { page } from '$app/stores';
     import { CldImage } from 'svelte-cloudinary';
     import search_src from '$lib/assets/icons/components/search.svg';
@@ -10,74 +8,59 @@
     // data
     const pageData = $page.data;
 
-    console.log('home page data in aside :>> ', pageData);
-    const staticTags = [
-        {
-            title: '🔥 Discover with us',
-        },
-        {
-            title: 'Blog',
-        },
-        {
-            title: '🍺 Pilsner Urquell',
-        },
-        {
-            title: '🇨🇿 Zichov, Czech Republic',
-        },
-        {
-            title: '#Beers',
-        },
-        {
-            title: '#IPA',
-        },
-    ];
-    const pubs = [
-        {
-            title: 'NUBEERBAR',
-            image: '/stock/b6_k7y5gk',
-        },
-        {
-            title: 'Bad Flash Bar Krymská',
-            image: '/stock/b5_tpwqfg',
-        },
-        {
-            title: 'Pivovarský Klub Benedict long name',
-            image: '/stock/b4_xsn93f',
-        },
-        {
-            title: 'U Slovanské Lípy',
-            image: '/stock/b3_ytdxaa',
-        },
-        {
-            title: 'Medovinárna',
-            image: '/stock/b2_koxyps',
-        },
-        {
-            title: 'Pivotéka Zlý Časy',
-            image: '/stock/b1_y41vkg',
-        },
-    ];
+    console.log('aside data :>> ', pageData);
+    // const pubs = [
+    //     {
+    //         title: 'NUBEERBAR',
+    //         image: '/stock/b6_k7y5gk',
+    //     },
+    //     {
+    //         title: 'Bad Flash Bar Krymská',
+    //         image: '/stock/b5_tpwqfg',
+    //     },
+    //     {
+    //         title: 'Pivovarský Klub Benedict long name',
+    //         image: '/stock/b4_xsn93f',
+    //     },
+    //     {
+    //         title: 'U Slovanské Lípy',
+    //         image: '/stock/b3_ytdxaa',
+    //     },
+    //     {
+    //         title: 'Medovinárna',
+    //         image: '/stock/b2_koxyps',
+    //     },
+    //     {
+    //         title: 'Pivotéka Zlý Časy',
+    //         image: '/stock/b1_y41vkg',
+    //     },
+    // ];
 </script>
 
-<div class="aside-block">
+<AsideBlock modifiers={['basic']}>
     <div class="search">
-        <div class="search-icon">
-            <img src={search_src} width="17" height="18" alt="Beer mug" />
-        </div>
         <input type="text" name="query" class="search-input" autocomplete="off" placeholder="Go on G..." />
+        <div class="search-icon">
+            <img src={search_src} width="29" height="30" alt="Beer mug" />
+        </div>
     </div>
-    <div class="tags">
-        {#each staticTags as item}
-            <WTag>
-                <svelte:fragment slot="title">{item.title}</svelte:fragment>
-            </WTag>
-        {/each}
-    </div>
-</div>
+</AsideBlock>
 
-<AsideBlock title="Local places 🇨🇿">
+<AsideBlock>
+    <h3 class="fw-700">Register here!</h3>
+    <p>
+        Join 'Find-Brews' to connect with beer enthusiasts! Share photos and reviews with others, and discover new
+        brews.
+    </p>
+    <div class="mt-5">
+        <WButton href="/login" text="Sign up" modifiers={['primary', 'sm']}></WButton>
+    </div>
+</AsideBlock>
+
+<!-- TODO: add places, pubs -->
+<!-- TODO: show emoji of country and pubs by IP -->
+<!-- <AsideBlock title="Local places 🇨🇿">
     <div class="pubs">
-        <!-- TODO: show emoji of country and pubs by IP -->
         {#each pubs as item}
             <WPub>
                 <svelte:fragment slot="image">
@@ -89,14 +72,15 @@
             </WPub>
         {/each}
     </div>
-</AsideBlock>
+</AsideBlock> -->
 
 <style lang="scss">
     .tags {
         display: flex;
         flex-flow: row wrap;
         gap: 6px;
-        margin-top: 12px;
+        margin-top: 20px;
+        padding: 0 4px;
     }
 
     .pubs {
@@ -109,16 +93,21 @@
         display: flex;
         align-items: center;
         background-color: var(--page);
-        border-radius: var(--main-border-radius);
-        margin-top: 12px;
+        height: 52px;
 
         &-icon {
-            padding: 0 12px;
+            padding: 0 20px 0 0;
         }
 
         input {
             border: none;
-            padding: 0;
+            padding: 0 0 0 28px;
+            height: 100%;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        input::placeholder {
+            color: var(--text-3);
         }
     }
 </style>
