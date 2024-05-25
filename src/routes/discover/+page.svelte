@@ -128,6 +128,7 @@
                 padding: 0 16px;
             }
             input {
+                height: 52px;
                 border: none;
                 padding: 0;
             }

@@ -60,6 +60,7 @@
         const threshold = 100;
         isScrolled = scrollPosition > threshold;
     };
+
     onMount(() => {
         console.log('myProfile :>> ', $myProfile);
     });
@@ -111,14 +112,22 @@
         </div>
 
         <div class="layout-right">
-            <AsideBlock modifiers={['basic']}>
-                <div class="search">
-                    <input type="text" name="query" class="search-input" autocomplete="off" placeholder="Go on G..." />
-                    <div class="search-icon">
-                        <img src={search_src} width="29" height="30" alt="Beer mug" />
+            {#if pathname !== '/discover'}
+                <AsideBlock modifiers={['basic']}>
+                    <div class="search">
+                        <input
+                            type="text"
+                            name="query"
+                            class="search-input"
+                            autocomplete="off"
+                            placeholder="Go on G..."
+                        />
+                        <div class="search-icon">
+                            <img src={search_src} width="29" height="30" alt="Beer mug" />
+                        </div>
                     </div>
-                </div>
-            </AsideBlock>
+                </AsideBlock>
+            {/if}
             {#if $myProfile}
                 <!-- TODO: idea for logged user? last drinked beer? -->
             {:else}
