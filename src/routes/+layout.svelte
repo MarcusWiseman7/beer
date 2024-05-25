@@ -1,9 +1,12 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import '../app.scss'; // global scss
     import type { TLayoutData } from '$lib/types/pageData';
     import { appMessages, loading, myProfile, locale, newReviewModal } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
+    import AsideBlock from '$lib/components/AsideBlock.svelte';
+    import WButton from '$lib/components/WButton.svelte';
     import WFooter from '$lib/components/WFooter.svelte';
     import MainNavMobile from '$lib/components/MainNavMobile.svelte';
     import MainNavDesktop from '$lib/components/MainNavDesktop.svelte';
@@ -18,6 +21,7 @@
     import menu_src from '$lib/assets/icons/nav/menu.svg';
     import foam_src from '$lib/assets/icons/layout/foam.svg';
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
+    import search_src from '$lib/assets/icons/components/search.svg';
 
     // props
     export let data: TLayoutData;
@@ -56,6 +60,9 @@
         const threshold = 100;
         isScrolled = scrollPosition > threshold;
     };
+    onMount(() => {
+        console.log('myProfile :>> ', $myProfile);
+    });
 </script>
 
 <svelte:window on:scroll|passive={handleScroll} />
@@ -104,6 +111,28 @@
         </div>
 
         <div class="layout-right">
+            <AsideBlock modifiers={['basic']}>
+                <div class="search">
+                    <input type="text" name="query" class="search-input" autocomplete="off" placeholder="Go on G..." />
+                    <div class="search-icon">
+                        <img src={search_src} width="29" height="30" alt="Beer mug" />
+                    </div>
+                </div>
+            </AsideBlock>
+            {#if $myProfile}
+                <!-- TODO: idea for logged user? last drinked beer? -->
+            {:else}
+                <AsideBlock>
+                    <h3 class="fw-700">Register here!</h3>
+                    <p>
+                        Join 'Find-Brews' to connect with beer enthusiasts! Share photos and reviews with others, and
+                        discover new brews.
+                    </p>
+                    <div class="mt-5">
+                        <WButton href="/login" text="Sign up" modifiers={['primary', 'sm']}></WButton>
+                    </div>
+                </AsideBlock>
+            {/if}
             {#if asideComponent}
                 <svelte:component this={asideComponent} />
             {/if}
@@ -331,6 +360,28 @@
             border-top-right-radius: 30px;
             box-shadow: var(--box-border-shadow);
             padding: 28px;
+        }
+    }
+
+    .search {
+        display: flex;
+        align-items: center;
+        background-color: var(--page);
+        height: 52px;
+
+        &-icon {
+            padding: 0 20px 0 0;
+        }
+
+        input {
+            border: none;
+            padding: 0 0 0 28px;
+            height: 100%;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        input::placeholder {
+            color: var(--text-3);
         }
     }
 </style>

@@ -92,7 +92,6 @@
                         </li>
                     </ul>
                 </li>
-                <br />
             </ul>
         </div>
     </AsideBlock>

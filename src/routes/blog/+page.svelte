@@ -26,16 +26,16 @@
     </div>
 
     {#if blogPosts}
-        <div class="blog-wrapper d-flex-column">
-            {#each blogPosts as post}
-                <BlogPreview {post} />
-            {/each}
-        </div>
+        <section class="section section--feed">
+            <!-- <h2 class="section-title">All beer blog posts</h2> -->
+            <div class="section-content">
+                {#each blogPosts as post}
+                    <BlogPreview {post} />
+                {/each}
+            </div>
+        </section>
     {/if}
 </div>
 
 <style lang="scss">
-    .blog-wrapper {
-        gap: var(--gap-section-default);
-    }
 </style>

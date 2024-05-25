@@ -4,11 +4,10 @@
 </script>
 
 <div class={modifiers.map((m) => 'aside-block aside-block--' + m).join(' ')}>
-    {#if title}
-        <h3 class="aside-block__title">{title}</h3>
-    {/if}
-
     <div class="aside-block__info">
+        {#if title}
+            <h3 class="aside-block__title">{title}</h3>
+        {/if}
         <slot />
     </div>
 </div>
@@ -16,7 +15,7 @@
 <style lang="scss">
     .aside-block {
         &__title {
-            margin: 0 0 12px 2px;
+            margin: 0 0 0 2px;
         }
 
         &__info {

@@ -21,37 +21,40 @@
 
 <div class="page">
     {#if data?.topBeers}
-        <div>
+        <section class="section">
             <div class="row">
-                <h2>Top rated beer</h2>
+                <h2 class="section-title">Top rated Beer</h2>
                 <a href="/discover" class="link">Show all ></a>
             </div>
-            <WHorizontalScroller items={data.topBeers} showRating={false} />
-        </div>
+            <div class="section-content">
+                <WHorizontalScroller items={data.topBeers} showRating={false} />
+            </div>
+        </section>
     {/if}
 
     {#if data?.topBeers}
-        <div>
+        <section class="section">
             <div class="row">
-                <h2>New and popular</h2>
+                <h2 class="section-title">New and popular</h2>
             </div>
-            <WHorizontalScroller items={data.newBeers} showRating={true} />
-        </div>
+            <div class="section-content">
+                <WHorizontalScroller items={data.newBeers} showRating={true} />
+            </div>
+        </section>
     {/if}
 
     {#if data?.blogPosts}
-        <div>
+        <section class="section section--feed">
             <div class="row">
-                <h2>Blog articles</h2>
+                <h2 class="section-title">Blog articles</h2>
                 <a href="/blog" class="link">All Articles ></a>
             </div>
-
-            <div class="blog-wrapper">
+            <div class="section-content">
                 {#each data.blogPosts as post}
                     <BlogPreview {post} />
                 {/each}
             </div>
-        </div>
+        </section>
     {/if}
 </div>
 
@@ -67,16 +70,5 @@
         flex-flow: row wrap;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 16px;
-    }
-
-    .timeline {
-        margin: 40px 0 20px 0;
-    }
-
-    .blog-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: var(--gap-section-default);
     }
 </style>

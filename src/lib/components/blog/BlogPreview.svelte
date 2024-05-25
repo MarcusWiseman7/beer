@@ -87,7 +87,8 @@
         align-items: flex-start;
         gap: 20px;
         padding-bottom: 36px;
-        border-bottom: 1px solid var(--border);
+        padding-left: 28px;
+        padding-right: 28px;
 
         &:last-child {
             border: none;

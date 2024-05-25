@@ -67,6 +67,10 @@
 .page-hero {
     display: flex;
     gap: 28px;
+    
+    @media (min-width: $desktop) {
+        padding-bottom: 30px;
+    }
     // left column
     &__image {
         position: relative;
@@ -121,7 +125,7 @@
     margin-top: 30px;
     display: flex;
     flex-flow: column;
-    gap: 12px;
+    gap: 16px;
 
     &-title {
         font-weight: 600;
@@ -136,6 +140,24 @@
     &-footer {
 
     }
+    // Minus margin
+    &--feed {
+        .section-content {
+            margin: 0 -28px;
+            display: flex;
+            flex-flow: column;
+            gap: 40px;
+
+            > div {
+                padding-bottom: 28px;
+                border-bottom: 1px solid var(--border);
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+
 }
 
 
@@ -206,6 +228,7 @@ button {
 
 
 .row {
+    display: flex;
     align-items: center;
 
     // Align

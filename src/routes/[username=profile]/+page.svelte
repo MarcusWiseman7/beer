@@ -164,7 +164,7 @@
     {/if}
 
     {#if reviews}
-        <section class="section gap--0">
+        <section class="section section--feed">
             <h2 class="section-title">Last reviews</h2>
             <div class="section-content">
                 {#each reviews.slice(0, visibleReviewsCount) as review, index}
@@ -172,7 +172,7 @@
                 {/each}
             </div>
             {#if visibleReviewsCount < reviews.length}
-                <div class="section-footer row row--center">
+                <div class="section section--feed row row--center">
                     <WButton on:click={showReviews} modifiers={['third', 'sm']}>
                         <span class="text">Show More</span>
                     </WButton>
@@ -200,13 +200,8 @@
     }
 
     .section {
-        &-content,
-        &-footer {
-            margin: 0 -28px;
-        }
         &-footer {
             position: relative;
-            margin-top: -28px;
 
             &:after {
                 content: '';

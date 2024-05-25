@@ -1,14 +1,10 @@
 <script lang="ts">
-    import AsideBlock from '$lib/components/AsideBlock.svelte';
-    import WButton from '$lib/components/WButton.svelte';
     import { page } from '$app/stores';
-    import { CldImage } from 'svelte-cloudinary';
-    import search_src from '$lib/assets/icons/components/search.svg';
+    // import { CldImage } from 'svelte-cloudinary';
 
     // data
     const pageData = $page.data;
 
-    console.log('aside data :>> ', pageData);
     // const pubs = [
     //     {
     //         title: 'NUBEERBAR',
@@ -37,26 +33,6 @@
     // ];
 </script>
 
-<AsideBlock modifiers={['basic']}>
-    <div class="search">
-        <input type="text" name="query" class="search-input" autocomplete="off" placeholder="Go on G..." />
-        <div class="search-icon">
-            <img src={search_src} width="29" height="30" alt="Beer mug" />
-        </div>
-    </div>
-</AsideBlock>
-
-<AsideBlock>
-    <h3 class="fw-700">Register here!</h3>
-    <p>
-        Join 'Find-Brews' to connect with beer enthusiasts! Share photos and reviews with others, and discover new
-        brews.
-    </p>
-    <div class="mt-5">
-        <WButton href="/login" text="Sign up" modifiers={['primary', 'sm']}></WButton>
-    </div>
-</AsideBlock>
-
 <!-- TODO: add places, pubs -->
 <!-- TODO: show emoji of country and pubs by IP -->
 <!-- <AsideBlock title="Local places 🇨🇿">
@@ -81,33 +57,5 @@
         gap: 6px;
         margin-top: 20px;
         padding: 0 4px;
-    }
-
-    .pubs {
-        display: flex;
-        flex-flow: column;
-        gap: 8px;
-    }
-
-    .search {
-        display: flex;
-        align-items: center;
-        background-color: var(--page);
-        height: 52px;
-
-        &-icon {
-            padding: 0 20px 0 0;
-        }
-
-        input {
-            border: none;
-            padding: 0 0 0 28px;
-            height: 100%;
-            font-size: 16px;
-            font-weight: 500;
-        }
-        input::placeholder {
-            color: var(--text-3);
-        }
     }
 </style>

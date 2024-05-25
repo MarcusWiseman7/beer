@@ -25,14 +25,11 @@
         border-radius: var(--main-border-radius);
         font-size: 14px;
         background-color: var(--c-btn-default);
+        text-decoration: none;
 
         &:disabled {
             cursor: not-allowed;
             opacity: 0.4;
-        }
-
-        &.a {
-            text-decoration: none;
         }
     }
 

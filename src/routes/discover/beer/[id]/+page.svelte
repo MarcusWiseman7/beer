@@ -76,9 +76,9 @@
     {/if}
 
     {#if beer?.reviews}
-        <section class="section">
+        <section class="section section--feed">
             <h2 class="section-title">Last user's reviews</h2>
-            <div class="section__content">
+            <div class="section-content">
                 {#each beer.reviews as review}
                     <div class="review-holder">
                         <WReview {review} />
@@ -118,18 +118,5 @@
         font-weight: 600;
         font-size: 21px;
         line-height: 26px;
-    }
-
-    .reviews {
-        margin: 0 -28px;
-        .review-holder {
-            padding: 0 28px;
-            padding-bottom: 28px;
-            border-bottom: 1px solid var(--border);
-
-            &:last-child {
-                border: none;
-            }
-        }
     }
 </style>

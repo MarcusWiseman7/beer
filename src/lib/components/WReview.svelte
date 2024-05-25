@@ -73,8 +73,8 @@
         display: flex;
         flex-flow: row;
         gap: 12px;
-        border-bottom: 1px solid var(--border);
-        padding: 28px;
+        padding-left: 28px;
+        padding-right: 28px;
 
         &--no-border {
             border: none;
