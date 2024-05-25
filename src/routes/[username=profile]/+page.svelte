@@ -172,7 +172,7 @@
                 {/each}
             </div>
             {#if visibleReviewsCount < reviews.length}
-                <div class="section section--feed row row--center">
+                <div class="section section--feed row row--center mt-0">
                     <WButton on:click={showReviews} modifiers={['third', 'sm']}>
                         <span class="text">Show More</span>
                     </WButton>
