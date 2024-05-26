@@ -2,7 +2,7 @@
     import type { TReview } from '$lib/types/review';
     import type { TRating } from '$lib/types/pageData';
     import { myProfile, ratingTaste } from '$lib/stores';
-    import noAvatarImg from '$lib/assets/images/no-avatar.png';
+    import noavatar_src from '$lib/assets/images/no-avatar.png';
     import WAvatar from '$lib/components/WAvatar.svelte';
     import { CldImage } from 'svelte-cloudinary';
     import WPill from './WPill.svelte';
@@ -29,7 +29,7 @@
                 {#if review.reviewer?.avatarPublicId}
                     <WAvatar publicId={review.reviewer.avatarPublicId} size={48} />
                 {:else}
-                    <img src={noAvatarImg} alt="noavatar" />
+                    <img src={noavatar_src} alt="noavatar" />
                 {/if}
             </div>
         {/if}
@@ -82,11 +82,13 @@
 
         &-avatar {
             max-width: 48px;
+            flex-shrink: 0;
         }
 
         &-content {
             display: flex;
             flex-direction: column;
+            gap: 4px;
 
             .user-list {
                 display: flex;
@@ -111,7 +113,7 @@
             }
             .pills {
                 display: flex;
-                flex-flow: row;
+                flex-flow: row wrap;
                 gap: 8px;
                 margin-top: 12px;
             }

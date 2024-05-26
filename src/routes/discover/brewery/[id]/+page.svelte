@@ -71,9 +71,23 @@
             <div class="page-hero__image">
                 <div class="image">
                     {#if brewery.logo}
-                        <div class="logo">
-                            <CldImage src={brewery.logo} alt="Brewery logo" loading="eager" height="140" width="140" />
-                        </div>
+                        <!-- test image -->
+                        <CldImage
+                            src={brewery.logo}
+                            alt="Brewery logo"
+                            class="is-blured"
+                            loading="eager"
+                            height="60"
+                            width="60"
+                        />
+                        <CldImage
+                            src={brewery.logo}
+                            alt="Brewery logo"
+                            class="is-absolute"
+                            loading="eager"
+                            height="60"
+                            width="60"
+                        />
                     {:else}
                         <div class="icon">
                             <img src={noBreweryImg} alt="Brewery still" />

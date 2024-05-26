@@ -90,9 +90,12 @@
                 <button on:click={logoClick} class="menu">
                     <img src={menu_src} class="icon" alt="menu" height="24" width="24" />
                 </button>
-                <div class="user">
-                    <WAvatar publicId="/stock/b2_koxyps" size={33} />
-                </div>
+                <!-- TODO: connect link to profile and user picture -->
+                {#if $myProfile}
+                    <div class="user">
+                        <WAvatar publicId="/stock/b2_koxyps" size={33} />
+                    </div>
+                {/if}
             </nav>
         </div>
         <div class="layout-middle">
@@ -248,7 +251,8 @@
     .header {
         height: 150px;
         background-color: var(--body-m);
-        @media (min-width: $tablet) {
+
+        @media (min-width: $desktop) {
             background-color: transparent;
             position: relative;
             height: 180px;
@@ -331,9 +335,8 @@
         }
 
         h1 {
-            font-size: 24px;
-            line-height: 32px;
             margin-left: 20px;
+            color: initial;
         }
     }
 
@@ -367,7 +370,7 @@
         border-radius: 50%;
         background-color: var(--main-color);
         z-index: 1;
-        @media (min-width: $tablet) {
+        @media (min-width: $desktop) {
             display: none;
         }
     }
@@ -376,10 +379,10 @@
         position: relative;
         min-height: calc(100vh - 19rem);
         background-color: var(--page);
-        padding: 10px;
+        padding: 20px 15px 0;
         min-height: 100%;
 
-        @media (min-width: $tablet) {
+        @media (min-width: $desktop) {
             border-top-left-radius: 30px;
             border-top-right-radius: 30px;
             box-shadow: var(--box-border-shadow);

@@ -111,7 +111,7 @@
     {#if beerResults.length}
         <section class="section">
             <h2 class="section-title">
-                🔍 <span class="--main-color">{capitalizeQuery}</span> beers n breweries
+                🔍 <span class="color-primary">{capitalizeQuery}</span> beers n breweries
             </h2>
             <div class="section-content grid grid--2 grid--t--4 gap--150">
                 {#each beerResults as item}

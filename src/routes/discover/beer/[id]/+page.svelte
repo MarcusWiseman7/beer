@@ -35,16 +35,29 @@
     {#if beer}
         <div class="page-hero">
             <div class="page-hero__image">
-                <!-- TODO: to add beer image -->
+                <!-- TODO: to add beer image else  -->
                 <div class="image">
                     <!-- test image -->
                     <CldImage
                         src="beers/volt_eliasuv_ohen_fu5iqo"
                         alt="Beer logo"
+                        class="is-blured"
                         loading="eager"
-                        height="140"
-                        width="140"
+                        height="60"
+                        width="60"
                     />
+                    <CldImage
+                        src="beers/volt_eliasuv_ohen_fu5iqo"
+                        alt="Beer logo"
+                        class="is-absolute"
+                        loading="eager"
+                        height="60"
+                        width="60"
+                    />
+                    <!-- TODO: else no beer img -->
+                    <!-- <div class="icon">
+                        <img src={noBreweryImg} alt="Brewery" />
+                    </div> -->
                 </div>
             </div>
 
@@ -61,17 +74,6 @@
                     {beer.description ||
                         `Discover ${beer.beerName}, a ${beer.style} with ${beer.degrees}° from ${beer?.brewery?.name}. Read reviews, check ratings, and share your tasting notes on Find-Brews.com.`}
                 </p>
-
-                {#if beer.brewery}
-                    <div class="box">
-                        <WBreweryBox
-                            id={beer.brewery._id}
-                            text={beer.brewery.description}
-                            logoUrl={beer.brewery.logo}
-                            name={beer.brewery.name}
-                        />
-                    </div>
-                {/if}
             </div>
         </div>
     {/if}
@@ -85,6 +87,22 @@
                         <WReview {review} />
                     </div>
                 {/each}
+            </div>
+        </section>
+    {/if}
+
+    {#if beer.brewery}
+        <section class="section">
+            <h2 class="section-title">About Brewery</h2>
+            <div class="section-content">
+                <div class="box">
+                    <WBreweryBox
+                        id={beer.brewery._id}
+                        text={beer.brewery.description}
+                        logoUrl={beer.brewery.logo}
+                        name={beer.brewery.name}
+                    />
+                </div>
             </div>
         </section>
     {/if}
@@ -109,11 +127,6 @@
 </div>
 
 <style lang="scss">
-    .box {
-        margin-top: 8px;
-        padding-top: 16px;
-        border-top: 1px solid var(--border);
-    }
     .beer-posts-title {
         margin: 50px 0 24px 0;
         font-weight: 600;

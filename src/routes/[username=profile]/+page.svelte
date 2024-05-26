@@ -5,7 +5,7 @@
     import { setAppMessage } from '$lib/helpers';
     import WHead from '$lib/components/WHead.svelte';
     import WBack from '$lib/components/WBack.svelte';
-    import noAvatarImg from '$lib/assets/images/no-avatar.png';
+    import noavatar_src from '$lib/assets/images/no-avatar.png';
     import WReview from '$lib/components/WReview.svelte';
     import WDropdown from '$lib/components/WDropdown.svelte';
     import WButton from '$lib/components/WButton.svelte';
@@ -149,7 +149,7 @@
         <div class="page-hero">
             <div class="page-hero__image">
                 <div class="image image--is-rounded">
-                    <img src={noAvatarImg} alt={'profile @' + profile.username} />
+                    <img src={noavatar_src} alt={'profile @' + profile.username} />
                 </div>
             </div>
             <div class="page-hero__content">

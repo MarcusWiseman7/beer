@@ -44,7 +44,7 @@
                 {#if post.tags}
                     <ul class="categories">
                         {#each post.tags.slice(0, 3) as tag}
-                            <li>
+                            <li class="text-ellipsis">
                                 <!-- TODO: Check this, set en -->
                                 <WLocaleText text={tag.title.en} />
                             </li>
@@ -162,7 +162,7 @@
                 .categories {
                     width: 100%;
                     display: flex;
-                    justify-content: end;
+                    flex-flow: row wrap;
                     gap: 8px;
                     position: absolute;
                     top: 20px;
