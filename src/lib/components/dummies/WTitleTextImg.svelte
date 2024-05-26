@@ -8,15 +8,15 @@
 
 <div class={`info-wrapper info-wrapper--${type}`}>
     {#if subtitle}
-        <span class="info-wrapper__small">{subtitle}</span>
+        <span class="info-wrapper__small text--sm">{subtitle}</span>
     {/if}
     {#if title}
         <h1 class="info-wrapper__title">{title}</h1>
     {/if}
     {#if text}
-        <p class="info-wrapper__text">
+        <h4 class="info-wrapper__text">
             {text}
-        </p>
+        </h4>
     {/if}
     {#if image_src}
         <img src={image_src} alt="" style="margin: 0 auto;" />
@@ -33,17 +33,13 @@
         gap: 16px;
 
         &__small {
-            font-size: 16px;
             font-weight: 400;
         }
         &__title {
-            font-size: 26px;
-            line-height: 40px;
             font-weight: 900;
         }
         &__text {
-            font-size: 20px;
-            font-weight: 300;
+            font-weight: 400;
             line-height: 34px;
         }
         &__image {

@@ -25,13 +25,13 @@
             {/if}
         </div>
         <div class="article__content">
-            <h5 class="name">
+            <h5 class="name text--sm">
                 {#if post.author}
                     <span><span>@{post.author.name}</span> • </span>
                 {/if}
                 <span>{timeAgo(post.publishedAt || post._updatedAt)}</span>
             </h5>
-            <p class="description">
+            <p class="description text--md">
                 <!-- TODO: this is ugly -->
                 {#each post.body.en.slice(0, 1) as bodyPart}
                     {bodyPart.children[0].text
@@ -111,19 +111,15 @@
         &__content {
             width: 100%;
             .name {
-                font-size: 14px;
                 font-weight: 400;
                 color: var(--text-3);
                 padding: 0 3px;
             }
 
             .description {
-                padding: 0 5px;
-                font-size: 14px;
-                line-height: 1.6;
-                margin-bottom: 12px;
+                padding: 0 4px;
+                margin: 4px 0 12px 0;
                 color: var(--text);
-                margin-top: 2px;
             }
 
             .link {
@@ -157,7 +153,8 @@
                     z-index: 1;
                     bottom: 20px;
                     padding: 0 30px;
-                    font-size: 32px;
+                    font-size: 26px;
+                    line-height: 40px;
                     font-weight: 700;
                     color: var(--main-light);
                 }

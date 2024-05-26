@@ -68,6 +68,38 @@
 
     --gap-section-default: 40px;
 
+    /* font n family */
+    --font-primary: ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        Segoe UI,
+        Roboto,
+        Helvetica Neue,
+        Arial,
+        Noto Sans,
+        sans-serif,
+        Apple Color Emoji,
+        Segoe UI Emoji,
+        Segoe UI Symbol,
+        Noto Color Emoji;
+
+    /* set base values */
+    --text-base-size: 1em;
+    --text-scale-ratio: 1.025;
+    --heading-line-height: 1.25;
+    --body-line-height: 1.5;
+    
+    /* type scale */
+    --text-xs: calc(1em / (var(--text-scale-ratio) * var(--text-scale-ratio)));
+    --text-sm: calc(1em / var(--text-scale-ratio));
+    --text-md: calc(1em * var(--text-scale-ratio));
+    --text-lg: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xxl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xxxl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    
+
     @include lightTheme;
     // @media (prefers-color-scheme: light) {
     // }
@@ -76,8 +108,18 @@
     // }
 }
 
+
+@media (min-width: $desktop) {
+    :root {
+        --text-base-size: 1em;
+        --text-scale-ratio: 1.1;
+    }
+}
+
 html,
 body {
     background-color: var(--body);
     color: var(--text);
+    font-size: var(--text-base-size);
+    font-family: var(--font-primary);
 }

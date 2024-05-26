@@ -58,9 +58,6 @@
                     </WPill>
                 </div>
                 <h1 class="page__title">{post.title}</h1>
-                <p class="page__perex">
-                    TODO: We need a blog post description, which we will use for meta description too
-                </p>
                 <div class="page__content">
                     <!-- parsed wysiwyg post body -->
                     <ContentBlocks contentBlocks={post.body.en} />
@@ -126,13 +123,7 @@
             font-size: 32px;
             line-height: 46px;
             font-weight: 700;
-            margin-top: 16px;
-            padding: 0 3px;
-        }
-
-        &__perex {
-            margin: 16px 0;
-            padding: 0 3px;
+            margin: 16px 0 20px 0;
         }
 
         &__content {

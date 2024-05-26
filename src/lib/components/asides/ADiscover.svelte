@@ -69,11 +69,11 @@
 </script>
 
 {#if pagePath == 'discover'}
-    <AsideBlock title="Filter ✏️">
+    <AsideBlock>
         <div class="flex column gap--200">
             <ul class="detail-list">
                 <li>
-                    <h6 class="subtitle">By taste:</h6>
+                    <h4 class="subtitle">By taste:</h4>
                     <ul>
                         {#each $ratingTaste as rating}
                             <li>
@@ -85,7 +85,7 @@
                 <!-- .. -->
                 <br />
                 <li>
-                    <h6 class="subtitle">Local:</h6>
+                    <h4 class="subtitle">Local:</h4>
                     <ul>
                         <li>
                             <WCheckbox type="check" toggle={true} value="Show only local beers"></WCheckbox>
@@ -207,7 +207,8 @@
 
 <style lang="scss">
     .detail-list {
-        padding-left: 10px;
+        padding-left: 2px;
+        padding-bottom: 8px;
         .subtitle {
             margin-bottom: 12px;
             font-weight: 600;

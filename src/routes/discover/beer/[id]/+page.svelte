@@ -55,14 +55,15 @@
                         {beer.degrees}°
                     {/if}
                 </h1>
-                <small class="page-hero__content__subtitle">({beer.style})</small>
+                <small class="page-hero__content__subtitle text--sm">({beer.style})</small>
                 <!-- TODO: write generic beer style descriptions, for default -->
                 <p class="page-hero__content__description line-clamp">
-                    {beer.description || 'TODO: beer has no description'}
+                    {beer.description ||
+                        `Discover ${beer.beerName}, a ${beer.style} with ${beer.degrees}° from ${beer?.brewery?.name}. Read reviews, check ratings, and share your tasting notes on Find-Brews.com.`}
                 </p>
 
                 {#if beer.brewery}
-                    <div class="breweryBox-wrapper">
+                    <div class="box">
                         <WBreweryBox
                             id={beer.brewery._id}
                             text={beer.brewery.description}
@@ -108,8 +109,8 @@
 </div>
 
 <style lang="scss">
-    .breweryBox-wrapper {
-        margin-top: 16px;
+    .box {
+        margin-top: 8px;
         padding-top: 16px;
         border-top: 1px solid var(--border);
     }

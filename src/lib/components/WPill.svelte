@@ -12,7 +12,7 @@
         </div>
     {/if}
 
-    <div class="pill__title">
+    <div class="pill__title text-ellipsis text--sm">
         <slot name="title" />
     </div>
 
@@ -55,13 +55,7 @@
         }
 
         &__title {
-            font-size: 13px;
-            line-height: 20px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            // max-width: 100px;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--text);
         }
 

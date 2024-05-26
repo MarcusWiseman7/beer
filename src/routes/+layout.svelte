@@ -148,7 +148,7 @@
                         discover new brews.
                     </p>
                     <div class="mt-5">
-                        <WButton href="/login" text="Sign up" modifiers={['primary', 'sm']}></WButton>
+                        <WButton href="/login/" text="Sign up" modifiers={['primary', 'sm']}></WButton>
                     </div>
                 </AsideBlock>
             {/if}
@@ -300,6 +300,11 @@
                         height: 24px;
                         width: 24px;
                     }
+                }
+
+                .user {
+                    border-radius: 50%;
+                    overflow: hidden;
                 }
             }
 

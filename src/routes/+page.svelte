@@ -21,7 +21,7 @@
 
 <div class="page">
     {#if data?.topBeers}
-        <section class="section">
+        <section class="section mt-0">
             <div class="row">
                 <h2 class="section-title">Top rated Beer</h2>
                 <a href="/discover" class="link">Show all ></a>
@@ -62,7 +62,6 @@
     .page {
         display: flex;
         flex-direction: column;
-        gap: var(--gap-section-default);
     }
 
     .row {

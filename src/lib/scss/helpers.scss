@@ -28,6 +28,12 @@
     flex-direction: column;
 }
 
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .image {
     &--is-rounded {
         border-radius: 50%;
@@ -101,25 +107,20 @@
     // right column
     &__content {
         width: 100%;
+        display: flex;
+        flex-flow: column;
+        gap: 8px;
+
         &__title {
             font-weight: 600;
-            font-size: 26px;
-            line-height: 26px;
-            margin-bottom: 15px;
         }
         &__subtitle {
             font-weight: 500;
-            font-size: 16px;
-            line-height: 22px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
         &__description {
             font-weight: 400;
-            font-size: 16px;
-            line-height: 25px;
-            color: var(--text-3);
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
+            color: var(--text-3);        
             overflow: hidden;
         }
     }
@@ -132,9 +133,10 @@
     margin-top: var(--gap-section-default);
 
     &-title {
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 26px;
+        // font-weight: 600;
+        // font-size: 20px;
+        // line-height: 26px;
+        
     }
 
     &-content {
@@ -185,6 +187,10 @@ button {
 .link {
     font-size: 14px;
     color: var(--text);
+
+    @media (min-width: $desktop) {
+        font-size: 16px;
+    }
 
     &:hover {
         text-decoration: underline;

@@ -142,7 +142,9 @@
         <div class="signup">
             {#if signup}
                 <h1 class="signup__title">Create new account</h1>
-                <p class="signup__text">The goal is to facilitate usability and efficiency as much as possible.</p>
+                <p class="signup__text text--lg">
+                    The goal is to facilitate usability and efficiency as much as possible.
+                </p>
                 <div class="signup__inputs">
                     <div class="input-group">
                         <WInput label={'Display name'} activeLabel={!!(focused.displayName || displayName)}>
@@ -199,7 +201,7 @@
                 </div>
             {:else}
                 <h1 class="signup__title">Log in</h1>
-                <p class="signup__text">Log into Find-Brew to start sharing a beer review with your fellas.</p>
+                <p class="signup__text text--lg">Log into Find-Brew to start sharing a beer review with your fellas.</p>
 
                 <div class="input-group">
                     <WInput label={'Email'} activeLabel={!!(focused.email || email)}>
@@ -241,7 +243,7 @@
                     >{signup ? 'Signup' : 'Login'}</WButton
                 >
             </div>
-            <div class="need-account">
+            <div class="need-account text--sm">
                 {signup ? 'I have an account.' : "Don't have an account?"}
                 <button on:click={toggleAuth} type="button" class="link">{signup ? 'Login' : 'Signup'}</button>
             </div>
@@ -259,14 +261,12 @@
         box-shadow: 0px 6px 15px rgba(220, 220, 220, 0.3);
 
         &__title {
-            font-size: 22px;
             text-align: center;
         }
         &__text {
-            font-size: 18px;
             line-height: 32px;
             text-align: center;
-            margin-top: 4px;
+            margin-top: 12px;
             margin-bottom: 36px;
         }
         &__inputs {
@@ -315,7 +315,6 @@
     .need-account {
         text-align: center;
         margin-top: 28px;
-        font-size: 14px;
         button {
             margin-left: 4px;
             text-decoration: underline;

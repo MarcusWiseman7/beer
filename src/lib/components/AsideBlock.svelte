@@ -21,7 +21,7 @@
         &__info {
             display: flex;
             flex-flow: column;
-            gap: 20px;
+            gap: 16px;
             background-color: var(--page);
             border-radius: calc(var(--main-border-radius) * 1.5);
             box-shadow: var(--box-border-shadow);

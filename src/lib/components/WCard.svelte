@@ -51,13 +51,13 @@
             <!-- name/title -->
             {#if item.beerName}
                 <a href={cardUrl} class="link">
-                    <h3 class="card__content__title">{item.beerName} {item.degrees} °</h3>
+                    <h4 class="card__content__title text-ellipsis">{item.beerName} {item.degrees} °</h4>
                 </a>
             {/if}
 
             <!-- style -->
             {#if item.style}
-                <h5 class="card__content__style">{item.style}</h5>
+                <h5 class="card__content__style text--sm text-ellipsis">{item.style}</h5>
             {/if}
 
             <!-- info row -->
@@ -137,33 +137,24 @@
         &__content {
             height: 100%;
             width: 100%;
-            padding: 8px 12px;
+            padding: 12px;
 
             @media (min-width: $desktop) {
-                padding: 12px 16px;
+                padding: 16px;
             }
 
             &__title {
                 font-weight: 500;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                font-size: 16px;
             }
 
             &__style {
-                font-size: 14px;
-                line-height: 20px;
                 font-weight: 500;
                 color: var(--text-3);
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                margin-top: 3px;
+                margin-top: 8px;
             }
 
             &__info {
-                margin-top: 9px;
+                margin-top: 12px;
                 display: flex;
                 flex-flow: row wrap;
                 gap: 6px;

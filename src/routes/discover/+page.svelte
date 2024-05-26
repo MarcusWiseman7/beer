@@ -200,7 +200,7 @@
             display: flex;
             align-items: center;
             background-color: var(--page);
-            border-radius: 30px;
+            border-radius: calc(var(--main-border-radius) * 1.5);
             margin-top: 12px;
             box-shadow: 0px 6px 15px rgba(220, 220, 220, 0.6);
 
