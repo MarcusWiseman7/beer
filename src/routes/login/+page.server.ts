@@ -11,8 +11,7 @@ import nodemailer from 'nodemailer';
 import type { SanityPageData } from '$lib/types/pageData';
 import sanity from '$lib/sanity/sanity';
 import type { Actions, PageServerLoad } from './$types.js';
-import { compileEmailTemplate } from '$lib/helpers'
-
+import { compileEmailTemplate } from '$lib/helpers';
 
 const transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',
@@ -31,13 +30,15 @@ export const actions: Actions = {
     login: async ({ cookies, request }) => {
         const data = await request.formData();
         const userData: Login = { email: '', password: '' };
-        
+
         for (const pair of data.entries()) {
             if (typeof pair[1] === 'string') userData[pair[0] as keyof Login] = pair[1];
         }
 
         // try to find user in db
-        const user: HydratedDocument<TUser> | null = await User.findOne({ email: userData.email }).select('password loginToken').exec();
+        const user: HydratedDocument<TUser> | null = await User.findOne({ email: userData.email })
+            .select('password loginToken')
+            .exec();
         if (!user) throw error(404, { message: 'No user with that email address...' });
 
         // check if password matches
@@ -47,14 +48,14 @@ export const actions: Actions = {
 
         // create a session token
         const token = jwt.sign({ email: userData.email, date: new Date() }, secret, { expiresIn: exp });
-        
+
         // update user in db with session token
         user.loginToken = token;
         await user.save();
 
         // set session to cookies
         cookies.set('session', token);
-    
+
         return { success: true };
     },
     checkEmail: async ({ request }) => {
@@ -74,26 +75,30 @@ export const actions: Actions = {
     signup: async ({ request }) => {
         const data = await request.formData();
         const userData: Signup = { displayName: '', username: '', tempEmail: '', password: '' };
-        
+
         for (const pair of data.entries()) {
             if (typeof pair[1] === 'string') userData[pair[0] as keyof Signup] = pair[1];
         }
 
         // try to find user with email/username in db
-        const alreadyUser: TUser | null = await User.findOne({ $or: [{ email: userData.tempEmail }, { username: userData.username }] }).select('_id').lean();
+        const alreadyUser: TUser | null = await User.findOne({
+            $or: [{ email: userData.tempEmail }, { username: userData.username }],
+        })
+            .select('_id')
+            .lean();
         if (alreadyUser) throw error(403, { message: 'User with that email address already in system' });
-        
+
         // create temp email token
         const tempEmailToken = randomBytes(60).toString('hex');
 
         // create user
-        const user: HydratedDocument<TUser> = await User.create({ ...userData, tempEmailToken });
+        const payload = { ...userData, email: tempEmailToken, tempEmailToken };
+        const user: HydratedDocument<TUser> = await User.create(payload);
 
         // compile email
-        const emailHtml = await compileEmailTemplate(
-            './src/lib/email/welcome.hbs', 
-            { link: `https://find-brews.com/login/${tempEmailToken}` }
-        );
+        const emailHtml = await compileEmailTemplate('./src/lib/email/welcome.hbs', {
+            link: `https://find-brews.com/login/${tempEmailToken}`,
+        });
 
         const email = await transporter.sendMail({
             from: 'Find-Brews.com <no-reply.findbrews@outlook.com>',
@@ -108,7 +113,7 @@ export const actions: Actions = {
     },
 };
 
-export const load: PageServerLoad = async ({ }) => {
+export const load: PageServerLoad = async ({}) => {
     const pageQuery = `*[_type == 'login'][0]`;
     const page: SanityPageData = await sanity.fetch(pageQuery);
 
