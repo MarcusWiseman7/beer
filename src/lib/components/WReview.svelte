@@ -6,12 +6,15 @@
     import WAvatar from '$lib/components/WAvatar.svelte';
     import { CldImage } from 'svelte-cloudinary';
     import WPill from './WPill.svelte';
+    import type { TUser } from '$lib/types/user';
+    import type { ObjectId } from 'mongoose';
 
-    // props
     export let type: string = 'normal';
     export let review: TReview;
+    export let user: TUser | undefined;
 
-    // methods
+    const profile: TUser | ObjectId = user || review.reviewer;
+
     const getRatingById = (ratingId: number): { emoji: string; value: string } => {
         let ratingValue: TRating | undefined;
         const unsubscribe = ratingTaste.subscribe((values: TRating[]) => {
@@ -26,8 +29,8 @@
     <div class={`review review--${type}`}>
         {#if myProfile}
             <div class="review-avatar image image--is-rounded">
-                {#if review.reviewer?.avatarPublicId}
-                    <WAvatar publicId={review.reviewer.avatarPublicId} size={48} />
+                {#if profile?.avatarPublicId}
+                    <WAvatar publicId={profile.avatarPublicId} size={48} />
                 {:else}
                     <img src={noavatar_src} alt="noavatar" />
                 {/if}
@@ -35,7 +38,7 @@
         {/if}
         <div class="review-content">
             <ul class="user-list">
-                <li>{review.reviewer?.displayName}</li>
+                <li>{profile?.displayName}</li>
                 <li>{new Date(review.dateCreated).toLocaleDateString()}</li>
             </ul>
             <p class="bio">
