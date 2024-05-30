@@ -36,9 +36,7 @@ export const actions: Actions = {
         }
 
         // try to find user in db
-        const user: HydratedDocument<TUser> | null = await User.findOne({ email: userData.email })
-            .select('password loginToken')
-            .exec();
+        const user: HydratedDocument<TUser> | null = await User.findOne({ email: userData.email }).select('password loginToken').exec();
         if (!user) throw error(404, { message: 'No user with that email address...' });
 
         // check if password matches
