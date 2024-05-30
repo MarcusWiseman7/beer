@@ -15,7 +15,7 @@
         nav.href === activeRoute ||
         (activeRoute.startsWith('/discover') && nav.name === 'discover') ||
         (activeRoute.startsWith('/blog') && nav.name === 'blog') ||
-        ((activeRoute.startsWith('/@') || activeRoute === '/login') && nav.name === 'profile');
+        ((activeRoute.startsWith('/@') || activeRoute.includes('login')) && nav.name === 'profile');
 
     // methods
     const addBeer = (): void => {
@@ -55,9 +55,7 @@
         <h4 class="menu-footer__title">Follow us</h4>
         <ul class="menu-footer__socials">
             <li>
-                <a href="https://www.instagram.com/findbrews" target="_blank"
-                    ><img src={instagram_src} height="18" width="18" alt="Instagram" /></a
-                >
+                <a href="https://www.instagram.com/findbrews" target="_blank"><img src={instagram_src} height="18" width="18" alt="Instagram" /></a>
             </li>
             <li>
                 <a href="" target="_blank"><img src={twitter_src} width="18" height="18" alt="Twitter" /></a>
