@@ -10,15 +10,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--<![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="date=no">
     <meta name="format-detection" content="address=no">
     <meta name="format-detection" content="email=no">
     <link rel="shortcut icon" href="https://findbrews.com/favicon.ico">
-
     <title>{{title}}</title>
-
     <style type="text/css">
         html {
             margin: 0;
@@ -26,7 +23,7 @@
         }
 
         body {
-            background-color: #ffffff;
+            background-color: #EDEDED;
             color: #000001;
             font-size: 14px;
             font-family: Arial, Helvetica, sans-serif;
@@ -39,25 +36,25 @@
         }
 
         a:link {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
 
         a:hover {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
 
         a:active {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
 
         a:visited {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
@@ -149,34 +146,38 @@
                 padding-top: 0 !important;
                 padding-bottom: 0 !important;
             }
+
+            .small-less-padding {
+                padding: 20px 12px !important;
+            }
+
+            .mobile-padding {
+                padding: 32px 20px !important;
+                border-radius: 0 !important;
+            }
         }
     </style>
-
-
     <!--[if mso]> 
-	<style> 
-		body { font-family: Arial, sans-serif !important; } 
-	</style>
-<![endif]-->
-
+      <style> 
+         body { font-family: Arial, sans-serif !important; } 
+      </style>
+      <![endif]-->
     <!--[if (gte mso 9)|(IE)]>
-	<style type="text/css">
-		table {border-collapse: collapse !important;}
-	</style>
-<![endif]-->
-
+      <style type="text/css">
+         table {border-collapse: collapse !important;}
+      </style>
+      <![endif]-->
     <!--[if gte mso 9]>
-	<xml>
-		<o:OfficeDocumentSettings>
-		<o:AllowPNG/>
-		<o:PixelsPerInch>96</o:PixelsPerInch>
-		</o:OfficeDocumentSettings>
-	</xml>
-<![endif]-->
-
+      <xml>
+         <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+         </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
 </head>
 
-<body style="Margin: 0; padding: 0; min-width: 100%; background-color: #ffffff;">
+<body style="Margin: 0; padding: 0; min-width: 100%; background-color: #EDEDED;">
     <!-- PRE-HEADER TEXT -->
     <span class="preheader"
         style="display: none !important; visibility: hidden; opacity: 0; color: transparent; height: 0; width: 0;">{{emailData.title}}</span>
@@ -200,25 +201,25 @@
         }
 
         a:link {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
 
         a:hover {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
 
         a:active {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
 
         a:visited {
-            color: #0078bd;
+            color: #0572EF;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
         }
@@ -254,49 +255,75 @@
     <center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
         <div style="max-width:600px;">
             <!--[if (gte mso 9)|(IE)]>
-                    <table width="600" align="center" cellpadding="0" cellspacing="0" border="0" style="border-spacing:0;" >
-                    <tr>
-                    <td style="padding:0;" >
-                    <![endif]-->
+            <table width="600" align="center" cellpadding="0" cellspacing="0" border="0" style="border-spacing:0;" >
+               <tr>
+                  <td style="padding:0;" >
+                     <![endif]-->
             <table class="outer no-min-width" align="center" cellpadding="0" cellspacing="0" border="0"
                 style="border-spacing: 0; Margin: 0 auto; width: 100%; max-width: 600px; min-width: 600px;">
                 <tr>
-                    <td style="padding: 50px 10px 0;">
-                        <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+                    <td style="padding: 28px 16px 0;" class="small-no-x-padding">
+                        {{!-- ************** HEADER ************** --}}
+                        <table width="100%" align="center" cellspacing="0" cellpadding="0" border="0"
+                            style="border-collapse: collapse;">
                             <tr>
-                                <td align="center" valign="top" style="padding: 20px;">
-                                    header
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="left" valign="top" style="padding-top: 20px;">&nbsp;</td>
-                            </tr>
-                        </table>
-                        <table align="center" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
-                            <tr>
-                                <td align="center" valign="top">
-                                    {{{ body }}}
-                                </td>
-                            </tr>
-                        </table>
-                        <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
-                            <tr>
-                                <td align="left" valign="top" style="padding-top: 20px;">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td align="center" valign="top" style="padding: 20px;background-color: #f2f2f2;">
-                                    footer
+                                <td style="padding: 0 0 24px 24px;">
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                        <tr>
+                                            <td align="left" valign="middle" style="padding-right: 24px;">
+                                                <a href="https://find-brews.com/" target="_blank" style="border: 0;">
+                                                    <img src="https://cdn.sanity.io/images/v29s4pb7/production/2f015ad9a74bc0fa3d1eeaf7c4c3fd1e092a0c5d-165x180.png"
+                                                        width="55" height="60" alt="" style="display: block;" border="0"
+                                                        hspace="0" vspace="0" />
+                                                </a>
+                                            </td>
+                                            <td align="left" valign="middle"
+                                                style="font-family: Arial, Helvetica, sans-serif;">
+                                                <a href="https://find-brews.com/" target="_blank"
+                                                    style="border: 0;font-size: 18px; line-height: 30px; color: #3C3737; font-weight: bold; font-family: Arial, sans-serif;">Find-Brews.com</a>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                         </table>
+                        {{!-- ************** CONTENT **************  --}}
+                        {{{ body }}}
+                        {{!-- ************** CONTENT ************** --}}
                     </td>
                 </tr>
             </table>
-            <!--[if (gte mso 9)|(IE)]>
+            {{!-- ************** FOOTER ************** --}}
+            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+                <tr>
+                    <td align="left" valign="top"
+                        style="font-size: 14px; line-height: 26px; color: #333333; font-weight: normal; font-family: Arial, Helvetica, sans-serif; padding: 32px 20px 0;">
+                        If you’d rather not receive this kind of email, you can unsubscribe or
+                        <a href="https://find-brews.com/login/" target="_blank"
+                            style="border: 0; font-size: 14px; line-height: 24px; font-family: Arial, sans-serif;">manage
+                            your email preferences</a>.
                     </td>
-                    </tr>
-                    </table>
-                    <![endif]-->
+                </tr>
+                <tr>
+                    <td align="left" valign="top" border="0"
+                        style="border-collapse: collapse;  padding: 28px 20px 28px;">
+                        <a href="https://find-brews.com/login/" target="_blank"
+                            style="border: 0; font-size: 14px; line-height: 24px; font-family: Arial, sans-serif;">
+                            <img src="https://cdn.sanity.io/images/v29s4pb7/production/bbb7c4365243af925f226aefc6f83fc2f807dc3d-52x52.png"
+                                width="28" height="28" alt="" style="display: block;" border="0" hspace="0"
+                                vspace="0" />
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+                  </td>
+               </tr>
+            </table>
+            <![endif]-->
             <!-- WRAPPER END -->
         </div>
     </center>
