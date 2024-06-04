@@ -11,12 +11,10 @@
     import WCard from '$lib/components/WCard.svelte';
     import search_src from '$lib/assets/icons/components/search.svg';
 
-    // data
     let query = '';
     let inputElement: HTMLInputElement;
     let beerResults: any[] = [];
 
-    // props
     export let data: DiscoverPageData;
 
     $: seo = data?.page?.seo;
@@ -46,7 +44,6 @@
                     const result = await response.json();
                     beerResults = result;
                     inputElement.focus();
-                    console.log('result :>> ', result);
                 }
             } catch (err) {
                 console.error('Error fetching brewery :>> ', err);
@@ -60,9 +57,6 @@
         search();
     };
 
-    onMount(() => {
-        console.log('discover page data :>> ', data);
-    });
 </script>
 
 <WHead {seo} canonicalURL="discovery" {translationReplacements} />

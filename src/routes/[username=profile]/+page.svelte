@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { UserPageData } from '$lib/types/pageData';
     import { loading, myProfile } from '$lib/stores';
-    import { onMount } from 'svelte';
     import { setAppMessage } from '$lib/helpers';
     import WHead from '$lib/components/WHead.svelte';
     import WBack from '$lib/components/WBack.svelte';
@@ -11,10 +10,8 @@
     import WButton from '$lib/components/WButton.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
 
-    // props
     export let data: UserPageData;
 
-    // data
     let moreReviews = true;
     let fetchingReviews = false;
     let visibleReviewsCount = 3;
@@ -24,7 +21,6 @@
         { label: 'Share Profile', action: 'share' },
     ];
 
-    // computed
     $: seo = data?.page?.seo;
     $: profile = data?.user;
     $: reviews = data?.reviews;
@@ -33,7 +29,6 @@
     $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
     $: translationReplacements = [{ key: 'username', value: data?.username }];
 
-    // methods
     const logout = async (): Promise<void> => {
         try {
             loading.set(true);
@@ -115,24 +110,19 @@
 
     const onDropdownSelect = (event: CustomEvent): void => {
         const { action } = event.detail;
-        console.log(`Action from dropdown: ${action}`);
+        // console.log(`Action from dropdown: ${action}`);
         if (action === 'logout') {
-            console.log('Performing logout...');
+            // console.log('Performing logout...');
             logout();
         }
         if (action === 'share') {
-            console.log('Performing share...');
+            // console.log('Performing share...');
         }
     };
 
     const showReviews = (): void => {
         visibleReviewsCount = reviews.length;
     };
-
-    onMount(() => {
-        // just to see what we have to work with...
-        console.log('profile page data :>> ', data);
-    });
 </script>
 
 <WHead {seo} canonicalURL={`@${profile?.username}`} {translationReplacements} />
@@ -155,9 +145,8 @@
             <div class="page-hero__content">
                 <h1 class="page-hero__content__title">{profile.displayName}</h1>
                 <p class="page-hero__content__description">
-                    {profile.displayName} also known as @{profile.username} has -- posts “so fucking lot!”. 🔥 He is quite
-                    famous look at his -- likes 👍 and {reviews?.length} and more reviews 📝. Follow him and follow his journey
-                    of the wounded soldier.
+                    {profile.displayName} also known as @{profile.username} has -- posts “so fucking lot!”. 🔥 He is quite famous look at his -- likes 👍 and {reviews?.length}
+                    and more reviews 📝. Follow him and follow his journey of the wounded soldier.
                 </p>
             </div>
         </div>

@@ -1,20 +1,14 @@
 <script lang="ts">
     import type { BlogPost } from '$lib/types/blog';
     import SanityImage from './SanityImage.svelte';
-    import { onMount } from 'svelte';
     import { timeAgo } from '$lib/helpers';
     import WLocaleText from '../WLocaleText.svelte';
     // import like_src from '$lib/assets/icons/post/like.svg';
     // import comment_src from '$lib/assets/icons/post/comment.svg';
     // import share_src from '$lib/assets/icons/post/share.svg';
 
-    // props
     export let type: string = 'normal';
     export let post: BlogPost;
-
-    onMount(() => {
-        console.log('post :>> ', post);
-    });
 </script>
 
 {#if post}

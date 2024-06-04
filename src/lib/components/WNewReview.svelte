@@ -228,10 +228,6 @@
             });
 
             if (response.ok) {
-                // TODO remove this, only for testing...
-                const testReview = await response.json();
-                console.log('Response from POST new review :>> ', testReview);
-
                 removeImage();
                 close();
                 setAppMessage({

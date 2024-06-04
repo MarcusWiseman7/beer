@@ -7,7 +7,7 @@
     import { loading, myProfile } from '$lib/stores';
     import { invalidateAll, goto } from '$app/navigation';
     import { applyAction } from '$app/forms';
-    import { setAppMessage } from '$lib/helpers';
+    import { parseResult, setAppMessage } from '$lib/helpers';
     import { debounce } from 'lodash';
 
     // data
@@ -28,9 +28,7 @@
 
     // computed
     $: realEmail = email && /^\S+@\S+\.\S+$/.test(email);
-    $: buttonDisabled = signup
-        ? emailExists || usernameExists || !realEmail || !password || !displayName
-        : !realEmail || !password;
+    $: buttonDisabled = signup ? emailExists || usernameExists || !realEmail || !password || !displayName : !realEmail || !password;
 
     // methods
     const toggleAuth = (): void => {
@@ -112,21 +110,31 @@
             const result = await response.json();
 
             if (result.type === 'success') {
+                const parsedResult = parseResult(result.data);
+
                 // re-run all `load` functions, following the successful update
                 await invalidateAll();
                 applyAction(result);
                 loading.set(false);
 
-                setAppMessage({
-                    timeout: $myProfile ? 3000 : 9000,
-                    message: $myProfile
-                        ? `Welcome ${$myProfile.displayName}!`
-                        : `Welcome! Please check your email to verify and log in!`,
-                    type: 'success',
-                    id: Date.now(),
-                });
-                goto('/');
-                return;
+                if (parsedResult.success) {
+                    setAppMessage({
+                        timeout: $myProfile ? 3000 : 9000,
+                        message: $myProfile ? `Welcome ${$myProfile.displayName}!` : `Welcome! Please check your email to verify and log in!`,
+                        type: 'success',
+                        id: Date.now(),
+                    });
+                    goto('/');
+                    return;
+                } else {
+                    setAppMessage({
+                        timeout: 9000,
+                        message: parsedResult.message,
+                        type: 'error',
+                        id: Date.now(),
+                    });
+                    return;
+                }
             }
 
             applyAction(result);
@@ -142,9 +150,7 @@
         <div class="signup">
             {#if signup}
                 <h1 class="signup__title">Create new account</h1>
-                <p class="signup__text text--lg">
-                    The goal is to facilitate usability and efficiency as much as possible.
-                </p>
+                <p class="signup__text text--lg">The goal is to facilitate usability and efficiency as much as possible.</p>
                 <div class="signup__inputs">
                     <div class="input-group">
                         <WInput label={'Display name'} activeLabel={!!(focused.displayName || displayName)}>
@@ -239,9 +245,7 @@
                 </div>
             {/if}
             <div class="signup__btn">
-                <WButton disabled={buttonDisabled} modifiers={['primary', 'lg', 'w100']}
-                    >{signup ? 'Signup' : 'Login'}</WButton
-                >
+                <WButton disabled={buttonDisabled} modifiers={['primary', 'lg', 'w100']}>{signup ? 'Signup' : 'Login'}</WButton>
             </div>
             <div class="need-account text--sm">
                 {signup ? 'I have an account.' : "Don't have an account?"}

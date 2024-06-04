@@ -1,20 +1,13 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import WHead from '$lib/components/WHead.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
     import BlogPreview from '$lib/components/blog/BlogPreview.svelte';
     import type { HomePageData } from '$lib/types/pageData';
 
-    // props
     export let data: HomePageData;
 
-    // computed
     $: seo = data?.page?.seo;
     $: translationReplacements = [];
-
-    onMount(() => {
-        console.log('home page data :>> ', data);
-    });
 </script>
 
 <WHead {seo} {translationReplacements} />

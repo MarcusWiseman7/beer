@@ -10,8 +10,6 @@
     $: profile = pageData?.user;
     $: reviews = pageData?.reviews;
     $: reviewsCount = pageData?.reviews.length;
-
-    console.log('profile page data in aside :>> ', pageData);
 </script>
 
 <AsideBlock title="Rewards">

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import '../app.scss'; // global scss
     import type { TLayoutData } from '$lib/types/pageData';
     import { appMessages, loading, myProfile, locale, newReviewModal, asideQuery } from '$lib/stores';
@@ -24,16 +23,13 @@
     import logo_beer_src from '$lib/assets/icons/general/logo_beer.svg';
     import search_src from '$lib/assets/icons/components/search.svg';
 
-    // data
     let query = '';
 
-    // props
     export let data: TLayoutData;
 
     $: myProfile.set(data.user || null);
     $: locale.set(data.locale);
 
-    // data
     const asideComponents = {
         blog: ABlog,
         profile: AProfile,
@@ -41,16 +37,12 @@
         index: AIndex,
     };
 
-    // computed
     $: pathname = $page.url.pathname;
     $: openMenu = false;
     $: isScrolled = false;
     $: pathnameSegment = pathname.split('/')[1];
-    $: asideComponent = pathnameSegment.startsWith('@')
-        ? asideComponents['profile']
-        : asideComponents[pathnameSegment || 'index'];
+    $: asideComponent = pathnameSegment.startsWith('@') ? asideComponents['profile'] : asideComponents[pathnameSegment || 'index'];
 
-    // methods
     const logoClick = (): void => {
         if (window.innerWidth >= 1024) {
             goto('/');
@@ -69,9 +61,6 @@
         $asideQuery = (event.target as HTMLInputElement)?.value;
         debounce(() => goto(`/discover?q=${encodeURIComponent($asideQuery)}`), 500)();
     };
-    onMount(() => {
-        console.log('myProfile :>> ', $myProfile);
-    });
 </script>
 
 <svelte:window on:scroll|passive={handleScroll} />
@@ -146,10 +135,7 @@
             {:else}
                 <AsideBlock>
                     <h3 class="fw-700">Register here!</h3>
-                    <p>
-                        Join 'Find-Brews' to connect with beer enthusiasts! Share photos and reviews with others, and
-                        discover new brews.
-                    </p>
+                    <p>Join 'Find-Brews' to connect with beer enthusiasts! Share photos and reviews with others, and discover new brews.</p>
                     <div class="mt-5">
                         <WButton href="/login/" text="Sign up" modifiers={['primary', 'sm']}></WButton>
                     </div>

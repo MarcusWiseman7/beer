@@ -1,6 +1,5 @@
 <script lang="ts">
     import { timeAgo } from '$lib/helpers';
-    import { onMount } from 'svelte';
     import WHead from '$lib/components/WHead.svelte';
     import SanityImage from '$lib/components/blog/SanityImage.svelte';
     import ContentBlocks from '$lib/components/blog/ContentBlocks.svelte';
@@ -12,10 +11,8 @@
     import telegram_src from '$lib/assets/icons/social/telegram.svg';
     import type { BlogpostPageData } from '$lib/types/pageData';
 
-    // props
     export let data: BlogpostPageData;
 
-    // data
     $: seo = data?.page?.seo;
     $: slug = data?.slug;
     $: post = data?.post;
@@ -26,10 +23,6 @@
         { id: 'twitter', icon: twitter_src },
         { id: 'telegram', icon: telegram_src },
     ];
-
-    onMount(() => {
-        console.log('[slug] blog page data :>> ', data);
-    });
 </script>
 
 <WHead {seo} canonicalURL={`blog/${slug}`} {translationReplacements} />

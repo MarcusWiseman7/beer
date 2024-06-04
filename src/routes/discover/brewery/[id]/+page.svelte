@@ -1,21 +1,18 @@
 <script lang="ts">
     import WHead from '$lib/components/WHead.svelte';
-    import WPill from '$lib/components/WPill.svelte';
+    // import WPill from '$lib/components/WPill.svelte';
     import WBack from '$lib/components/WBack.svelte';
     import WCard from '$lib/components/WCard.svelte';
-    import cz_src from '$lib/assets/icons/flags/czech.svg';
-    import star_src from '$lib/assets/icons/general/star.svg';
+    // import cz_src from '$lib/assets/icons/flags/czech.svg';
+    // import star_src from '$lib/assets/icons/general/star.svg';
     import facebook_src from '$lib/assets/icons/social/facebook.svg';
     import instagram_src from '$lib/assets/icons/social/instagram.svg';
     import noBreweryImg from '$lib/assets/images/no-brewery.png';
-    import { onMount } from 'svelte';
     import type { BreweryPageData } from '$lib/types/pageData';
     import { CldImage, CldOgImage } from 'svelte-cloudinary';
 
-    // props
     export let data: BreweryPageData;
 
-    // data
     $: seo = data?.page?.seo;
     $: brewery = data?.brewery;
     $: beers = data?.beers;
@@ -33,11 +30,6 @@
         const target = $event.target;
         if (target instanceof Element) target.classList.remove('line-clamp');
     };
-
-    onMount(() => {
-        // just to see what we have to work with...
-        console.log('brewery page data :>> ', data);
-    });
 </script>
 
 <WHead {seo} canonicalURL={`brewery/${brewery?._id}`} {translationReplacements} />
@@ -72,22 +64,8 @@
                 <div class="image">
                     {#if brewery.logo}
                         <!-- test image -->
-                        <CldImage
-                            src={brewery.logo}
-                            alt="Brewery logo"
-                            class="is-blured"
-                            loading="eager"
-                            height="60"
-                            width="60"
-                        />
-                        <CldImage
-                            src={brewery.logo}
-                            alt="Brewery logo"
-                            class="is-absolute"
-                            loading="eager"
-                            height="60"
-                            width="60"
-                        />
+                        <CldImage src={brewery.logo} alt="Brewery logo" class="is-blured" loading="eager" height="60" width="60" />
+                        <CldImage src={brewery.logo} alt="Brewery logo" class="is-absolute" loading="eager" height="60" width="60" />
                     {:else}
                         <div class="icon">
                             <img src={noBreweryImg} alt="Brewery still" />

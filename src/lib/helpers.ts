@@ -3,12 +3,13 @@ import type { LocaleObject, TranslationReplacements } from './types/locale';
 import type { Message } from './types/message';
 import handlebars from 'handlebars';
 import fs from 'fs/promises';
+import type { parsedResult } from './types/api';
 
 export const setAppMessage = (message: Message): void => {
     appMessages.update((a) => [...a, message]);
 };
 
-export const getPointFromEvent = ($event): { x: number, y: number } => {
+export const getPointFromEvent = ($event): { x: number; y: number } => {
     let point;
     if ($event.targetTouches && $event.targetTouches[0]) {
         point = { x: $event.targetTouches[0].clientX, y: $event.targetTouches[0].clientY };
@@ -30,9 +31,7 @@ export const timeAgo = (date: Date): string => {
 };
 
 export const getLocaleText = (text: LocaleObject | string | undefined, locale: string, replacements: TranslationReplacements = []): string => {
-    return (text &&
-        parseTranslation((typeof text === 'string' ? text : text[locale as keyof object]), replacements)
-    ) || '';
+    return (text && parseTranslation(typeof text === 'string' ? text : text[locale as keyof object], replacements)) || '';
 };
 
 export const parseTranslation = (rawText: string, replacements: TranslationReplacements): string => {
@@ -70,4 +69,16 @@ export const compileEmailTemplate = async (contentTemplatePath: string, data: Re
         console.error('Error compiling email template:', error);
         throw error;
     }
+};
+
+export const parseResult = (result: string | string[] | parsedResult): parsedResult => {
+    if (typeof result === 'string') {
+        return parseResult(JSON.parse(result));
+    }
+
+    if (Array.isArray(result)) {
+        return parseResult(result[0]);
+    }
+
+    return result;
 };
