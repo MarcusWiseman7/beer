@@ -5,41 +5,48 @@
 
     export let messageObj: Message;
 
-    setTimeout(() => {
+    const removeMessage = (): void => {
         appMessages.update((a) => a.filter((m: Message) => m.id !== messageObj.id));
-    }, messageObj.timeout);
+    };
+
+    setTimeout(removeMessage, messageObj.timeout);
+
+    const handleClick = (): void => {
+        removeMessage();
+    };
 </script>
 
-<div transition:fly={{ x: -100 }} class={`message message--${messageObj.type}`}>
+<button on:click={handleClick} transition:fly={{ x: -100 }} class={`text--xs message message--${messageObj.type}`}>
     {messageObj.message}
-</div>
+</button>
 
 <style lang="scss">
     .message {
-        position: absolute;
+        position: fixed;
         bottom: 40px;
         left: 40px;
         z-index: var(--z-app-message);
         padding: 8px 32px;
-        font-weight: 600;
         color: #fff;
-        font-size: 18px;
-        line-height: 28px;
         text-align: justify;
         border-radius: 6px;
         max-width: 320px;
         background-color: rgb(168 162 158);
 
+        &:hover {
+            cursor: pointer;
+        }
+
         &--success {
-            background-color: rgb(22 163 74);
+            background-color: var(--success-color);
         }
 
         &--error {
-            background-color: rgb(220 38 38);
+            background-color: var(--error-color);
         }
 
         &--warning {
-            background-color: rgb(202 138 4);
+            background-color: var(--warning-color);
         }
     }
 </style>
