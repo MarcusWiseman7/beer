@@ -6,7 +6,8 @@
     import { newReviewModal, myProfile, loading, ratingTaste } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
-    import { debounce, isObject } from 'lodash';
+    import debounce from 'lodash/debounce';
+    import isObject from 'lodash/isObject';
     import { onDestroy, onMount } from 'svelte';
     import { setAppMessage } from '$lib/helpers';
     import brewery_src from '$lib/assets/icons/post/brewery.svg';
@@ -41,8 +42,7 @@
 
     // computed
     $: hasCompleteBeer = review.beer || (review.tempBeer?.beerName && review.tempBeer.breweryName);
-    $: canSubmit =
-        (step === 1 && hasCompleteBeer) || (step === 2 && review?.reviewer && review.rating && hasCompleteBeer);
+    $: canSubmit = (step === 1 && hasCompleteBeer) || (step === 2 && review?.reviewer && review.rating && hasCompleteBeer);
     $: description = review.rating ? $ratingTaste.find((r) => r.id === review.rating)?.value || 'Hmmm...' : 'Hmmm...';
 
     // methods
@@ -70,49 +70,46 @@
             removeImage();
         }
     };
-    const search = debounce(
-        async ($event: Event & { currentTarget: EventTarget & HTMLInputElement }, type: string): Promise<void> => {
-            try {
-                const element = $event.target as HTMLInputElement;
-                const query = element?.value;
-                if (!query) return;
+    const search = debounce(async ($event: Event & { currentTarget: EventTarget & HTMLInputElement }, type: string): Promise<void> => {
+        try {
+            const element = $event.target as HTMLInputElement;
+            const query = element?.value;
+            if (!query) return;
 
-                // if beers from already selected brewery loaded skip search
-                if (type === 'beer' && review.brewery && searchResultsBeer?.length) {
-                    searchResultsBeer = searchResultsBeer.filter((b) => b.beerName.toLowerCase().includes(query));
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append('query', query as string);
-                formData.append('type', type);
-                if (type === 'beer' && review.brewery) formData.append('brewery', review.brewery.toString());
-
-                const response = await fetch('/api/search', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'x-sveltekit-action': 'true',
-                    },
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-
-                    if (type === 'beer') {
-                        searchResultsBeer = result;
-                        isBeerDropdownVisible = result.length;
-                    } else {
-                        searchResultsBrewery = result;
-                        isBreweryDropdownVisible = result.length;
-                    }
-                }
-            } catch (err) {
-                console.error('ERROR searching DB :>> ', err);
+            // if beers from already selected brewery loaded skip search
+            if (type === 'beer' && review.brewery && searchResultsBeer?.length) {
+                searchResultsBeer = searchResultsBeer.filter((b) => b.beerName.toLowerCase().includes(query));
+                return;
             }
-        },
-        300
-    );
+
+            const formData = new FormData();
+            formData.append('query', query as string);
+            formData.append('type', type);
+            if (type === 'beer' && review.brewery) formData.append('brewery', review.brewery.toString());
+
+            const response = await fetch('/api/search', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'x-sveltekit-action': 'true',
+                },
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+
+                if (type === 'beer') {
+                    searchResultsBeer = result;
+                    isBeerDropdownVisible = result.length;
+                } else {
+                    searchResultsBrewery = result;
+                    isBreweryDropdownVisible = result.length;
+                }
+            }
+        } catch (err) {
+            console.error('ERROR searching DB :>> ', err);
+        }
+    }, 300);
     const checkForPrefill = (): void => {
         isBeerDropdownVisible = searchResultsBeer?.length > 0;
     };
@@ -339,11 +336,7 @@
                                     class="btn {review.brewery || review.tempBeer?.breweryName ? 'remove' : 'add'}"
                                 >
                                     <span class="plus">
-                                        <PlusIcon
-                                            stroke={review.brewery || review.tempBeer?.breweryName
-                                                ? 'var(--main-light)'
-                                                : 'var(--text-2)'}
-                                        />
+                                        <PlusIcon stroke={review.brewery || review.tempBeer?.breweryName ? 'var(--main-light)' : 'var(--text-2)'} />
                                     </span>
                                 </button>
                             </div>
@@ -379,16 +372,9 @@
                                             }, 200)}
                                     />
                                 </div>
-                                <button
-                                    on:click={() => toggleBeerDropdown()}
-                                    class="btn {review.beer || review.tempBeer?.beerName ? 'remove' : 'add'}"
-                                >
+                                <button on:click={() => toggleBeerDropdown()} class="btn {review.beer || review.tempBeer?.beerName ? 'remove' : 'add'}">
                                     <span class="plus">
-                                        <PlusIcon
-                                            stroke={review.beer || review.tempBeer?.beerName
-                                                ? 'var(--main-light)'
-                                                : 'var(--text-2)'}
-                                        />
+                                        <PlusIcon stroke={review.beer || review.tempBeer?.beerName ? 'var(--main-light)' : 'var(--text-2)'} />
                                     </span>
                                 </button>
                             </div>
@@ -417,10 +403,7 @@
                         <h3 class="description">Taste emotion: "{description}"</h3>
                         <div class="emojis">
                             {#each $ratingTaste as { id, emoji }}
-                                <button
-                                    class="emoji {review.rating === id ? 'active' : ''}"
-                                    on:click={() => (review.rating = id)}
-                                >
+                                <button class="emoji {review.rating === id ? 'active' : ''}" on:click={() => (review.rating = id)}>
                                     {emoji}
                                 </button>
                             {/each}
@@ -434,11 +417,7 @@
                             <div class="options">
                                 <!-- TODO patrikkkkkkkkkk: choose correct icon && correct type with "active" class -->
                                 {#each servingStyles as { _id, name }}
-                                    <WPill
-                                        type="tag"
-                                        activeLabel={review.servingStyle === _id}
-                                        on:click={() => selectServingStyle(_id)}
-                                    >
+                                    <WPill type="tag" activeLabel={review.servingStyle === _id} on:click={() => selectServingStyle(_id)}>
                                         <svelte:fragment slot="image">
                                             <img src={beer_src} alt="Beer" tabindex="-1" />
                                         </svelte:fragment>
