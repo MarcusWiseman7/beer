@@ -101,7 +101,8 @@ export const actions: Actions = {
                 throw error(400, { message: 'Please enter a password...' });
             }
             const salt = bcrypt.genSaltSync(10);
-            userData.password = bcrypt.hashSync(userData.password, salt);
+            const hash = bcrypt.hashSync(userData.password, salt);
+            userData.password = hash;
 
             // create user
             const payload = { ...userData, email: tempEmailToken, tempEmailToken };
