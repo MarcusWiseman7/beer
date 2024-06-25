@@ -113,8 +113,9 @@
             height: 190px;
             overflow: hidden;
             border-radius: var(--main-border-radius);
+            background-color: var(--placeholder);
 
-            img {
+            > img {
                 background-size: cover;
                 position: absolute;
                 width: 100%;

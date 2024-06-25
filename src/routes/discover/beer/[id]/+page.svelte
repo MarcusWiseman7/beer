@@ -1,6 +1,4 @@
 <script lang="ts">
-    // import WPill from '$lib/components/WPill.svelte';
-    // import star_src from '$lib/assets/icons/general/star.svg';
     import type { BeerPageData } from '$lib/types/pageData';
     import WBack from '$lib/components/WBack.svelte';
     import WHorizontalScroller from '$lib/components/WHorizontalScroller.svelte';
@@ -9,6 +7,7 @@
     import WReview from '$lib/components/WReview.svelte';
     import WCard from '$lib/components/WCard.svelte';
     import { CldImage } from 'svelte-cloudinary';
+    import beer_src from '$lib/assets/icons/post/beer.svg';
 
     export let data: BeerPageData;
 
@@ -27,15 +26,15 @@
     {#if beer}
         <div class="page-hero">
             <div class="page-hero__image">
-                <!-- TODO: to add beer image else  -->
                 <div class="image">
-                    <!-- test image -->
-                    <CldImage src="beers/volt_eliasuv_ohen_fu5iqo" alt="Beer logo" class="is-blured" loading="eager" height="60" width="60" />
-                    <CldImage src="beers/volt_eliasuv_ohen_fu5iqo" alt="Beer logo" class="is-absolute" loading="eager" height="60" width="60" />
-                    <!-- TODO: else no beer img -->
-                    <!-- <div class="icon">
-                        <img src={noBreweryImg} alt="Brewery" />
-                    </div> -->
+                    {#if beer?.logoURL}
+                        <!-- TODO: Marcus or Patrik in future replace with first picture from last review or from any review -->
+                        <CldImage src={beer?.logoURL} alt="Beer logo" loading="eager" height="60" width="60" />
+                    {:else}
+                        <div class="no-image">
+                            <img src={beer_src} alt="No Beer" class="icon" />
+                        </div>
+                    {/if}
                 </div>
             </div>
 
@@ -56,7 +55,7 @@
         </div>
     {/if}
 
-    {#if beer?.reviews}
+    {#if beer?.reviews.length}
         <section class="section section--feed">
             <h2 class="section-title">Last user's reviews</h2>
             <div class="section-content">
@@ -105,5 +104,12 @@
         font-weight: 600;
         font-size: 21px;
         line-height: 26px;
+    }
+
+    .no-image {
+        img {
+            width: 70px;
+            height: 70px;
+        }
     }
 </style>

@@ -138,7 +138,7 @@
     {#if profile}
         <div class="page-hero">
             <div class="page-hero__image">
-                <div class="image image--is-rounded">
+                <div class="image">
                     <img src={noavatar_src} alt={'profile @' + profile.username} />
                 </div>
             </div>

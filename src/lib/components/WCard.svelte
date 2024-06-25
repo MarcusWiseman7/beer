@@ -1,36 +1,15 @@
 <script lang="ts">
     import type { TBeer } from '$lib/types/beer';
-    import cz_src from '$lib/assets/icons/flags/czech.svg';
     import star_src from '$lib/assets/icons/general/star.svg';
     import WPill from './WPill.svelte';
-    import { goto } from '$app/navigation';
     import { CldImage } from 'svelte-cloudinary';
+    import beer_src from '$lib/assets/icons/post/beer.svg';
 
     // props
     export let item: TBeer;
     export let size: string = 'normal';
     export let dragging: boolean = false;
     export let showRating: boolean = true;
-
-    $: imageDims = {
-        height: size === 'big' ? 160 : 112,
-        width: size === 'big' ? 248 : 200,
-    };
-
-    // data
-    const stockPhotos = [
-        '/stock/b6_k7y5gk',
-        '/stock/b5_tpwqfg',
-        '/stock/b4_xsn93f',
-        '/stock/b3_ytdxaa',
-        '/stock/b2_koxyps',
-        '/stock/b1_y41vkg',
-    ];
-
-    // methods
-    const stockPic = () => {
-        return stockPhotos[Math.floor(Math.random() * stockPhotos.length)];
-    };
 
     let cardUrl = item?._id ? `/discover/beer/${item._id}` : '';
     let breweryUrl = item?.brewery?._id ? `/discover/brewery/${item.brewery._id}` : '';
@@ -42,8 +21,19 @@
     <!-- <a href={'/discover/brewery/' + id} class={`breweryBox breweryBox--${type}`}></a> -->
     <div class={`card card--${size}`}>
         <!-- image -->
-        <a href={cardUrl} class="card__image">
-            <CldImage src={stockPic()} alt="stock pic" height={imageDims.height} width={imageDims.width} />
+        <a href={cardUrl}>
+            <!-- TODO: Marcus or Patrik in future replace with first picture from last review or from any review -->
+            <div class="card__image">
+                {#if false}
+                    <div class="image">
+                        <CldImage src="/stock/b6_k7y5gk" alt="stock pic" width="248" style="position: absolute; height: 100%;" />
+                    </div>
+                {:else}
+                    <div class="placeholder">
+                        <img src={beer_src} alt="No Beer" />
+                    </div>
+                {/if}
+            </div>
         </a>
 
         <!-- content -->
@@ -67,13 +57,7 @@
                         <WPill type="brewery">
                             <svelte:fragment slot="image">
                                 {#if item.brewery.logo}
-                                    <CldImage
-                                        src={item.brewery.logo}
-                                        alt="Brewery logo"
-                                        crop="thumb"
-                                        height="28"
-                                        width="28"
-                                    />
+                                    <CldImage src={item.brewery.logo} alt="Brewery logo" crop="thumb" height="28" width="28" />
                                 {/if}
                             </svelte:fragment>
 
@@ -111,26 +95,46 @@
         border-radius: 12px;
         width: 100%;
 
+        a {
+            text-decoration: none;
+        }
+
         &__image {
             position: relative;
             width: 100%;
             height: 112px;
+            background-color: var(--placeholder);
 
-            &:before {
-                content: '';
-                position: absolute;
-                background: linear-gradient(
-                    180deg,
-                    rgba(0, 0, 0, 0.7) 0%,
-                    rgba(0, 0, 0, 0.601562) 23.96%,
-                    rgba(0, 0, 0, 0.399668) 59.9%,
-                    rgba(0, 0, 0, 0) 100%
-                );
-                left: 0;
-                right: 0;
-                top: 0;
+            .image {
+                &:before {
+                    content: '';
+                    position: absolute;
+                    background: linear-gradient(
+                        180deg,
+                        rgba(0, 0, 0, 0.7) 0%,
+                        rgba(0, 0, 0, 0.601562) 23.96%,
+                        rgba(0, 0, 0, 0.399668) 59.9%,
+                        rgba(0, 0, 0, 0) 100%
+                    );
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 50%;
+                    z-index: 2;
+                }
+            }
+            .placeholder {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
                 width: 100%;
-                height: 50%;
+                img {
+                    height: 40px;
+                    width: 40px;
+                    filter: grayscale(1);
+                }
             }
         }
 
@@ -192,5 +196,6 @@
         position: absolute;
         top: 8px;
         left: 8px;
+        z-index: 3;
     }
 </style>
