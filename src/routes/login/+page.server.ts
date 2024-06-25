@@ -2,7 +2,7 @@ import type { HydratedDocument } from 'mongoose';
 import type { TUser } from '$lib/types/user';
 import _db from '$lib/server/database';
 import User from '$lib/server/models/user';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { error } from '@sveltejs/kit';
 import { randomBytes } from 'crypto';
@@ -35,7 +35,8 @@ export const actions: Actions = {
             if (!user) throw error(404, { message: 'No user with that email address...' });
 
             // check if password matches
-            if (!bcrypt.compareSync(userData.password, user.password)) {
+            const match = await bcrypt.compare(userData.password, user.password);
+            if (!match) {
                 throw error(401, { message: 'Wrong password, please try again...' });
             }
 
@@ -100,8 +101,8 @@ export const actions: Actions = {
             if (!userData.password) {
                 throw error(400, { message: 'Please enter a password...' });
             }
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(userData.password, salt);
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(userData.password, salt);
             userData.password = hash;
 
             // create user
