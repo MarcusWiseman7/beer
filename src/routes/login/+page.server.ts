@@ -2,10 +2,9 @@ import type { HydratedDocument } from 'mongoose';
 import type { TUser } from '$lib/types/user';
 import _db from '$lib/server/database';
 import User from '$lib/server/models/user';
-import bcrypt from 'bcrypt';
+import { randomBytes, timingSafeEqual, scryptSync } from 'crypto';
 import jwt from 'jsonwebtoken';
 import { error } from '@sveltejs/kit';
-import { randomBytes } from 'crypto';
 import nodemailer from 'nodemailer';
 import type { SanityPageData } from '$lib/types/pageData';
 import sanity from '$lib/sanity/sanity';
@@ -15,6 +14,20 @@ import { compileEmailTemplate } from '$lib/helpers';
 const secret = import.meta.env.VITE_LOGIN_SECRET;
 const exp = import.meta.env.VITE_LOGIN_EXP;
 
+const hashPassword = async (password: string) => {
+    const salt = await randomBytes(16).toString('hex');
+    const buffer = scryptSync(password, salt, 64) as Buffer;
+
+    return `${buffer.toString('hex')}.${salt}`;
+};
+const comparePassword = async (storedPassword: string, providedPassword: string) => {
+    const [hashedPassword, salt] = storedPassword.split('.');
+    const hashedPasswordBuf = Buffer.from(hashedPassword, 'hex');
+    const suppliedPasswordBuf = scryptSync(providedPassword, salt, 64) as Buffer;
+
+    return timingSafeEqual(hashedPasswordBuf, suppliedPasswordBuf);
+};
+
 export const actions: Actions = {
     login: async ({ cookies, request }) => {
         try {
@@ -22,7 +35,6 @@ export const actions: Actions = {
             const userData: Partial<TUser> = {};
 
             for (const pair of data.entries()) {
-                // if (typeof pair[1] === 'string')
                 userData[pair[0] as keyof TUser] = String(pair[1]);
             }
 
@@ -35,7 +47,7 @@ export const actions: Actions = {
             if (!user) throw error(404, { message: 'No user with that email address...' });
 
             // check if password matches
-            const match = await bcrypt.compare(userData.password, user.password);
+            const match = await comparePassword(user.password, userData.password);
             if (!match) {
                 throw error(401, { message: 'Wrong password, please try again...' });
             }
@@ -48,7 +60,7 @@ export const actions: Actions = {
             await user.save();
 
             // set session to cookies
-            cookies.set('session', token);
+            cookies.set('session', token, { path: '/' });
 
             return JSON.stringify({ success: true });
         } catch (err) {
@@ -101,9 +113,7 @@ export const actions: Actions = {
             if (!userData.password) {
                 throw error(400, { message: 'Please enter a password...' });
             }
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(userData.password, salt);
-            userData.password = hash;
+            userData.password = await hashPassword(userData.password);
 
             // create user
             const payload = { ...userData, email: tempEmailToken, tempEmailToken };

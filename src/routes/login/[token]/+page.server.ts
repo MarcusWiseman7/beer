@@ -13,7 +13,9 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     const { token } = params;
 
     // try to find user in db
-    const user: HydratedDocument<Partial<TUser>> | null = await User.findOne({ tempEmailToken: token }).select('email tempEmail tempEmailToken loginToken displayName');
+    const user: HydratedDocument<Partial<TUser>> | null = await User.findOne({ tempEmailToken: token }).select(
+        'email tempEmail tempEmailToken loginToken displayName'
+    );
     if (!user || !user.tempEmail) throw redirect(303, '/login');
 
     // create a session token
@@ -28,7 +30,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     await user.save();
 
     // set session to cookies
-    cookies.set('session', loginToken);
+    cookies.set('session', loginToken, { path: '/' });
 
     return { data: JSON.stringify({ displayName: user.displayName }) };
-}
+};
