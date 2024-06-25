@@ -4,7 +4,7 @@
     import { appMessages, loading, myProfile, locale, newReviewModal, asideQuery } from '$lib/stores';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
-    import { debounce } from 'lodash';
+    import debounce from 'lodash/debounce';
     import AsideBlock from '$lib/components/AsideBlock.svelte';
     import WButton from '$lib/components/WButton.svelte';
     import WFooter from '$lib/components/WFooter.svelte';

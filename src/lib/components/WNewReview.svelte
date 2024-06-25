@@ -6,7 +6,8 @@
     import { newReviewModal, myProfile, loading, ratingTaste } from '$lib/stores';
     import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
-    import { debounce, isObject } from 'lodash';
+    import debounce from 'lodash/debounce';
+    import isObject from 'lodash/isObject';
     import { onDestroy, onMount } from 'svelte';
     import { setAppMessage } from '$lib/helpers';
     import brewery_src from '$lib/assets/icons/post/brewery.svg';

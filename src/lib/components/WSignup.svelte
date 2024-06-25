@@ -8,7 +8,7 @@
     import { invalidateAll, goto } from '$app/navigation';
     import { applyAction } from '$app/forms';
     import { parseResult, setAppMessage } from '$lib/helpers';
-    import { debounce } from 'lodash';
+    import debounce from 'lodash/debounce';
 
     // data
     let email: string;

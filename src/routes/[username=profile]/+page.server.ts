@@ -11,7 +11,7 @@ import type { Actions, PageServerLoad } from './$types.js';
 export const load: PageServerLoad = async ({ params }) => {
     const profileQuery = `*[_type == 'profile'][0]`;
     const page: SanityPageData = await sanity.fetch(profileQuery);
-    
+
     const { username } = params;
     const name = username.replace('@', '');
 
@@ -21,24 +21,24 @@ export const load: PageServerLoad = async ({ params }) => {
 
     // get reviews count
     const reviewsCount = await Review.where({ reviewer: user._id }).countDocuments();
-    
+
     // get first 30 user reviews
-    const reviews: TReview[] = reviewsCount
-        ? await Review.find({ reviewer: user._id }).sort('dateCreated').limit(30).populate('beer').lean()
-        : [];
-    const canFetchMoreReviews = (reviewsCount - reviews.length) > 0;
+    const reviews: TReview[] = reviewsCount ? await Review.find({ reviewer: user._id }).sort('dateCreated').limit(30).populate('beer').lean() : [];
+    const canFetchMoreReviews = reviewsCount - reviews.length > 0;
 
     return { data: JSON.stringify({ user, reviews, canFetchMoreReviews, page, username: name }) };
-}
+};
 
 export const actions: Actions = {
     logout: async ({ cookies }) => {
         const session = cookies.get('session');
-    
+
         if (session) {
             // remove token from user in db
-            await User.findOneAndUpdate({ loginToken: session }, { $set: { loginToken: Date.now().toString() } }).select('_id').lean();
-            cookies.delete('session');
+            await User.findOneAndUpdate({ loginToken: session }, { $set: { loginToken: Date.now().toString() } })
+                .select('_id')
+                .lean();
+            cookies.delete('session', { path: '/' });
         }
 
         return { success: true };
@@ -53,17 +53,11 @@ export const actions: Actions = {
 
         // get count
         const reviewsCount = await Review.where({ reviewer: userId }).countDocuments();
-        
+
         // get next 30 user reviews
-        const reviews: TReview[] = await Review
-            .find({ reviewer: userId })
-            .sort('dateCreated')
-            .skip(offset)
-            .limit(limit)
-            .populate('beer')
-            .lean();
-        const canFetchMoreReviews = (reviewsCount - (offset + reviews.length)) > 0;
-        
+        const reviews: TReview[] = await Review.find({ reviewer: userId }).sort('dateCreated').skip(offset).limit(limit).populate('beer').lean();
+        const canFetchMoreReviews = reviewsCount - (offset + reviews.length) > 0;
+
         return JSON.stringify({ reviews, canFetchMoreReviews });
     },
 };
