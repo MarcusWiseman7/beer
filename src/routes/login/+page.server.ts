@@ -1,5 +1,4 @@
 import type { HydratedDocument } from 'mongoose';
-import type { Login, Signup } from '$lib/types/auth';
 import type { TUser } from '$lib/types/user';
 import _db from '$lib/server/database';
 import User from '$lib/server/models/user';
@@ -20,10 +19,15 @@ export const actions: Actions = {
     login: async ({ cookies, request }) => {
         try {
             const data = await request.formData();
-            const userData: Login = { email: '', password: '' };
+            const userData: Partial<TUser> = {};
 
             for (const pair of data.entries()) {
-                if (typeof pair[1] === 'string') userData[pair[0] as keyof Login] = pair[1];
+                // if (typeof pair[1] === 'string')
+                userData[pair[0] as keyof TUser] = String(pair[1]);
+            }
+
+            if (!userData.email || !userData.password) {
+                throw error(400, { message: 'Please enter an email and password...' });
             }
 
             // try to find user in db
@@ -75,7 +79,7 @@ export const actions: Actions = {
     signup: async ({ request }) => {
         try {
             const data = await request.formData();
-            const userData: Signup = { displayName: '', username: '', tempEmail: '', password: '' };
+            const userData: Partial<TUser> = {};
 
             for (const pair of data.entries()) {
                 if (typeof pair[1] === 'string') userData[pair[0] as keyof Signup] = pair[1];
@@ -91,6 +95,13 @@ export const actions: Actions = {
 
             // create temp email token
             const tempEmailToken = randomBytes(60).toString('hex');
+
+            // encrypt password
+            if (!userData.password) {
+                throw error(400, { message: 'Please enter a password...' });
+            }
+            const salt = bcrypt.genSaltSync(10);
+            userData.password = bcrypt.hashSync(userData.password, salt);
 
             // create user
             const payload = { ...userData, email: tempEmailToken, tempEmailToken };
