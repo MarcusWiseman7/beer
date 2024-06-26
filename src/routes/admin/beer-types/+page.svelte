@@ -1,23 +1,17 @@
 <script lang="ts">
-    // types
     import type { TBeerCategory } from '$lib/types/beer';
-
-    // components
-    import WButton from '$lib/components/WButton.svelte';
-    import WInput from '$lib/components/WInput.svelte';
-
-    // props
-    export let data: {
-        types: TBeerCategory[];
-    };
-
-    // helpers
+    import isEqual from 'lodash/isEqual';
     import { loading } from '$lib/stores';
     import { setAppMessage } from '$lib/helpers';
     import { onMount } from 'svelte';
-    import { isEqual } from 'lodash';
+    import WButton from '$lib/components/WButton.svelte';
+    import WInput from '$lib/components/WInput.svelte';
 
-    // data
+    export let data: {
+        types: TBeerCategory[];
+    };
+    $: beerTypesList = data?.types;
+
     let controlList: TBeerCategory[] = [];
     let addBeerTypeForm = false;
     let query = '';
@@ -30,10 +24,6 @@
         ibu: '',
     };
 
-    // computed
-    $: beerTypesList = data?.types;
-
-    // methods
     const addBeerType = async (): Promise<void> => {
         try {
             loading.set(true);
@@ -212,9 +202,7 @@
                         </div>
                     </form>
 
-                    <WButton modifiers={['default']} on:click={() => updateBeerType(beerType)}
-                        >Update {beerType.name}</WButton
-                    >
+                    <WButton modifiers={['default']} on:click={() => updateBeerType(beerType)}>Update {beerType.name}</WButton>
                 </li>
             {/each}
         </ul>
