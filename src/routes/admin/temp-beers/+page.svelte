@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { TTempBeer } from '$lib/types/beer';
+    import TableList from '$lib/components/admin/TableList.svelte';
 
     export let data: {
         tempBeers: TTempBeer[];
@@ -10,13 +11,9 @@
 <div class="page">
     <h1 class="title">Temp Beers</h1>
 
-    <ul class="temp-beers">
-        {#each tempBeers as beer}
-            <li class="temp-beer">
-                <pre>{JSON.stringify(beer, null, 8)}</pre>
-            </li>
-        {/each}
-    </ul>
+    {#if tempBeers?.length}
+        <TableList data={tempBeers} />
+    {/if}
 </div>
 
 <style lang="scss">

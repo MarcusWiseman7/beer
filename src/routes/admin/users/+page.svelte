@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { TUser } from '$lib/types/user';
+    import TableList from '$lib/components/admin/TableList.svelte';
 
     export let data: {
         users: TUser[];
@@ -11,13 +12,7 @@
     <h1 class="title">Beer Drinkers</h1>
 
     {#if users?.length}
-        <ul class="users">
-            {#each users as user}
-                <li class="user">
-                    <pre>{JSON.stringify(user, null, 8)}</pre>
-                </li>
-            {/each}
-        </ul>
+        <TableList data={users} />
     {/if}
 </div>
 
