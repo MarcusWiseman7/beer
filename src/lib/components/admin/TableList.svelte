@@ -30,7 +30,7 @@
 
 <style lang="scss">
     // Define basic variables for colors and spacing
-    $primary-color: #71818b;
+    $primary-color: var(--main-admin);
     $font-color: #2c3e50;
     $border-color: #bdc3c7;
     $border-radius: 4px;
@@ -66,12 +66,8 @@
 
             tbody {
                 tr {
-                    &:nth-child(even) {
-                        color: var(--page);
-                    }
-
                     &:hover {
-                        background-color: lighten($primary-color, 45%);
+                        background-color: var(--hover);
                     }
 
                     td {

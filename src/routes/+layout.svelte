@@ -189,7 +189,7 @@
     @import '../lib/scss/vars.scss';
 
     .admin-bar {
-        background-color: var(--main-color);
+        background-color: var(--main-admin);
         color: var(--page);
         padding: 4px 20px;
         border-radius: 0 0 30px 30px;
