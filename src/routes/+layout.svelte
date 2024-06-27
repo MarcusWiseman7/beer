@@ -64,7 +64,18 @@
 </script>
 
 <svelte:window on:scroll|passive={handleScroll} />
-
+{#if $myProfile && $myProfile.level >= 100}
+    <div class="admin-bar">
+        <div class="admin-bar-wrapper">
+            <strong>Admin</strong>
+            <ul class="list row gap--400">
+                <li><a href="/admin/users">Users</a></li>
+                <li><a href="/admin/temp-beers">Temp beers</a></li>
+                <li><a href="/admin/beer-types">Beer Types</a></li>
+            </ul>
+        </div>
+    </div>
+{/if}
 <div class="papa">
     <header class="header layout">
         <div class="layout-left logo">
@@ -176,6 +187,26 @@
 
 <style lang="scss">
     @import '../lib/scss/vars.scss';
+
+    .admin-bar {
+        background-color: var(--main-color);
+        color: var(--page);
+        padding: 4px 20px;
+        border-radius: 0 0 30px 30px;
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        &-wrapper {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+        .list a {
+            color: var(--page);
+        }
+    }
 
     .papa {
         width: 100%;
