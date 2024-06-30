@@ -61,7 +61,7 @@
             <div class="section-content">
                 {#each beer.reviews as review}
                     <div class="review-holder">
-                        <WReview {review} />
+                        <WReview {review} {beer} />
                     </div>
                 {/each}
             </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { TReview } from '$lib/types/review';
     import type { TRating } from '$lib/types/pageData';
+    import type { TBeer } from '$lib/types/beer';
     import { myProfile, ratingTaste } from '$lib/stores';
     import noavatar_src from '$lib/assets/images/no-avatar.png';
     import WAvatar from '$lib/components/WAvatar.svelte';
@@ -12,6 +13,7 @@
     export let type: string = 'normal';
     export let review: TReview;
     export let user: TUser | undefined;
+    export let beer: TBeer | undefined;
 
     const profile: TUser | ObjectId = user || review.reviewer;
 
@@ -44,19 +46,27 @@
             <p class="bio">
                 {review.notes}
             </p>
+            {#if beer}
+                <ul class="row-list">
+                    <li>
+                        Beer:
+                        <a class="beer" href={`/discover/beer/${beer?._id}`}>{beer?.beerName} {beer?.degrees}</a>
+                    </li>
+                </ul>
+            {/if}
             <div class="pills">
                 {#if review?.rating}
                     <WPill>
                         <svelte:fragment slot="image">{getRatingById(review.rating).emoji}</svelte:fragment>
                         <svelte:fragment slot="title">
-                            Taste: "{getRatingById(review.rating).value}"
+                            Rated: "{getRatingById(review.rating).value}"
                         </svelte:fragment>
                     </WPill>
                 {/if}
                 {#if review?.location}
                     <WPill>
                         <svelte:fragment slot="image">📍</svelte:fragment>
-                        <svelte:fragment slot="title">review's from {review.location}</svelte:fragment>
+                        <svelte:fragment slot="title">{review.location}</svelte:fragment>
                     </WPill>
                 {/if}
             </div>
@@ -98,6 +108,7 @@
                 align-items: center;
                 flex-flow: row wrap;
                 margin-bottom: 4px;
+
                 li {
                     font-size: 16px;
                     line-height: 20px;
@@ -114,11 +125,33 @@
                     }
                 }
             }
+
+            .bio {
+                font-weight: 500;
+            }
+
+            .row-list {
+                margin-top: 4px;
+                display: flex;
+                flex-flow: row wrap;
+                align-items: center;
+                gap: 8px;
+
+                .beer {
+                    border-bottom: 1px solid var(--link);
+                }
+                li:not(:last-child) {
+                    line-height: 1;
+                    border-right: 1px solid var(--text);
+                    padding-right: 8px;
+                }
+            }
             .pills {
                 display: flex;
                 flex-flow: row wrap;
                 gap: 8px;
                 margin-top: 12px;
+                margin-left: -4px;
             }
 
             .images {

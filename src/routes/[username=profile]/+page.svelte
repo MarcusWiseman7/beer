@@ -29,6 +29,11 @@
     $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
     $: translationReplacements = [{ key: 'username', value: data?.username }];
 
+    import { onMount } from 'svelte';
+    onMount(() => {
+        console.log('reviews:', reviews);
+    });
+
     const logout = async (): Promise<void> => {
         try {
             loading.set(true);
@@ -157,7 +162,7 @@
             <h2 class="section-title">Last reviews</h2>
             <div class="section-content">
                 {#each reviews.slice(0, visibleReviewsCount) as review, index}
-                    <WReview {review} user={profile} type={index === visibleReviewsCount - 1 ? 'no-border' : ''} />
+                    <WReview {review} user={profile} beer={review?.beer} type={index === visibleReviewsCount - 1 ? 'no-border' : ''} />
                 {/each}
             </div>
             {#if visibleReviewsCount < reviews.length}
