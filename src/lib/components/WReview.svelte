@@ -1,21 +1,19 @@
 <script lang="ts">
     import type { TReview } from '$lib/types/review';
     import type { TRating } from '$lib/types/pageData';
-    import type { TBeer } from '$lib/types/beer';
-    import { myProfile, ratingTaste } from '$lib/stores';
+    import { ratingTaste } from '$lib/stores';
     import noavatar_src from '$lib/assets/images/no-avatar.png';
     import WAvatar from '$lib/components/WAvatar.svelte';
     import { CldImage } from 'svelte-cloudinary';
     import WPill from './WPill.svelte';
     import type { TUser } from '$lib/types/user';
-    import type { ObjectId } from 'mongoose';
 
     export let type: string = 'normal';
     export let review: TReview;
-    export let user: TUser | undefined;
-    export let beer: TBeer | undefined;
+    export let profile: TUser;
 
-    const profile: TUser | ObjectId = user || review.reviewer;
+    $: reviewer = profile || review?.reviewer;
+    $: beer = review?.beer && typeof review.beer === 'object' && review?.beer;
 
     const getRatingById = (ratingId: number): { emoji: string; value: string } => {
         let ratingValue: TRating | undefined;
@@ -29,10 +27,10 @@
 
 {#if review}
     <div class={`review review--${type}`}>
-        {#if myProfile}
+        {#if reviewer}
             <div class="review-avatar image image--is-rounded">
-                {#if profile?.avatarPublicId}
-                    <WAvatar publicId={profile.avatarPublicId} size={48} />
+                {#if reviewer.avatarPublicId}
+                    <WAvatar publicId={reviewer.avatarPublicId} size={48} />
                 {:else}
                     <img src={noavatar_src} alt="noavatar" />
                 {/if}
@@ -40,7 +38,7 @@
         {/if}
         <div class="review-content">
             <ul class="user-list">
-                <li>{profile?.displayName}</li>
+                <li>{reviewer?.displayName}</li>
                 <li>{new Date(review.dateCreated).toLocaleDateString()}</li>
             </ul>
             <p class="bio">
@@ -50,7 +48,7 @@
                 <ul class="row-list">
                     <li>
                         Beer:
-                        <a class="beer" href={`/discover/beer/${beer?._id}`}>{beer?.beerName} {beer?.degrees}</a>
+                        <a class="beer" href={`/discover/beer/${beer?._id}`}>{beer?.beerName}</a>
                     </li>
                 </ul>
             {/if}

@@ -1,6 +1,6 @@
 import User from '$lib/server/models/user';
 import { error } from '@sveltejs/kit';
-import { userSelect } from '$lib/server/server-helpers';
+import { beerSelect, brewerySelect, reviewSelect, userSelect } from '$lib/server/server-helpers';
 import Review from '$lib/server/models/review';
 import sanity from '$lib/sanity/sanity.js';
 import type { SanityPageData } from '$lib/types/pageData';
@@ -23,7 +23,19 @@ export const load: PageServerLoad = async ({ params }) => {
     const reviewsCount = await Review.where({ reviewer: user._id }).countDocuments();
 
     // get first 30 user reviews
-    const reviews: TReview[] = reviewsCount ? await Review.find({ reviewer: user._id }).sort('dateCreated').limit(30).populate('beer').lean() : [];
+    const reviews: TReview[] = reviewsCount
+        ? await Review.find({ reviewer: user._id })
+              .select(reviewSelect)
+              .sort('dateCreated')
+              .limit(30)
+              .populate({
+                  path: 'beer',
+                  model: 'Beer',
+                  select: beerSelect,
+                  populate: { path: 'brewery', model: 'Brewery', select: brewerySelect },
+              })
+              .lean()
+        : [];
     const canFetchMoreReviews = reviewsCount - reviews.length > 0;
 
     return { data: JSON.stringify({ user, reviews, canFetchMoreReviews, page, username: name }) };
@@ -55,7 +67,18 @@ export const actions: Actions = {
         const reviewsCount = await Review.where({ reviewer: userId }).countDocuments();
 
         // get next 30 user reviews
-        const reviews: TReview[] = await Review.find({ reviewer: userId }).sort('dateCreated').skip(offset).limit(limit).populate('beer').lean();
+        const reviews: TReview[] = await Review.find({ reviewer: userId })
+            .select(reviewSelect)
+            .sort('dateCreated')
+            .skip(offset)
+            .limit(limit)
+            .populate({
+                path: 'beer',
+                model: 'Beer',
+                select: beerSelect,
+                populate: { path: 'brewery', model: 'Brewery', select: brewerySelect },
+            })
+            .lean();
         const canFetchMoreReviews = reviewsCount - (offset + reviews.length) > 0;
 
         return JSON.stringify({ reviews, canFetchMoreReviews });

@@ -64,6 +64,7 @@
 </script>
 
 <svelte:window on:scroll|passive={handleScroll} />
+
 {#if $myProfile && $myProfile.level >= 100}
     <div class="admin-bar">
         <div class="admin-bar-wrapper">
@@ -76,6 +77,7 @@
         </div>
     </div>
 {/if}
+
 <div class="papa">
     <header class="header layout">
         <div class="layout-left logo">

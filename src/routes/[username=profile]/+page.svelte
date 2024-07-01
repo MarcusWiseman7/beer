@@ -29,11 +29,6 @@
     $: canFetchMoreReviews = !!(moreReviews && data?.canFetchMoreReviews);
     $: translationReplacements = [{ key: 'username', value: data?.username }];
 
-    import { onMount } from 'svelte';
-    onMount(() => {
-        console.log('reviews:', reviews);
-    });
-
     const logout = async (): Promise<void> => {
         try {
             loading.set(true);
@@ -157,12 +152,13 @@
         </div>
     {/if}
 
-    {#if reviews}
+    {#if reviews?.length}
         <section class="section section--feed">
             <h2 class="section-title">Last reviews</h2>
             <div class="section-content">
                 {#each reviews.slice(0, visibleReviewsCount) as review, index}
-                    <WReview {review} user={profile} beer={review?.beer} type={index === visibleReviewsCount - 1 ? 'no-border' : ''} />
+                    <!-- TODO Patrikkkkk this no-border class should be done in the CSS not JS please -->
+                    <WReview {review} {profile} type={index === visibleReviewsCount - 1 ? 'no-border' : ''} />
                 {/each}
             </div>
             {#if visibleReviewsCount < reviews.length}
@@ -173,11 +169,9 @@
                 </div>
             {/if}
         </section>
-    {/if}
 
-    {#if reviews}
         <section class="section">
-            <h2 class="section-title">Last drinked beers</h2>
+            <h2 class="section-title">Last drunk beers</h2>
             <WHorizontalScroller items={reviewsBeers} showRating={true} />
         </section>
     {/if}
