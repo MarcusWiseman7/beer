@@ -1,6 +1,6 @@
 import User from '$lib/server/models/user';
 import { error } from '@sveltejs/kit';
-import { beerSelect, brewerySelect, reviewSelect, userSelect } from '$lib/server/server-helpers';
+import { beerSelect, brewerySelect, userSelect } from '$lib/server/server-helpers';
 import Review from '$lib/server/models/review';
 import sanity from '$lib/sanity/sanity.js';
 import type { SanityPageData } from '$lib/types/pageData';
@@ -25,7 +25,6 @@ export const load: PageServerLoad = async ({ params }) => {
     // get first 30 user reviews
     const reviews: TReview[] = reviewsCount
         ? await Review.find({ reviewer: user._id })
-              .select(reviewSelect)
               .sort('dateCreated')
               .limit(30)
               .populate({
@@ -68,7 +67,6 @@ export const actions: Actions = {
 
         // get next 30 user reviews
         const reviews: TReview[] = await Review.find({ reviewer: userId })
-            .select(reviewSelect)
             .sort('dateCreated')
             .skip(offset)
             .limit(limit)

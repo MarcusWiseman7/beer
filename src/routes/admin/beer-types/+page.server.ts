@@ -11,9 +11,9 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
      */
     await adminLevelRouteGuard(cookies, params);
 
-    const types: TBeerCategory[] = await BeerType.find().select('-__v').lean();
+    const types: TBeerCategory[] = await BeerType.find().lean();
     return { data: JSON.stringify({ types }) };
-}
+};
 
 export const actions: Actions = {
     addBeerType: async ({ request }) => {
@@ -45,10 +45,7 @@ export const actions: Actions = {
         }
 
         // update in db
-        const beerType: TBeerCategory | null = await BeerType
-            .findOneAndUpdate({ _id }, { $set: typeData }, { new: true })
-            .select('-_v')
-            .lean();
+        const beerType: TBeerCategory | null = await BeerType.findOneAndUpdate({ _id }, { $set: typeData }, { new: true }).select('-_v').lean();
 
         return { beerType: JSON.stringify(beerType) };
     },
