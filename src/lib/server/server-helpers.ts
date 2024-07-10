@@ -1,7 +1,6 @@
 // mongoose helpers
 export const userSelect = ['_id', 'avatarURL', 'avatarPublicId', 'dateCreated', 'level', 'displayName', 'username'];
 export const beerSelect = '-sumOfAllBeerRatings -sumOfAllPrices -totalNumberOfPrices -averagePrice';
-export const tempBeerSelect = beerSelect + ' tempBeer tempBrewery';
 export const brewerySelect = '-sumOfAllRatings -dateCreated';
 export const reviewSelect = '';
 

@@ -2,7 +2,7 @@ import type { TTempBeer } from '$lib/types/beer';
 import { adminLevelRouteGuard } from '$lib/server/admin-guard';
 import type { PageServerLoad } from './$types.js';
 import TempBeer from '$lib/server/models/tempBeer.js';
-import { tempBeerSelect } from '$lib/server/server-helpers.js';
+import { beerSelect } from '$lib/server/server-helpers.js';
 
 export const load: PageServerLoad = async ({ cookies, params }) => {
     /**
@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
     await adminLevelRouteGuard(cookies, params);
 
     const tempBeers: TTempBeer[] = await TempBeer.find()
-        .select(tempBeerSelect)
+        .select(beerSelect)
         .populate({
             path: 'review',
             model: 'Review',
